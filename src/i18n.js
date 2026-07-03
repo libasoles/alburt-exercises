@@ -4,9 +4,9 @@ export const strings = {
   es: {
     indexTitle: "Ejercicios de Ajedrez — Libro de Alburt",
     alburtBio:
-      "El GM Lev Alburt fue tres veces campeón de los EE.UU. de ajedrez (1984, 1985, 1990). Nacido en Ucrania, emigró a Estados Unidos en 1979 y se convirtió en uno de los entrenadores más reconocidos del país. Su «Chess Training Pocket Book» contiene 300 posiciones cuidadosamente seleccionadas para mejorar el cálculo y la visión táctica. Este sitio presenta los primeros 7 ejercicios para la práctica interactiva del club TucuChess.",
-    toMoveWhite: "Mueven las blancas",
-    toMoveBlack: "Mueven las negras",
+      "Lev Alburt fue tres veces campeón de ajedrez de EE.UU. (1984, 1985 y 1990). Nació en Ucrania, emigró a Estados Unidos en 1979 y llegó a ser uno de los entrenadores más reconocidos del país. Su «Chess Training Pocket Book» reúne 300 posiciones elegidas para afinar el cálculo y la visión táctica. Acá compartimos los primeros 7 ejercicios para practicar de forma interactiva en TucuChess.",
+    toMoveWhite: "Juegan las blancas",
+    toMoveBlack: "Juegan las negras",
     reset: "Reiniciar",
     prev: "Anterior",
     next: "Siguiente",
@@ -18,8 +18,8 @@ export const strings = {
     solutionLabel: "Solución",
     hintLabel: "Pista",
     gameLabel: "Partida",
-    exerciseLinkWhite: "Blancas juegan",
-    exerciseLinkBlack: "Negras juegan",
+    exerciseLinkWhite: "Juegan las blancas",
+    exerciseLinkBlack: "Juegan las negras",
     settingsLang: "Idioma",
     settingsBoard: "Tablero",
     settingsBoardFlat: "Plano",
