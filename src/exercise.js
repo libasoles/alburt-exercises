@@ -7,6 +7,7 @@ import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
 import { exercises } from './exercises/data.js'
 import { evaluateMove } from './exercises/evaluateMove.js'
+import { formatSolutionHtml } from './exercises/formatSolution.js'
 import { getLang, applyI18n, setupLangToggle, t } from './i18n.js'
 
 // ── Routing ──────────────────────────────────────────────────────────────────
@@ -57,9 +58,9 @@ function updateCgDests() {
 // ── Toast ─────────────────────────────────────────────────────────────────────
 
 const RATING_IMAGES = {
-  best: './rating-best.png',
-  ok: './rating-ok.png',
-  bad: './rating-bad.png',
+  best: './images/rating-best.png',
+  ok: './images/rating-ok.png',
+  bad: './images/rating-bad.png',
 }
 
 let toastTimer = null
@@ -253,7 +254,7 @@ function renderExercise(lang) {
     hintEl.hidden = true
   }
 
-  document.getElementById('solution-text').textContent = exercise.solution[lang]
+  document.getElementById('solution-text').innerHTML = formatSolutionHtml(exercise.solution[lang])
 
   // Solution button label
   const btn = document.getElementById('solution-btn')
