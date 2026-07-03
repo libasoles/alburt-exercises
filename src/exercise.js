@@ -113,6 +113,16 @@ const TOAST_DURATION_MS = {
 }
 
 let toastTimer = null
+let toastHideTimer = null
+
+function hideToast() {
+  const toast = document.getElementById('toast')
+  if (!toast) return
+
+  clearTimeout(toastTimer)
+  clearTimeout(toastHideTimer)
+  toast.classList.remove('toast-visible', 'toast-hiding')
+}
 
 function showToast(rating) {
   const toast = document.getElementById('toast')
@@ -123,6 +133,7 @@ function showToast(rating) {
 
   // Clear any ongoing hide animation
   clearTimeout(toastTimer)
+  clearTimeout(toastHideTimer)
   toast.classList.remove('toast-hiding')
   // Force reflow so CSS transition restarts
   void toast.offsetWidth
@@ -130,7 +141,7 @@ function showToast(rating) {
 
   toastTimer = setTimeout(() => {
     toast.classList.add('toast-hiding')
-    setTimeout(() => {
+    toastHideTimer = setTimeout(() => {
       toast.classList.remove('toast-visible', 'toast-hiding')
     }, 200)
   }, TOAST_DURATION_MS[rating] ?? TOAST_DURATION_MS.best)
@@ -310,7 +321,7 @@ function initBoard() {
 // ── Reset ─────────────────────────────────────────────────────────────────────
 
 function resetBoard() {
-  clearTimeout(toastTimer)
+  hideToast()
   bookResponsePending = false
   setResetButtonPulse(false)
   setNextButtonPulse(false)
