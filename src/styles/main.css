@@ -874,23 +874,19 @@ settings-menu {
   opacity: 0;
   transform: translateY(20px) scale(1.05);
   pointer-events: none;
-  transition: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
 }
 
 .toast.toast-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition:
-    opacity 0.22s ease-in,
-    transform 0.22s ease-in;
 }
 
 .toast.toast-hiding {
   opacity: 0;
   transform: translateY(-10px) scale(1);
-  transition:
-    opacity 0.18s ease-out,
-    transform 0.18s ease-out;
 }
 
 .toast img {
@@ -917,23 +913,19 @@ settings-menu {
   opacity: 0;
   transform: translate(-50%, 20px);
   pointer-events: none;
-  transition: none;
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
 }
 
 .copy-toast.copy-toast-visible {
   opacity: 1;
   transform: translate(-50%, 0);
-  transition:
-    opacity 0.22s ease-in,
-    transform 0.22s ease-in;
 }
 
 .copy-toast.copy-toast-hiding {
   opacity: 0;
   transform: translate(-50%, -10px);
-  transition:
-    opacity 0.18s ease-out,
-    transform 0.18s ease-out;
 }
 
 /* ── Mobile (≤ 639px) ────────────────────────────────────────────────────── */

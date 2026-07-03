@@ -112,6 +112,8 @@ const TOAST_DURATION_MS = {
   bad: 4500,
 }
 
+const TOAST_FADE_MS = 220
+
 let toastTimer = null
 let toastHideTimer = null
 
@@ -121,7 +123,12 @@ function hideToast() {
 
   clearTimeout(toastTimer)
   clearTimeout(toastHideTimer)
-  toast.classList.remove('toast-visible', 'toast-hiding')
+  if (!toast.classList.contains('toast-visible')) return
+
+  toast.classList.add('toast-hiding')
+  toastHideTimer = setTimeout(() => {
+    toast.classList.remove('toast-visible', 'toast-hiding')
+  }, TOAST_FADE_MS)
 }
 
 function showToast(rating) {
@@ -143,28 +150,30 @@ function showToast(rating) {
     toast.classList.add('toast-hiding')
     toastHideTimer = setTimeout(() => {
       toast.classList.remove('toast-visible', 'toast-hiding')
-    }, 200)
+    }, TOAST_FADE_MS)
   }, TOAST_DURATION_MS[rating] ?? TOAST_DURATION_MS.best)
 }
 
 // ── Copy toast ──────────────────────────────────────────────────────────────
 
 let copyToastTimer = null
+let copyToastHideTimer = null
 
 function showCopyToast(message) {
   const toast = document.getElementById('copy-toast')
   toast.textContent = message
 
   clearTimeout(copyToastTimer)
+  clearTimeout(copyToastHideTimer)
   toast.classList.remove('copy-toast-hiding')
   void toast.offsetWidth
   toast.classList.add('copy-toast-visible')
 
   copyToastTimer = setTimeout(() => {
     toast.classList.add('copy-toast-hiding')
-    setTimeout(() => {
+    copyToastHideTimer = setTimeout(() => {
       toast.classList.remove('copy-toast-visible', 'copy-toast-hiding')
-    }, 200)
+    }, TOAST_FADE_MS)
   }, 1500)
 }
 
