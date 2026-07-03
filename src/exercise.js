@@ -92,6 +92,12 @@ function setResetButtonPulse(enabled) {
   resetBtn.classList.toggle('action-btn-pulse', enabled)
 }
 
+function setNextButtonPulse(enabled) {
+  const nextBtn = document.getElementById('next-btn')
+  if (!nextBtn) return
+  nextBtn.classList.toggle('action-btn-pulse', enabled && !nextBtn.disabled)
+}
+
 // ── Toast ─────────────────────────────────────────────────────────────────────
 
 const RATING_IMAGES = {
@@ -265,7 +271,10 @@ function handleMove(orig, dest) {
   currentNode = nextNode
   if (currentNode === null) {
     inFreePlay = true
-    if (rating === 'best') celebrateSolved()
+    if (rating === 'best') {
+      celebrateSolved()
+      setNextButtonPulse(true)
+    }
   }
 
   // Schedule book response — disable board during the delay to prevent state desync
@@ -304,6 +313,7 @@ function resetBoard() {
   clearTimeout(toastTimer)
   bookResponsePending = false
   setResetButtonPulse(false)
+  setNextButtonPulse(false)
 
   chess = new Chess(exercise.fen)
   currentNode = exercise.moves
