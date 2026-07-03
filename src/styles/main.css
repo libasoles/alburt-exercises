@@ -996,7 +996,7 @@ settings-menu {
   line-height: 1;
   white-space: pre;
   transform-origin: center center;
-  transform: translate(calc(-50% + var(--char-x)), var(--char-curve-y)) scale(1);
+  transform: translate(calc(-50% + var(--char-x)), var(--char-curve-y)) rotate(var(--char-tilt, 0deg)) scale(1);
   opacity: 1;
 }
 

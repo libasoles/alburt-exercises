@@ -337,11 +337,14 @@ function setCurvedCompletionTitle(text) {
   chars.forEach((char, index) => {
     const offset = index - center
     const curveY = -1 * (maxOffset * maxOffset - offset * offset) * 1.7
+    const tiltRatio = maxOffset === 0 ? 0 : offset / maxOffset
+    const tilt = Math.sign(tiltRatio) * Math.pow(Math.abs(tiltRatio), 1.15) * 14
     const span = document.createElement('span')
     span.className = 'completion-overlay-title-char'
     span.style.setProperty('--char-index', index)
     span.style.setProperty('--char-x', `${offset * spread}px`)
     span.style.setProperty('--char-curve-y', `${curveY}px`)
+    span.style.setProperty('--char-tilt', `${tilt}deg`)
     span.textContent = char === ' ' ? '\u00a0' : char
     titleEl.appendChild(span)
   })
