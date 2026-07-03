@@ -25,9 +25,15 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 
 - Vite
 - JavaScript ES modules
-- `chessground`
+- [`lichess-org/chessground`](https://github.com/lichess-org/chessground)
 - `chess.js`
 - Vitest
+
+## Componentes y assets
+
+- El tablero interactivo está construido sobre [`lichess-org/chessground`](https://github.com/lichess-org/chessground).
+- El tema plano usa los assets `cburnett` importados desde `chessground`.
+- Las piezas del tema Staunton incluidas en `public/images/staunton/` provienen de [`lichess-org/lila`](https://github.com/lichess-org/lila).
 
 ## Desarrollo
 
@@ -59,6 +65,24 @@ npm test
 ```bash
 npm run build
 ```
+
+## Publicar en GitHub Pages
+
+El repositorio queda listo para deploy automático con GitHub Actions usando [`.github/workflows/deploy-pages.yml`](/Users/guillermoperez/Projects/playground/chess/alburt-book/.github/workflows/deploy-pages.yml). El flujo:
+
+- se ejecuta en cada push a `main`
+- instala dependencias con `npm ci`
+- corre los tests
+- genera `dist/`
+- publica ese build en GitHub Pages
+
+### Activación en GitHub
+
+1. Subí el proyecto al repositorio de GitHub.
+2. En `Settings > Pages`, elegí `Source: GitHub Actions`.
+3. Hacé push a `main`.
+
+La configuración de Vite ya usa `base: './'`, así que funciona bien publicado desde el subpath del repositorio en GitHub Pages.
 
 ## Estructura
 
