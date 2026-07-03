@@ -1,3 +1,5 @@
+import { strings } from '../i18n.js'
+
 const MOVE_START_RE = /(\d+)\.(\.\.)?([^\s()]+)/g
 
 function escapeHtml(text) {
@@ -128,27 +130,28 @@ function splitTopLevelComments(text) {
 
 function renderRow(row) {
   const moveNo = `${row.number}.`
-  const whiteMove = row.whiteMove ? escapeHtml(row.whiteMove) : ''
-  const blackMove = row.blackMove ? escapeHtml(row.blackMove) : ''
-  const result = row.result ? `<span class="solution-result">${escapeHtml(row.result)}</span>` : ''
+  const whiteMove = row.whiteMove ? escapeHtml(row.whiteMove) : '&hellip;'
+  const blackMove = row.blackMove ? escapeHtml(row.blackMove) : '&hellip;'
+  const result = row.result ? escapeHtml(row.result) : ''
 
   return `
     <div class="solution-row">
       <span class="solution-move-no">${escapeHtml(moveNo)}</span>
       <span class="solution-move solution-white">${whiteMove}</span>
       <span class="solution-move solution-black">${blackMove}</span>
-      ${result}
+      <span class="solution-result">${result}</span>
     </div>
   `
 }
 
-function renderFlatSegments(segments) {
+function renderFlatSegments(segments, { mainLine = false } = {}) {
   let html = ''
   let rows = ''
+  const linesClass = mainLine ? 'solution-lines solution-lines-main' : 'solution-lines'
 
   const flushRows = () => {
     if (!rows) return
-    html += `<div class="solution-lines">${rows}</div>`
+    html += `<div class="${linesClass}">${rows}</div>`
     rows = ''
   }
 
@@ -166,27 +169,34 @@ function renderFlatSegments(segments) {
   return html
 }
 
-function renderComment(text) {
+function renderComment(text, lang) {
   const branches = text
     .split(';')
     .map(branch => normalizeWhitespace(branch))
     .filter(Boolean)
 
-  const content = branches.length > 1
-    ? branches
-        .map(branch => `<div class="solution-comment-branch">${renderFlatSegments(parseTextSegment(branch))}</div>`)
-        .join('')
-    : renderFlatSegments(parseTextSegment(branches[0] ?? ''))
+  const parsedBranches = branches.map(branch => parseTextSegment(branch))
+  const hasMoves = parsedBranches.some(segments => segments.some(segment => segment.type === 'row'))
 
-  return `<div class="solution-comment">${content}</div>`
+  const content = parsedBranches.length > 1
+    ? parsedBranches
+        .map(segments => `<div class="solution-comment-branch">${renderFlatSegments(segments)}</div>`)
+        .join('')
+    : renderFlatSegments(parsedBranches[0] ?? [])
+
+  const title = hasMoves
+    ? `<div class="solution-comment-title">${escapeHtml(strings[lang].solutionAlternativesTitle)}</div>`
+    : ''
+
+  return `<div class="solution-comment">${title}${content}</div>`
 }
 
-export function formatSolutionHtml(text) {
+export function formatSolutionHtml(text, lang = 'es') {
   const segments = splitTopLevelComments(text)
   return segments
     .map(segment => {
-      if (segment.type === 'comment') return renderComment(segment.text)
-      return renderFlatSegments(parseTextSegment(segment.text))
+      if (segment.type === 'comment') return renderComment(segment.text, lang)
+      return renderFlatSegments(parseTextSegment(segment.text), { mainLine: true })
     })
     .join('')
 }

@@ -322,6 +322,11 @@ function toggleSolution(forceOpen) {
   const panel = document.getElementById('solution-panel')
   const btn = document.getElementById('solution-btn')
   solutionOpen = forceOpen !== undefined ? forceOpen : !solutionOpen
+
+  if (solutionOpen && !hintOpen && exercise.hint[getLang()]) {
+    toggleHint(true)
+  }
+
   panel.hidden = !solutionOpen
   btn.textContent = solutionOpen ? t('hideSolution') : t('showSolution')
   btn.dataset.i18n = solutionOpen ? 'hideSolution' : 'showSolution'
@@ -357,7 +362,7 @@ function renderExercise(lang) {
   }
   hintBtn.textContent = hintOpen ? t('hideHint') : t('showHint')
 
-  document.getElementById('solution-text').innerHTML = formatSolutionHtml(exercise.solution[lang])
+  document.getElementById('solution-text').innerHTML = formatSolutionHtml(exercise.solution[lang], lang)
 
   // Solution button label
   const btn = document.getElementById('solution-btn')

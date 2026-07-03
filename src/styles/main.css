@@ -657,13 +657,14 @@ settings-menu {
   font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.65;
+  font-family: Roboto, sans-serif;
 }
 
 .solution-text {
   font-size: 0.9rem;
   color: var(--text);
   line-height: 1.7;
-  font-family: "Courier New", Courier, monospace;
+  font-family: Roboto, sans-serif;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -679,9 +680,21 @@ settings-menu {
   gap: 6px;
 }
 
+.solution-lines-main {
+  padding: 10px 12px;
+  border-left: 3px solid rgba(87, 158, 90, 0.6);
+  background: var(--bg-card);
+  border-radius: 0 6px 6px 0;
+}
+
+.solution-lines-main .solution-row {
+  background: transparent;
+  padding: 4px 0;
+}
+
 .solution-row {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) auto;
+  grid-template-columns: 44px minmax(0, 1fr) minmax(0, 1fr) 72px;
   gap: 12px;
   align-items: baseline;
   padding: 8px 10px;
@@ -713,6 +726,10 @@ settings-menu {
   font-weight: 800;
 }
 
+.solution-result:empty {
+  display: none;
+}
+
 .solution-comment {
   display: flex;
   flex-direction: column;
@@ -723,6 +740,14 @@ settings-menu {
   border-radius: 0 6px 6px 0;
   color: var(--text-muted);
   font-size: 0.88rem;
+}
+
+.solution-comment-title {
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.72rem;
 }
 
 .solution-comment-branch + .solution-comment-branch {
