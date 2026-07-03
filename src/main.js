@@ -1,4 +1,3 @@
-import './styles/main.css'
 import { exercises } from './exercises/data.js'
 import { getLang, applyI18n, setupLangToggle, t, strings } from './i18n.js'
 
