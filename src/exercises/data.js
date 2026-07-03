@@ -129,8 +129,10 @@ export const exercises = [
 
   {
     id: 4,
-    // Klovan - Ruban, 1986. White to move. Best-effort — needs visual verification from PDF p.27
-    fen: '3qr1k1/pp3pp1/3p3p/8/8/2N5/PP3PPP/3RR1KQ w - - 0 1',
+    // Klovan - Ruban, 1986. White to move. Verified against book diagram (ex-004).
+    // White: Kh1 Rd4 Rf1 Qf2 Be2 Bh6, pawns a4 b2 c2 g2 h2 (Bh6 guards g7 -> Qg7#).
+    // Black: Kg8 Qc7 Ra8 Re8 Bd8 Bg6, pawns a6 b6 e6 f7 h7.
+    fen: 'r2br1k1/2q2p1p/pp2p1bB/8/P2R4/8/1PP1BQPP/5R1K w - - 0 1',
     toMove: 'white',
     title: {
       en: 'Dark Square Struggle',
@@ -170,8 +172,9 @@ export const exercises = [
 
   {
     id: 5,
-    // White to move. Best-effort — needs visual verification from PDF p.28
-    fen: '6k1/pp3ppp/3rp3/3p4/3RP3/8/PP3PPP/6K1 w - - 0 1',
+    // White to move. Verified against book diagram (ex-005).
+    // White: Ke2 Rd3 Bb4 Pe4. Black: Ke7 Rg6 Bd6 Pf7. Bb4 pins d6 to Ke7 (a3-e7 diagonal).
+    fen: '8/4kp2/3b2r1/8/1B2P3/3R4/4K3/8 w - - 0 1',
     toMove: 'white',
     title: {
       en: 'Absolutely Pinning & Winning',
@@ -199,8 +202,11 @@ export const exercises = [
 
   {
     id: 6,
-    // Simagin - Polugaevsky, 1961. Black to move. Best-effort — needs visual verification from PDF p.29
-    fen: 'r4rk1/ppq1bppp/2n1p3/3p2B1/2b1P3/2NQ1N2/PPP2PPP/R3R1K1 b - - 0 1',
+    // Simagin - Polugaevsky, 1961. Black to move. Verified against book diagram (ex-006).
+    // White: Kg1 Qe5 Rd1 Rf1 Bb1 Bb2 Nd4, pawns a2 b4 e3 f2 g2 h2.
+    // Black: Kg8 Qe8 Rc8 Rf8 Bb7 Be7 Nd6, pawns a7 b6 e6 f7 g6 h7.
+    // Threat: Qg7+ Kxg7 Nf5+ Kg8 Nh6# (Bb2 covers the long diagonal). Nc4 forks Qe5+Bb2.
+    fen: '2r1qrk1/pb2bp1p/1p1np1p1/4Q3/1P1N4/4P3/PB3PPP/1B1R1RK1 b - - 0 1',
     toMove: 'black',
     title: {
       en: 'The Long Diagonal',
@@ -229,8 +235,10 @@ export const exercises = [
 
   {
     id: 7,
-    // Engels - Maroczy, 1936. White to move. Best-effort — needs visual verification from PDF p.30
-    fen: '2n1r1k1/pp3ppp/3P4/8/8/8/1q3PPP/1R1QR1K1 w - - 0 1',
+    // Engels - Maroczy, 1936. White to move. Verified against book diagram (ex-007).
+    // White: Kg1 Qg4 Rb1 Rf1 Bg3, pawns d6 f2 g2 h2 (Qg4 hits c8 via the g4-c8 diagonal).
+    // Black: Kg8 Qc2 Rc8 Nb2 Nb6, pawns a6 b7 e5 f7 g6 h6 (Qc2 guards Rc8 down the c-file).
+    fen: '2r3k1/1p3p2/pn1P2pp/4p3/6Q1/6B1/1nq2PPP/1R3RK1 w - - 0 1',
     toMove: 'white',
     title: {
       en: 'Two Are Too Many',

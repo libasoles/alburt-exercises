@@ -175,11 +175,44 @@ Ejemplo de árbol codificado:
 | # | Título | FEN | Confianza | Fuente |
 |---|---|---|---|---|
 | 1 | The Classic Deflection | `3r2k1/p4ppp/1q6/8/8/2R1P3/P3QPPP/6K1 b` | **Alta (verificado)** | Diagrama real + Bernstein-Capablanca 1914 |
-| 2 | Go for the Pawn Ending | TBD | Baja | Lectura visual |
-| 3 | Seize the File & Penetrate | TBD | Baja | Seirawan-Rivas 1980 + lectura |
-| 4 | Dark Square Struggle | TBD | Baja | Klovan-Ruban 1986 + lectura |
-| 5 | Absolutely Pinning & Winning | TBD | Baja | Lectura visual |
-| 6 | The Long Diagonal | TBD | Baja | Simagin-Polugaevsky 1961 |
-| 7 | Two Are Too Many | TBD | Baja | Engels-Maroczy 1936 + deducción |
+| 2 | Go for the Pawn Ending | `8/1p2kp1p/p3pn2/2r5/8/P1N5/1PP3PP/5RK1 w` | **Alta (verificado)** | Diagrama real (ex-002) + solución |
+| 3 | Seize the File & Penetrate | `1n1q1rk1/Nb2ppbp/pp4p1/3p4/3Pn3/BP1BPN2/P3QPPP/2R3K1 w` | **Alta (verificado)** | Diagrama real + Seirawan-Rivas 1980 |
+| 4 | Dark Square Struggle | `r2br1k1/2q2p1p/pp2p1bP/8/P2R4/8/1PP1BQP1/5R1K w` | **Alta (verificado)** | Diagrama real + Klovan-Ruban 1986 |
+| 5 | Absolutely Pinning & Winning | `8/4kp2/3b2r1/8/1B2P3/3R4/4K3/8 w` | **Alta (verificado)** | Diagrama real (ex-005) + solución |
+| 6 | The Long Diagonal | `2r1qrk1/pb2bp1p/1p1np1p1/4Q3/1P1N4/4P3/PB3PPP/1B1R1RK1 b` | **Alta (verificado)** | Diagrama real + Simagin-Polugaevsky 1961 |
+| 7 | Two Are Too Many | `2r3k1/1p3p2/pn1P2pp/4p3/6Q1/6B1/1nq2PPP/1R3RK1 w` | **Alta (verificado)** | Diagrama real + Engels-Maroczy 1936 |
 
-Los FENs se poblaron durante la implementación inicial y deben verificarse contra el PDF.
+Los 7 FENs fueron re-extraídos y verificados el 2026-07-03 leyendo los diagramas
+reales del PDF y validando cada línea de solución con chess.js.
+
+## ⚠️ CRÍTICO: las imágenes embebidas están VOLTEADAS verticalmente
+
+`pdfimages` extrae los diagramas **espejados de arriba-abajo** respecto de cómo
+se ven en la página (el PDF los coloca con una matriz de transformación con flip).
+Antes de leer cualquier diagrama hay que aplicar `-flip`:
+
+```bash
+pdfimages -f 22 -l 34 -png "<PDF>" ex        # ex-001 = ejercicio 1, ex-002 = 2, ...
+magick ex-00N.png -crop 180x178+1+1 +repage -flip -filter Lanczos -resize 520 fN.png
+```
+
+El borde negro del tablero está en x=0/181, y=0/179 → interior = crop `180x178+1+1`.
+Cada casilla ≈ 65px (archivo) × 64.25px (fila) en la imagen de 520 px.
+
+## Método de lectura que funcionó (2026-07-03)
+
+1. **Flip + upscale** el diagrama (arriba). Verificar la orientación contra el
+   ejercicio 1 conocido antes de confiar en el resto.
+2. **Muestreo de brillo por casilla** (crop 20×20 centrado, mean·255): detecta de
+   forma fiable las **piezas NEGRAS** (sólidas, ~30–90) vs casillas vacías
+   (clara ~254, oscura ~185–200). **NO distingue piezas blancas** (contorno hueco):
+   sobre casilla oscura una pieza blanca lee ~150–200, casi como vacío.
+3. Para las **piezas blancas** y los tipos de pieza, **leer visualmente** con
+   `Read` sobre recortes por cuadrante o por rank (tira horizontal de 64px).
+   Superponer una grilla roja alineada al tablero ayuda a fijar el archivo.
+4. **Reconciliar siempre con la línea de solución** y **validar con chess.js**
+   (cargar FEN + jugar toda la línea, incluidos los mates). Un fallo revela una
+   pieza mal leída (p. ej. ej. 4: el peón blanco h6, no un alfil negro; ej. 3:
+   Bd3 alfil de casillas claras, no e3).
+5. Cuidado con confusiones de 1 archivo al leer ranks completos: usar recortes
+   por cuadrante cuando la posición es densa.
