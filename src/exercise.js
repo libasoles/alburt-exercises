@@ -7,7 +7,8 @@ import { Chess } from 'chess.js'
 import { exercises } from './exercises/data.js'
 import { evaluateMove } from './exercises/evaluateMove.js'
 import { formatSolutionHtml } from './exercises/formatSolution.js'
-import { getLang, applyI18n, setupLangToggle, t } from './i18n.js'
+import { getLang, applyI18n, t } from './i18n.js'
+import { getTheme, applyBoardTheme, setupSettingsMenu } from './settings.js'
 
 // ── Routing ──────────────────────────────────────────────────────────────────
 
@@ -52,6 +53,11 @@ function updateCgDests() {
       dests: toDests(chess),
     },
   })
+}
+
+function syncBoardTheme(theme = getTheme()) {
+  applyBoardTheme(theme)
+  if (cg) cg.redrawAll()
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -205,9 +211,24 @@ function resetBoard() {
     check: false,
   })
 
-  // Hide solution panel
-  const panel = document.getElementById('solution-panel')
-  if (panel && !panel.hidden) toggleSolution(false)
+  // Hide hint and solution panels
+  const hintPanel = document.getElementById('hint-panel')
+  if (hintPanel && !hintPanel.hidden) toggleHint(false)
+  const solutionPanel = document.getElementById('solution-panel')
+  if (solutionPanel && !solutionPanel.hidden) toggleSolution(false)
+}
+
+// ── Hint panel ────────────────────────────────────────────────────────────────
+
+let hintOpen = false
+
+function toggleHint(forceOpen) {
+  const panel = document.getElementById('hint-panel')
+  const btn = document.getElementById('hint-btn')
+  hintOpen = forceOpen !== undefined ? forceOpen : !hintOpen
+  panel.hidden = !hintOpen
+  btn.textContent = hintOpen ? t('hideHint') : t('showHint')
+  btn.dataset.i18n = hintOpen ? 'hideHint' : 'showHint'
 }
 
 // ── Solution panel ────────────────────────────────────────────────────────────
@@ -234,24 +255,28 @@ function renderExercise(lang) {
   document.getElementById('exercise-title').textContent = exercise.title[lang]
 
   const toMoveKey = exercise.toMove === 'white' ? 'toMoveWhite' : 'toMoveBlack'
-  document.getElementById('to-move-label').textContent = t(toMoveKey)
+  const toMoveLabel = document.getElementById('to-move-label')
+  toMoveLabel.textContent = t(toMoveKey)
+  toMoveLabel.className = `to-move-label exercise-link-badge ${exercise.toMove}`
 
   const gameEl = document.getElementById('game-ref')
   if (exercise.game) {
-    gameEl.textContent = `${lang === 'es' ? 'Partida' : 'Game'}: ${exercise.game}`
+    gameEl.textContent = exercise.game
     gameEl.hidden = false
   } else {
     gameEl.hidden = true
   }
 
-  // Solution panel content
+  // Hint panel content and button visibility
   const hintEl = document.getElementById('hint-text')
+  const hintBtn = document.getElementById('hint-btn')
   if (exercise.hint[lang]) {
-    hintEl.innerHTML = `<strong>${lang === 'es' ? 'Pista' : 'Hint'}:</strong> ${exercise.hint[lang]}`
-    hintEl.hidden = false
+    hintEl.textContent = exercise.hint[lang]
+    hintBtn.hidden = false
   } else {
-    hintEl.hidden = true
+    hintBtn.hidden = true
   }
+  hintBtn.textContent = hintOpen ? t('hideHint') : t('showHint')
 
   document.getElementById('solution-text').innerHTML = formatSolutionHtml(exercise.solution[lang])
 
@@ -283,12 +308,18 @@ const lang = getLang()
 applyI18n(lang)
 renderExercise(lang)
 initBoard()
+syncBoardTheme()
 setupNav()
 
 document.getElementById('reset-btn').addEventListener('click', resetBoard)
+document.getElementById('hint-btn').addEventListener('click', () => toggleHint())
 document.getElementById('solution-btn').addEventListener('click', () => toggleSolution())
 
-setupLangToggle(newLang => {
-  applyI18n(newLang)
-  renderExercise(newLang)
-})
+setupSettingsMenu(
+  newLang => {
+    renderExercise(newLang)
+  },
+  newTheme => {
+    syncBoardTheme(newTheme)
+  },
+)

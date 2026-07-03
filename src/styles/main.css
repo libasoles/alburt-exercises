@@ -7,14 +7,25 @@
 }
 
 :root {
-  --bg: #1a1a2e;
-  --bg-surface: #16213e;
-  --bg-card: #0f3460;
-  --accent: #e94560;
-  --accent-muted: #c73652;
-  --text: #e0e0e0;
-  --text-muted: #9090b0;
-  --border: #2a2a4a;
+  /* Calcite palette */
+  --color-silver:  #DDDCDB;
+  --color-orange:  #FD7B41;
+  --color-peach:   #EDBF9B;
+  --color-charcoal:#3C4044;
+
+  /* Semantic tokens */
+  --bg:            var(--color-silver);
+  --bg-surface:    #f5f4f3;
+  --bg-card:       #ece9e6;
+  --accent:        var(--color-orange);
+  --accent-muted:  #e06530;
+  --accent-warm:   var(--color-peach);
+  --text:          var(--color-charcoal);
+  --text-muted:    #6b7278;
+  --border:        #c4c2c0;
+  --overlay:       rgba(0, 0, 0, 0.05);
+  --overlay-border:rgba(0, 0, 0, 0.08);
+
   --board-size: min(480px, 90vw);
   --radius: 8px;
 }
@@ -29,6 +40,19 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100dvh;
   line-height: 1.6;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/images/chess-doodles-transparent.png');
+  background-repeat: repeat;
+  background-size: 460px auto;
+  opacity: 0.2;
+  pointer-events: none;
+  z-index: 0;
 }
 
 a {
@@ -79,22 +103,191 @@ a {
   gap: 12px;
 }
 
-.lang-btn {
-  background: transparent;
+/* ── Settings ─────────────────────────────────────────────────────────────── */
+
+.settings-wrap {
+  position: relative;
+}
+
+.settings-btn {
+  background: var(--bg-surface);
   color: var(--text);
-  border: 1px solid var(--border);
-  padding: 6px 14px;
-  border-radius: var(--radius);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
   cursor: pointer;
-  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, transform 0.3s;
+}
+
+.settings-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+}
+
+.settings-btn:hover {
+  background: var(--bg-card);
+  transform: rotate(45deg);
+}
+
+.settings-btn[aria-expanded="true"] {
+  background: var(--bg-card);
+  transform: rotate(90deg);
+}
+
+.settings-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  min-width: 170px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.14);
+}
+
+.settings-section-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.settings-opts {
+  display: flex;
+  gap: 6px;
+}
+
+.settings-opt {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text);
+  font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
 }
 
-.lang-btn:hover {
+.settings-opt:hover {
   background: var(--bg-card);
   border-color: var(--accent);
+}
+
+.settings-opt.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ── Board themes ─────────────────────────────────────────────────────────── */
+
+#board-wrap.theme-3d {
+  border-radius: 10px;
+  overflow: visible;
+  box-shadow:
+    0 10px 28px rgba(52, 31, 11, 0.24),
+    0 0 0 1px rgba(121, 75, 32, 0.35);
+}
+
+#board-wrap.theme-3d .cg-wrap,
+#board-wrap.theme-3d cg-board {
+  border-radius: 10px;
+  overflow: visible;
+  background-color: #c08a53;
+  background-image: url('/images/staunton/wood.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+#board-wrap.theme-3d piece {
+  overflow: visible;
+  background-image: none !important;
+  filter: none;
+}
+
+#board-wrap.theme-3d piece.white {
+  --piece-shadow: drop-shadow(0 10px 12px rgba(31, 18, 9, 0.2));
+}
+
+#board-wrap.theme-3d piece.black {
+  --piece-shadow: drop-shadow(0 10px 12px rgba(12, 8, 4, 0.28));
+}
+
+#board-wrap.theme-3d piece::before {
+  content: '';
+  position: absolute;
+  left: -22%;
+  top: -26%;
+  width: 144%;
+  height: 172%;
+  background-image: var(--piece-image);
+  background-size: contain;
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  filter: var(--piece-shadow);
+  pointer-events: none;
+}
+
+#board-wrap.theme-3d .cg-wrap piece.white.king {
+  --piece-image: url('/images/staunton/White-King.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.white.queen {
+  --piece-image: url('/images/staunton/White-Queen.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.white.rook {
+  --piece-image: url('/images/staunton/White-Rook.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.white.bishop {
+  --piece-image: url('/images/staunton/White-Bishop.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.white.knight {
+  --piece-image: url('/images/staunton/White-Knight.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.white.pawn {
+  --piece-image: url('/images/staunton/White-Pawn.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.black.king {
+  --piece-image: url('/images/staunton/Black-King.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.black.queen {
+  --piece-image: url('/images/staunton/Black-Queen.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.black.rook {
+  --piece-image: url('/images/staunton/Black-Rook.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.black.bishop {
+  --piece-image: url('/images/staunton/Black-Bishop.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.black.knight {
+  --piece-image: url('/images/staunton/Black-Knight.png');
+}
+
+#board-wrap.theme-3d .cg-wrap piece.black.pawn {
+  --piece-image: url('/images/staunton/Black-Pawn.png');
 }
 
 /* ── Index page ──────────────────────────────────────────────────────────── */
@@ -103,6 +296,8 @@ a {
   max-width: 720px;
   margin: 0 auto;
   padding: 40px 24px 80px;
+  position: relative;
+  z-index: 1;
 }
 
 .index-main h1 {
@@ -168,6 +363,9 @@ a {
 }
 
 .exercise-link-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -178,14 +376,14 @@ a {
 }
 
 .exercise-link-badge.white {
-  background: #f0f0f0;
-  color: #1a1a2e;
+  background: #fff;
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .exercise-link-badge.black {
-  background: #333;
+  background: var(--color-charcoal);
   color: #f0f0f0;
-  border: 1px solid #555;
 }
 
 /* ── Exercise page ───────────────────────────────────────────────────────── */
@@ -207,14 +405,20 @@ a {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   width: var(--board-size);
 }
 
 .exercise-meta {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 14px;
 }
 
 .exercise-number {
@@ -233,18 +437,20 @@ a {
 }
 
 .to-move-label {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  font-weight: 500;
+  align-self: flex-start;
+  margin-top: -2px;
 }
 
 /* Board wrapper — keeps board square */
 #board-wrap {
+  position: relative;
   width: var(--board-size);
   height: var(--board-size);
   border-radius: var(--radius);
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  transition: height 0.25s ease, padding 0.25s ease, border-radius 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 #board {
@@ -260,6 +466,8 @@ a {
 
 /* Board controls */
 .board-controls {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -267,6 +475,8 @@ a {
 
 .nav-btn,
 .action-btn {
+  position: relative;
+  z-index: 1;
   flex: 1;
   padding: 10px 16px;
   border-radius: var(--radius);
@@ -313,13 +523,22 @@ a {
 }
 
 .game-ref {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  padding: 0;
   font-size: 0.85rem;
-  color: var(--text-muted);
-  font-style: italic;
+  color: var(--text);
+}
+
+.panel-buttons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
 }
 
 .solution-btn {
-  align-self: flex-start;
   background: var(--bg-surface);
   color: var(--text);
   border: 1px solid var(--border);
@@ -337,6 +556,8 @@ a {
 }
 
 .solution-panel {
+  position: relative;
+  z-index: 1;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -359,7 +580,6 @@ a {
   font-size: 0.9rem;
   color: var(--text-muted);
   line-height: 1.65;
-  font-style: italic;
 }
 
 .solution-text {
@@ -389,7 +609,7 @@ a {
   align-items: baseline;
   padding: 8px 10px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-card);
 }
 
 .solution-move-no {
@@ -404,11 +624,11 @@ a {
 }
 
 .solution-white {
-  color: #f4f0d8;
+  color: #7a5c3a;
 }
 
 .solution-black {
-  color: #7fd1ff;
+  color: var(--color-charcoal);
 }
 
 .solution-result {
@@ -421,8 +641,8 @@ a {
   flex-direction: column;
   gap: 8px;
   padding: 10px 12px;
-  border-left: 3px solid rgba(233, 69, 96, 0.45);
-  background: rgba(255, 255, 255, 0.025);
+  border-left: 3px solid rgba(253, 123, 65, 0.5);
+  background: var(--bg-card);
   border-radius: 0 6px 6px 0;
   color: var(--text-muted);
   font-size: 0.88rem;
@@ -430,7 +650,7 @@ a {
 
 .solution-comment-branch + .solution-comment-branch {
   padding-top: 8px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--overlay-border);
 }
 
 /* ── Toast ───────────────────────────────────────────────────────────────── */
@@ -462,7 +682,7 @@ a {
   width: 130px;
   height: auto;
   display: block;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
 }
 
 /* ── Mobile (≤ 639px) ────────────────────────────────────────────────────── */
@@ -509,6 +729,10 @@ a {
 
   .toast img {
     width: 100px;
+  }
+
+  .panel-buttons {
+    flex-direction: column;
   }
 
   .solution-btn {
