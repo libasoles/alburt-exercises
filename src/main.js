@@ -1,5 +1,6 @@
 import { exercises } from './exercises/data.js'
-import { getLang, applyI18n, setupLangToggle, t, strings } from './i18n.js'
+import { getLang, applyI18n } from './i18n.js'
+import { setupSettingsMenu } from './settings.js'
 
 function renderExerciseList(lang) {
   const list = document.getElementById('exercise-list')
@@ -17,13 +18,7 @@ function renderExerciseList(lang) {
     title.className = 'exercise-link-title'
     title.textContent = ex.title[lang]
 
-    const badge = document.createElement('span')
-    badge.className = `exercise-link-badge ${ex.toMove}`
-    badge.textContent =
-      ex.toMove === 'white' ? strings[lang].exerciseLinkWhite : strings[lang].exerciseLinkBlack
-
     link.appendChild(title)
-    link.appendChild(badge)
     li.appendChild(link)
     list.appendChild(li)
   })
@@ -34,7 +29,6 @@ const lang = getLang()
 applyI18n(lang)
 renderExerciseList(lang)
 
-setupLangToggle(newLang => {
-  applyI18n(newLang)
+setupSettingsMenu(newLang => {
   renderExerciseList(newLang)
 })

@@ -1,6 +1,8 @@
 /* ── Reset & base ─────────────────────────────────────────────────────────── */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -8,23 +10,23 @@
 
 :root {
   /* Calcite palette */
-  --color-silver:  #DDDCDB;
-  --color-orange:  #FD7B41;
-  --color-peach:   #EDBF9B;
-  --color-charcoal:#3C4044;
+  --color-silver: #dddcdb;
+  --color-orange: #fd7b41;
+  --color-peach: #edbf9b;
+  --color-charcoal: #3c4044;
 
   /* Semantic tokens */
-  --bg:            var(--color-silver);
-  --bg-surface:    #f5f4f3;
-  --bg-card:       #ece9e6;
-  --accent:        var(--color-orange);
-  --accent-muted:  #e06530;
-  --accent-warm:   var(--color-peach);
-  --text:          var(--color-charcoal);
-  --text-muted:    #6b7278;
-  --border:        #c4c2c0;
-  --overlay:       rgba(0, 0, 0, 0.05);
-  --overlay-border:rgba(0, 0, 0, 0.08);
+  --bg: var(--color-silver);
+  --bg-surface: #f5f4f3;
+  --bg-card: #ece9e6;
+  --accent: var(--color-orange);
+  --accent-muted: #e06530;
+  --accent-warm: var(--color-peach);
+  --text: var(--color-charcoal);
+  --text-muted: #6b7278;
+  --border: #c4c2c0;
+  --overlay: rgba(0, 0, 0, 0.05);
+  --overlay-border: rgba(0, 0, 0, 0.08);
 
   --board-size: min(480px, 90vw);
   --radius: 8px;
@@ -37,17 +39,18 @@ html {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   min-height: 100dvh;
   line-height: 1.6;
   position: relative;
 }
 
 body::before {
-  content: '';
+  content: "";
   position: fixed;
   inset: 0;
-  background-image: url('/images/chess-doodles-transparent.png');
+  background-image: url("/images/chess-doodles-transparent.png");
   background-repeat: repeat;
   background-size: 460px auto;
   opacity: 0.2;
@@ -120,12 +123,14 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.15s, transform 0.3s;
+  transition:
+    background 0.15s,
+    transform 0.3s;
 }
 
 .settings-icon {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   display: block;
 }
 
@@ -179,7 +184,9 @@ a {
   font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .settings-opt:hover {
@@ -208,7 +215,7 @@ a {
   border-radius: 10px;
   overflow: visible;
   background-color: #c08a53;
-  background-image: url('/images/staunton/wood.jpg');
+  background-image: url("/images/staunton/wood.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -228,7 +235,7 @@ a {
 }
 
 #board-wrap.theme-3d piece::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -22%;
   top: -26%;
@@ -243,51 +250,51 @@ a {
 }
 
 #board-wrap.theme-3d .cg-wrap piece.white.king {
-  --piece-image: url('/images/staunton/White-King.png');
+  --piece-image: url("/images/staunton/White-King.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.white.queen {
-  --piece-image: url('/images/staunton/White-Queen.png');
+  --piece-image: url("/images/staunton/White-Queen.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.white.rook {
-  --piece-image: url('/images/staunton/White-Rook.png');
+  --piece-image: url("/images/staunton/White-Rook.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.white.bishop {
-  --piece-image: url('/images/staunton/White-Bishop.png');
+  --piece-image: url("/images/staunton/White-Bishop.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.white.knight {
-  --piece-image: url('/images/staunton/White-Knight.png');
+  --piece-image: url("/images/staunton/White-Knight.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.white.pawn {
-  --piece-image: url('/images/staunton/White-Pawn.png');
+  --piece-image: url("/images/staunton/White-Pawn.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.black.king {
-  --piece-image: url('/images/staunton/Black-King.png');
+  --piece-image: url("/images/staunton/Black-King.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.black.queen {
-  --piece-image: url('/images/staunton/Black-Queen.png');
+  --piece-image: url("/images/staunton/Black-Queen.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.black.rook {
-  --piece-image: url('/images/staunton/Black-Rook.png');
+  --piece-image: url("/images/staunton/Black-Rook.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.black.bishop {
-  --piece-image: url('/images/staunton/Black-Bishop.png');
+  --piece-image: url("/images/staunton/Black-Bishop.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.black.knight {
-  --piece-image: url('/images/staunton/Black-Knight.png');
+  --piece-image: url("/images/staunton/Black-Knight.png");
 }
 
 #board-wrap.theme-3d .cg-wrap piece.black.pawn {
-  --piece-image: url('/images/staunton/Black-Pawn.png');
+  --piece-image: url("/images/staunton/Black-Pawn.png");
 }
 
 /* ── Index page ──────────────────────────────────────────────────────────── */
@@ -301,7 +308,7 @@ a {
 }
 
 .index-main h1 {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.4rem, 3vw, 2rem);
   margin-bottom: 24px;
   color: var(--text);
@@ -339,7 +346,9 @@ a {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px 20px;
-  transition: border-color 0.15s, background 0.15s;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
 }
 
 .exercise-link::before {
@@ -415,7 +424,7 @@ a {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: var(--bg);
+  background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 12px 14px;
@@ -430,7 +439,7 @@ a {
 }
 
 .exercise-title {
-  font-family: Georgia, 'Times New Roman', serif;
+  font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   color: var(--text);
   line-height: 1.3;
@@ -449,7 +458,10 @@ a {
   border-radius: var(--radius);
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
-  transition: height 0.25s ease, padding 0.25s ease, border-radius 0.25s ease,
+  transition:
+    height 0.25s ease,
+    padding 0.25s ease,
+    border-radius 0.25s ease,
     box-shadow 0.25s ease;
 }
 
@@ -483,7 +495,9 @@ a {
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, opacity 0.15s;
+  transition:
+    background 0.15s,
+    opacity 0.15s;
   border: none;
 }
 
@@ -529,6 +543,7 @@ a {
   padding: 0;
   font-size: 0.85rem;
   color: var(--text);
+  font-weight: 600;
 }
 
 .panel-buttons {
@@ -547,7 +562,9 @@ a {
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
 }
 
 .solution-btn:hover {
@@ -586,7 +603,7 @@ a {
   font-size: 0.9rem;
   color: var(--text);
   line-height: 1.7;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -669,13 +686,17 @@ a {
 .toast.toast-visible {
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: opacity 0.22s ease-in, transform 0.22s ease-in;
+  transition:
+    opacity 0.22s ease-in,
+    transform 0.22s ease-in;
 }
 
 .toast.toast-hiding {
   opacity: 0;
   transform: translateY(-10px) scale(1);
-  transition: opacity 0.18s ease-out, transform 0.18s ease-out;
+  transition:
+    opacity 0.18s ease-out,
+    transform 0.18s ease-out;
 }
 
 .toast img {
