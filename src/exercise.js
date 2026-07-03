@@ -384,6 +384,28 @@ function toggleSolution(forceOpen) {
   btn.dataset.i18n = solutionOpen ? 'hideSolution' : 'showSolution'
 }
 
+const mobilePanelsQuery = window.matchMedia('(max-width: 639px)')
+
+function syncPanelLayout() {
+  const infoColumn = document.querySelector('.info-column')
+  const panelButtons = document.getElementById('panel-buttons')
+  const hintBtn = document.getElementById('hint-btn')
+  const hintPanel = document.getElementById('hint-panel')
+  const solutionBtn = document.getElementById('solution-btn')
+  const solutionPanel = document.getElementById('solution-panel')
+
+  if (!infoColumn || !panelButtons || !hintBtn || !hintPanel || !solutionBtn || !solutionPanel) return
+
+  if (mobilePanelsQuery.matches) {
+    hintBtn.insertAdjacentElement('afterend', hintPanel)
+    solutionBtn.insertAdjacentElement('afterend', solutionPanel)
+    return
+  }
+
+  panelButtons.insertAdjacentElement('afterend', hintPanel)
+  hintPanel.insertAdjacentElement('afterend', solutionPanel)
+}
+
 // ── Render exercise content ───────────────────────────────────────────────────
 
 function renderExercise(lang) {
@@ -465,11 +487,13 @@ syncBoardTheme()
 setupNav()
 setupBoardControls()
 setupFenCopy()
+syncPanelLayout()
 updateResetButtonState()
 
 document.getElementById('reset-btn').addEventListener('click', resetBoard)
 document.getElementById('hint-btn').addEventListener('click', () => toggleHint())
 document.getElementById('solution-btn').addEventListener('click', () => toggleSolution())
+mobilePanelsQuery.addEventListener('change', syncPanelLayout)
 
 setupSettingsMenu(
   newLang => {

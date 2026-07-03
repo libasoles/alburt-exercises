@@ -988,11 +988,16 @@ settings-menu {
 
   .panel-buttons {
     flex-direction: column;
+    gap: 12px;
   }
 
   .solution-btn {
     width: 100%;
     text-align: center;
+  }
+
+  .panel-buttons .solution-panel {
+    width: 100%;
   }
 
   .fen-details {
