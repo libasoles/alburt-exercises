@@ -975,6 +975,7 @@ settings-menu {
   gap: 0;
   max-width: 640px;
   text-align: center;
+  opacity: 0;
 }
 
 .completion-overlay-title {
@@ -995,9 +996,7 @@ settings-menu {
   line-height: 1;
   white-space: pre;
   transform-origin: center center;
-  transform:
-    translate(calc(-50% + var(--char-x)), var(--char-curve-y))
-    scale(1);
+  transform: translate(calc(-50% + var(--char-x)), var(--char-curve-y)) scale(1);
   opacity: 1;
 }
 
@@ -1008,7 +1007,8 @@ settings-menu {
 }
 
 .completion-overlay-visible .completion-overlay-card {
-  animation: completion-bounce-in 0.9s cubic-bezier(0.22, 1.2, 0.36, 1);
+  opacity: 1;
+  animation: completion-card-fade-in 0.18s linear;
 }
 
 .completion-overlay-visible .completion-overlay-mascot {
@@ -1016,12 +1016,8 @@ settings-menu {
 }
 
 .completion-overlay-visible .completion-overlay-title {
-  transform: translateY(-26px);
-  animation: completion-float 2.2s ease-in-out 0.75s infinite;
-}
-
-.completion-overlay-visible .completion-overlay-title-char {
-  animation: completion-title-pop 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(-26px) scale(1);
+  animation: completion-title-float-bounce 2.2s linear infinite;
 }
 
 .completion-overlay-subtitle {
@@ -1032,21 +1028,9 @@ settings-menu {
   text-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
 }
 
-@keyframes completion-bounce-in {
+@keyframes completion-card-fade-in {
   0% {
-    transform: translateY(32px) scale(0.86);
-  }
-
-  55% {
-    transform: translateY(-14px) scale(1.04);
-  }
-
-  75% {
-    transform: translateY(6px) scale(0.98);
-  }
-
-  100% {
-    transform: translateY(0) scale(1);
+    opacity: 0;
   }
 }
 
@@ -1061,29 +1045,25 @@ settings-menu {
   }
 }
 
-@keyframes completion-title-pop {
-  0% {
-    transform:
-      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
-      scale(1);
+@keyframes completion-title-float-bounce {
+  10% {
+    transform: translateY(-26px) scale(0.96);
   }
 
-  45% {
-    transform:
-      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
-      scale(1.18);
+  22% {
+    transform: translateY(-36px) scale(1.08);
   }
 
-  72% {
-    transform:
-      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
-      scale(0.97);
+  50% {
+    transform: translateY(-31px) scale(1.1);
+  }
+
+  70% {
+    transform: translateY(-36px) scale(1.08);
   }
 
   100% {
-    transform:
-      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
-      scale(1);
+    transform: translateY(-26px) scale(1);
   }
 }
 
