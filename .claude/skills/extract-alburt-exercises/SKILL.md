@@ -166,13 +166,15 @@ Ejemplo de árbol codificado:
 
 | Fecha | Ejercicio | Error | Corrección |
 |---|---|---|---|
-| — | — | — | — |
+| 2026-07-03 | 1 | FEN inventado desde el texto de la solución (Kh8, Re8, peones fantasma d6/e4, dama ya en a2, Tc1). No coincidía con el diagrama y salía espejado. | Leído del diagrama real: `3r2k1/p4ppp/1q6/8/8/2R1P3/P3QPPP/6K1 b`. Blancas Kg1 Qe2 Rc3 Pa2 Pe3 Pf2 Pg2 Ph2; negras Kg8 Rd8 Qb6 Pa7 Pf7 Pg7 Ph7. Validado con chess.js (línea principal + mate Rxe1#). |
+
+**Lección**: no fabricar FEN desde el texto de la solución. Recortar el diagrama del PDF/imagen, muestrear brillo por casilla, y leer rank por rank con la grilla de archivos superpuesta.
 
 ## FENs extraídos (primeros 7 ejercicios)
 
 | # | Título | FEN | Confianza | Fuente |
 |---|---|---|---|---|
-| 1 | The Classic Deflection | TBD | Baja | Bernstein-Capablanca 1914 + deducción |
+| 1 | The Classic Deflection | `3r2k1/p4ppp/1q6/8/8/2R1P3/P3QPPP/6K1 b` | **Alta (verificado)** | Diagrama real + Bernstein-Capablanca 1914 |
 | 2 | Go for the Pawn Ending | TBD | Baja | Lectura visual |
 | 3 | Seize the File & Penetrate | TBD | Baja | Seirawan-Rivas 1980 + lectura |
 | 4 | Dark Square Struggle | TBD | Baja | Klovan-Ruban 1986 + lectura |

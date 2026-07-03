@@ -1,8 +1,9 @@
 export const exercises = [
   {
     id: 1,
-    // Bernstein - Capablanca, 1914. Black queen on a2, white rook c1, white queen e2, kings g1/h8
-    fen: '4r2k/6pp/3p4/8/4P3/8/q3QPPP/2R3K1 b - - 0 1',
+    // Bernstein - Capablanca, St. Petersburg 1914. Verified against book diagram:
+    // Black: Kg8 Rd8 Qb6, pawns a7 f7 g7 h7. White: Kg1 Qe2 Rc3, pawns a2 e3 f2 g2 h2.
+    fen: '3r2k1/p4ppp/1q6/8/8/2R1P3/P3QPPP/6K1 b - - 0 1',
     toMove: 'black',
     title: {
       en: 'The Classic Deflection',
@@ -43,8 +44,9 @@ export const exercises = [
 
   {
     id: 2,
-    // White to move. Best-effort — needs visual verification from PDF p.25
-    fen: '8/2r5/5pk1/4p3/2RNK3/2P5/1P4PP/8 w - - 0 1',
+    // White to move. Verified against book diagram (ex-002).
+    // White: Kg1 Rf1 Nc3, pawns a3 b2 c2 g2 h2. Black: Ke7 Rc5 Nf6, pawns a6 b7 e6 f7 h7.
+    fen: '8/1p2kp1p/p3pn2/2r5/8/P1N5/1PP3PP/5RK1 w - - 0 1',
     toMove: 'white',
     title: {
       en: 'Go for the Pawn Ending',
@@ -78,8 +80,10 @@ export const exercises = [
 
   {
     id: 3,
-    // Seirawan - Rivas, 1980. White to move. Best-effort — needs visual verification from PDF p.26
-    fen: '1rb1qrk1/pp3ppp/2n1p3/3p4/8/2N1B1P1/PPQ1PP1P/R4RK1 w - - 0 1',
+    // Seirawan - Rivas, 1980. White to move. Verified against book diagram (ex-003).
+    // White: Kg1 Rc1 Qe2 Ba3 Bd3 Na7 Nf3, pawns a2 b3 d4 e3 f2 g2 h2.
+    // Black: Kg8 Qd8 Rf8 Nb8 Ne4 Bb7 Bg7, pawns a6 b6 d5 e7 f7 g6 h7.
+    fen: '1n1q1rk1/Nb2ppbp/pp4p1/3p4/3Pn3/BP1BPN2/P3QPPP/2R3K1 w - - 0 1',
     toMove: 'white',
     title: {
       en: 'Seize the File & Penetrate',

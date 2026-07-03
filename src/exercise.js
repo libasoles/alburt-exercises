@@ -30,6 +30,7 @@ let cg = null
 let currentNode = exercise.moves
 let inFreePlay = false
 let bookResponsePending = false
+let boardOrientation = exercise.toMove
 
 // ── Chessground helpers ───────────────────────────────────────────────────────
 
@@ -59,6 +60,19 @@ function updateCgDests() {
 function syncBoardTheme(theme = getTheme()) {
   applyBoardTheme(theme)
   if (cg) cg.redrawAll()
+}
+
+function getOppositeOrientation(color) {
+  return color === 'white' ? 'black' : 'white'
+}
+
+function setRotateBoardButtonLabels(lang = getLang()) {
+  const rotateBtn = document.getElementById('rotate-board-btn')
+  if (!rotateBtn) return
+
+  const label = lang === 'es' ? 'Rotar tablero' : 'Rotate board'
+  rotateBtn.setAttribute('aria-label', label)
+  rotateBtn.title = label
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -174,7 +188,7 @@ function initBoard() {
 
   cg = Chessground(boardEl, {
     fen: exercise.fen,
-    orientation: exercise.toMove,
+    orientation: boardOrientation,
     turnColor: exercise.toMove,
     movable: {
       color: 'both',
@@ -201,7 +215,7 @@ function resetBoard() {
 
   cg.set({
     fen: exercise.fen,
-    orientation: exercise.toMove,
+    orientation: boardOrientation,
     turnColor: exercise.toMove,
     lastMove: undefined,
     movable: {
@@ -261,12 +275,8 @@ function renderExercise(lang) {
   toMoveLabel.className = `to-move-label exercise-link-badge ${exercise.toMove}`
 
   const gameEl = document.getElementById('game-ref')
-  if (exercise.game) {
-    gameEl.textContent = exercise.game
-    gameEl.hidden = false
-  } else {
-    gameEl.hidden = true
-  }
+  gameEl.textContent = exercise.game ?? ''
+  setRotateBoardButtonLabels(lang)
 
   // Hint panel content and button visibility
   const hintEl = document.getElementById('hint-text')
@@ -303,6 +313,14 @@ function setupNav() {
   })
 }
 
+function setupBoardControls() {
+  const rotateBtn = document.getElementById('rotate-board-btn')
+  rotateBtn.addEventListener('click', () => {
+    boardOrientation = getOppositeOrientation(boardOrientation)
+    cg.set({ orientation: boardOrientation })
+  })
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 const lang = getLang()
@@ -311,6 +329,7 @@ renderExercise(lang)
 initBoard()
 syncBoardTheme()
 setupNav()
+setupBoardControls()
 
 document.getElementById('reset-btn').addEventListener('click', resetBoard)
 document.getElementById('hint-btn').addEventListener('click', () => toggleHint())

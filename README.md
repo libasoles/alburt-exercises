@@ -2,7 +2,13 @@
 
 > Este proyecto fue codeado en forma black box con IA como proyecto personal. No es un repositorio pensado para evaluación de recruiters ni como muestra representativa de ingeniería profesional.
 
-Aplicación web estática para practicar ejercicios tácticos de ajedrez basados en el *Chess Training Pocket Book* de Lev Alburt. El proyecto ofrece una portada con los ejercicios disponibles y una vista interactiva para resolver cada posición directamente sobre el tablero.
+Aplicación web estática para practicar ejercicios tácticos de ajedrez basados en el _Chess Training Pocket Book_ de Lev Alburt. El proyecto ofrece una portada con los ejercicios disponibles y una vista interactiva para resolver cada posición directamente sobre el tablero.
+
+## Demo
+
+[![Abrir demo de TucuChess](./public/images/rating-ok.png)](https://libasoles.github.io/alburt-exercises/)
+
+[Probar demo en GitHub Pages](https://libasoles.github.io/alburt-exercises/)
 
 ## Capturas
 
