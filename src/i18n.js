@@ -2,7 +2,8 @@ const LANG_KEY = "tucuchess_lang";
 
 export const strings = {
   es: {
-    indexTitle: "Ejercicios de Ajedrez — Libro de Alburt",
+    indexTitleMain: "Ejercicios de Ajedrez",
+    indexTitleSub: "Libro de Alburt",
     alburtBio:
       "Lev Alburt fue tres veces campeón de ajedrez de EE.UU. (1984, 1985 y 1990). Nació en Ucrania, emigró a Estados Unidos en 1979 y llegó a ser uno de los entrenadores más reconocidos del país. Su «Chess Training Pocket Book» reúne 300 posiciones elegidas para afinar el cálculo y la visión táctica. Acá compartimos los primeros 7 ejercicios para practicar de forma interactiva en TucuChess.",
     toMoveWhite: "Juegan las blancas",
@@ -27,7 +28,8 @@ export const strings = {
     rotateBoard: "Rotar",
   },
   en: {
-    indexTitle: "Chess Exercises — Alburt's Pocket Book",
+    indexTitleMain: "Chess Exercises",
+    indexTitleSub: "Alburt's Pocket Book",
     alburtBio:
       'GM Lev Alburt is a three-time US Chess Champion (1984, 1985, 1990). Born in Ukraine, he emigrated to the United States in 1979 and became one of the country\'s most recognized chess coaches. His "Chess Training Pocket Book" contains 300 carefully selected positions designed to sharpen calculation and tactical vision. This site presents the first 7 exercises for interactive practice by the TucuChess club.',
     toMoveWhite: "White to move",
