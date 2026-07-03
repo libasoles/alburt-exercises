@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TucuChess — Ejercicios de Alburt</title>
+  <meta name="description" content="Ejercicios interactivos de ajedrez del libro de GM Lev Alburt para el club TucuChess de Argentina." />
+  <link rel="icon" type="image/png" href="./mascot.png" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="./index.html" class="logo-link">
+      <img src="./mascot.png" alt="TucuChess" class="mascot-logo" />
+    </a>
+    <div class="header-right">
+      <button id="lang-toggle" class="lang-btn">EN</button>
+    </div>
+  </header>
+
+  <main class="index-main">
+    <h1 data-i18n="indexTitle">Ejercicios de Ajedrez — Libro de Alburt</h1>
+
+    <section class="alburt-bio">
+      <p data-i18n="alburtBio">El GM Lev Alburt fue tres veces campeón de los EE.UU. de ajedrez (1984, 1985, 1990). Nacido en Ucrania, emigró a Estados Unidos en 1979 y se convirtió en uno de los entrenadores más reconocidos del país. Su «Chess Training Pocket Book» contiene 300 posiciones cuidadosamente seleccionadas para mejorar el cálculo y la visión táctica. Este sitio presenta los primeros 7 ejercicios para la práctica interactiva del club TucuChess.</p>
+    </section>
+
+    <ol id="exercise-list" class="exercise-list"></ol>
+  </main>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

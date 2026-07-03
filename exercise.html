@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TucuChess — Ejercicio</title>
+  <link rel="icon" type="image/png" href="./mascot.png" />
+</head>
+<body>
+  <header class="site-header">
+    <a href="./index.html" class="logo-link">
+      <img src="./mascot.png" alt="TucuChess" class="mascot-logo" />
+    </a>
+    <div class="header-right">
+      <button id="lang-toggle" class="lang-btn">EN</button>
+    </div>
+  </header>
+
+  <main class="exercise-main">
+    <div class="exercise-layout">
+      <!-- Board column -->
+      <div class="board-column">
+        <div class="exercise-meta">
+          <span class="exercise-number" id="exercise-number"></span>
+          <h1 class="exercise-title" id="exercise-title"></h1>
+          <p class="to-move-label" id="to-move-label"></p>
+        </div>
+        <div id="board-wrap">
+          <div id="board"></div>
+        </div>
+        <div class="board-controls">
+          <button id="prev-btn" class="nav-btn" data-i18n="prev">Anterior</button>
+          <button id="reset-btn" class="action-btn" data-i18n="reset">Reiniciar</button>
+          <button id="next-btn" class="nav-btn" data-i18n="next">Siguiente</button>
+        </div>
+      </div>
+
+      <!-- Info column -->
+      <div class="info-column">
+        <div class="game-ref" id="game-ref"></div>
+
+        <button id="solution-btn" class="solution-btn" data-i18n="showSolution">Ver solución</button>
+
+        <div id="solution-panel" class="solution-panel" hidden>
+          <h3 data-i18n="solutionLabel">Solución</h3>
+          <p class="hint-text" id="hint-text"></p>
+          <p class="solution-text" id="solution-text"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" aria-live="polite">
+    <img id="toast-img" src="" alt="" />
+  </div>
+
+  <script type="module" src="./src/exercise.js"></script>
+</body>
+</html>
