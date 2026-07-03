@@ -23,6 +23,7 @@ if (!exId || exId < 1 || exId > exercises.length) {
 }
 
 const exercise = exercises[exId - 1]
+const isLastExercise = exId === exercises.length
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
@@ -34,6 +35,8 @@ let bookResponsePending = false
 let hasUserMoved = false
 let boardOrientation = exercise.toMove
 let rotateIconTurns = 0
+let completionConfettiTimer = null
+let completionConfetti = confetti
 
 // ── Chessground helpers ───────────────────────────────────────────────────────
 
@@ -238,10 +241,109 @@ function playBookResponse(san) {
 // ── Confetti ──────────────────────────────────────────────────────────────────
 
 function celebrateSolved() {
-  confetti({
+  completionConfetti({
     particleCount: 150,
     spread: 70,
     origin: { y: 0.6 },
+    disableForReducedMotion: true,
+  })
+}
+
+function celebrateFinalExerciseSolved() {
+  const bursts = [
+    { particleCount: 220, spread: 90, origin: { x: 0.2, y: 0.65 } },
+    { particleCount: 220, spread: 90, origin: { x: 0.8, y: 0.65 } },
+    { particleCount: 280, spread: 120, origin: { x: 0.5, y: 0.45 } },
+  ]
+
+  bursts.forEach((burst, index) => {
+    setTimeout(
+      () =>
+        completionConfetti({
+          ...burst,
+          disableForReducedMotion: true,
+        }),
+      index * 180,
+    )
+  })
+}
+
+function startCompletionConfetti() {
+  if (completionConfettiTimer !== null) return
+
+  const fire = () => {
+    completionConfetti({
+      particleCount: 110,
+      angle: 60,
+      spread: 70,
+      origin: { x: 0, y: 0.72 },
+      disableForReducedMotion: true,
+    })
+    completionConfetti({
+      particleCount: 110,
+      angle: 120,
+      spread: 70,
+      origin: { x: 1, y: 0.72 },
+      disableForReducedMotion: true,
+    })
+  }
+
+  fire()
+  completionConfettiTimer = window.setInterval(fire, 900)
+}
+
+function stopCompletionConfetti() {
+  if (completionConfettiTimer === null) return
+
+  window.clearInterval(completionConfettiTimer)
+  completionConfettiTimer = null
+}
+
+function showCompletionOverlay() {
+  const overlay = document.getElementById('completion-overlay')
+  if (!overlay) return
+
+  overlay.classList.add('completion-overlay-visible')
+  overlay.setAttribute('aria-hidden', 'false')
+  startCompletionConfetti()
+}
+
+function hideCompletionOverlay() {
+  const overlay = document.getElementById('completion-overlay')
+  if (!overlay) return
+
+  overlay.classList.remove('completion-overlay-visible')
+  overlay.setAttribute('aria-hidden', 'true')
+  stopCompletionConfetti()
+}
+
+function goToIndex() {
+  stopCompletionConfetti()
+  window.location.href = './index.html'
+}
+
+function setCurvedCompletionTitle(text) {
+  const titleEl = document.getElementById('completion-overlay-title')
+  if (!titleEl) return
+
+  const chars = [...text]
+  const center = (chars.length - 1) / 2
+  const spread = Math.min(30, Math.max(16, 340 / Math.max(chars.length - 1, 1)))
+  const maxOffset = Math.max(center, 1)
+  titleEl.setAttribute('aria-label', text)
+  titleEl.textContent = ''
+  titleEl.style.setProperty('--char-count', chars.length)
+
+  chars.forEach((char, index) => {
+    const offset = index - center
+    const curveY = -1 * (maxOffset * maxOffset - offset * offset) * 1.7
+    const span = document.createElement('span')
+    span.className = 'completion-overlay-title-char'
+    span.style.setProperty('--char-index', index)
+    span.style.setProperty('--char-x', `${offset * spread}px`)
+    span.style.setProperty('--char-curve-y', `${curveY}px`)
+    span.textContent = char === ' ' ? '\u00a0' : char
+    titleEl.appendChild(span)
   })
 }
 
@@ -292,8 +394,13 @@ function handleMove(orig, dest) {
   if (currentNode === null) {
     inFreePlay = true
     if (rating === 'best') {
-      celebrateSolved()
-      setNextButtonPulse(true)
+      if (isLastExercise) {
+        celebrateFinalExerciseSolved()
+        showCompletionOverlay()
+      } else {
+        celebrateSolved()
+        setNextButtonPulse(true)
+      }
     }
   }
 
@@ -331,6 +438,7 @@ function initBoard() {
 
 function resetBoard() {
   hideToast()
+  hideCompletionOverlay()
   bookResponsePending = false
   setResetButtonPulse(false)
   setNextButtonPulse(false)
@@ -457,6 +565,8 @@ function renderExercise(lang) {
     fenBox.title = t('fenCopyHint')
     fenBox.setAttribute('aria-label', t('fenCopyHint'))
   }
+
+  setCurvedCompletionTitle(t('finalCongratsTitle'))
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
@@ -486,6 +596,27 @@ function setupBoardControls() {
   })
 }
 
+function setupCompletionOverlay() {
+  const overlay = document.getElementById('completion-overlay')
+  if (!overlay) return
+  const confettiCanvas = document.getElementById('completion-confetti-canvas')
+
+  if (confettiCanvas instanceof HTMLCanvasElement) {
+    completionConfetti = confetti.create(confettiCanvas, {
+      resize: true,
+      useWorker: true,
+    })
+  }
+
+  overlay.addEventListener('click', goToIndex)
+  overlay.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      goToIndex()
+    }
+  })
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 const lang = getLang()
@@ -495,6 +626,7 @@ initBoard()
 syncBoardTheme()
 setupNav()
 setupBoardControls()
+setupCompletionOverlay()
 setupFenCopy()
 syncPanelLayout()
 updateResetButtonState()

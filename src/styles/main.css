@@ -928,6 +928,165 @@ settings-menu {
   transform: translate(-50%, -10px);
 }
 
+/* ── Final exercise overlay ──────────────────────────────────────────────── */
+
+.completion-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 700;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.completion-overlay-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.completion-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(circle at top, rgba(255, 239, 180, 0.35), transparent 45%),
+    rgba(12, 18, 28, 0.42);
+  backdrop-filter: blur(4px);
+}
+
+.completion-overlay-confetti {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.completion-overlay-card {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  max-width: 640px;
+  text-align: center;
+}
+
+.completion-overlay-title {
+  position: relative;
+  width: min(88vw, 520px);
+  height: 190px;
+  margin: -92px 0 -54px;
+  color: #fff7cf;
+  text-shadow: 0 8px 26px rgba(0, 0, 0, 0.32);
+}
+
+.completion-overlay-title-char {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  font-size: clamp(1.9rem, 4.4vw, 3.3rem);
+  font-weight: 900;
+  line-height: 1;
+  white-space: pre;
+  transform-origin: center center;
+  transform:
+    translate(calc(-50% + var(--char-x)), var(--char-curve-y))
+    scale(1);
+  opacity: 1;
+}
+
+.completion-overlay-mascot {
+  width: min(82vw, 420px);
+  height: auto;
+  filter: drop-shadow(0 18px 36px rgba(0, 0, 0, 0.3));
+}
+
+.completion-overlay-visible .completion-overlay-card {
+  animation: completion-bounce-in 0.9s cubic-bezier(0.22, 1.2, 0.36, 1);
+}
+
+.completion-overlay-visible .completion-overlay-mascot {
+  animation: completion-float 2.2s ease-in-out infinite;
+}
+
+.completion-overlay-visible .completion-overlay-title {
+  transform: translateY(-26px);
+  animation: completion-float 2.2s ease-in-out 0.75s infinite;
+}
+
+.completion-overlay-visible .completion-overlay-title-char {
+  animation: completion-title-pop 0.56s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.completion-overlay-subtitle {
+  margin: 46px 0 0;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+@keyframes completion-bounce-in {
+  0% {
+    transform: translateY(32px) scale(0.86);
+  }
+
+  55% {
+    transform: translateY(-14px) scale(1.04);
+  }
+
+  75% {
+    transform: translateY(6px) scale(0.98);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes completion-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes completion-title-pop {
+  0% {
+    transform:
+      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
+      scale(1);
+  }
+
+  45% {
+    transform:
+      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
+      scale(1.18);
+  }
+
+  72% {
+    transform:
+      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
+      scale(0.97);
+  }
+
+  100% {
+    transform:
+      translate(calc(-50% + var(--char-x)), var(--char-curve-y))
+      scale(1);
+  }
+}
+
 /* ── Mobile (≤ 639px) ────────────────────────────────────────────────────── */
 
 @media (max-width: 639px) {
@@ -976,6 +1135,29 @@ settings-menu {
 
   .toast img {
     width: 100px;
+  }
+
+  .completion-overlay {
+    padding: 16px;
+  }
+
+  .completion-overlay-card {
+    gap: 0;
+  }
+
+  .completion-overlay-title {
+    width: min(94vw, 420px);
+    height: 138px;
+    margin: -54px 0 -18px;
+  }
+
+  .completion-overlay-title-char {
+    bottom: 10px;
+    font-size: clamp(1.45rem, 6vw, 2.2rem);
+  }
+
+  .completion-overlay-mascot {
+    width: min(88vw, 340px);
   }
 
   .panel-buttons {

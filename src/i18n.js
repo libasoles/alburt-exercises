@@ -30,6 +30,9 @@ export const strings = {
     fenLabel: "FEN",
     fenCopyHint: "Tocá para copiar",
     fenCopied: "FEN copiado",
+    finalCongratsKicker: "TucuChess",
+    finalCongratsTitle: "Felicitaciones",
+    finalCongratsSubtitle: "Tocá para volver al indice",
   },
   en: {
     indexTitleMain: "Chess Exercises",
@@ -60,6 +63,9 @@ export const strings = {
     fenLabel: "FEN",
     fenCopyHint: "Tap to copy",
     fenCopied: "FEN copied",
+    finalCongratsKicker: "TucuChess",
+    finalCongratsTitle: "Congratulations!",
+    finalCongratsSubtitle: "Tap to return to the index",
   },
 };
 

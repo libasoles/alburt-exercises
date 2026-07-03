@@ -143,6 +143,37 @@
     <!-- Copy toast -->
     <div id="copy-toast" class="copy-toast" role="status" aria-live="polite"></div>
 
+    <div
+      id="completion-overlay"
+      class="completion-overlay"
+      role="button"
+      tabindex="0"
+      aria-hidden="true"
+    >
+      <div class="completion-overlay-backdrop"></div>
+      <canvas
+        id="completion-confetti-canvas"
+        class="completion-overlay-confetti"
+        aria-hidden="true"
+      ></canvas>
+      <div class="completion-overlay-card">
+        <h2
+          class="completion-overlay-title"
+          id="completion-overlay-title"
+          data-i18n="finalCongratsTitle"
+          aria-live="polite"
+        ></h2>
+        <img
+          src="./images/congrats.png"
+          alt="Celebration mascot"
+          class="completion-overlay-mascot"
+        />
+        <p class="completion-overlay-subtitle" id="completion-overlay-subtitle" data-i18n="finalCongratsSubtitle">
+          Hiciste click para volver al indice
+        </p>
+      </div>
+    </div>
+
     <script type="module" src="./src/exercise.js"></script>
   </body>
 </html>
