@@ -6,9 +6,15 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 
 ## Demo
 
-[![Abrir demo de TucuChess](./public/images/rating-ok.png)](https://libasoles.github.io/alburt-exercises/)
+<p align="center">
+  <a href="https://libasoles.github.io/alburt-exercises/">
+    <img src="./public/images/rating-ok.png" alt="Abrir demo de TucuChess" width="160" />
+  </a>
+</p>
 
-[Probar demo en GitHub Pages](https://libasoles.github.io/alburt-exercises/)
+<p align="center">
+  <a href="https://libasoles.github.io/alburt-exercises/"><strong><span style="font-size: 1.25rem;">Ver ejercicios</span></strong></a>
+</p>
 
 ## Capturas
 
@@ -74,7 +80,7 @@ npm test
 npm run build
 ```
 
-## Publicar en GitHub Pages
+## Publicar
 
 El repositorio queda listo para deploy automático con GitHub Actions usando [`.github/workflows/deploy-pages.yml`](/Users/guillermoperez/Projects/playground/chess/alburt-book/.github/workflows/deploy-pages.yml). El flujo:
 
@@ -82,15 +88,15 @@ El repositorio queda listo para deploy automático con GitHub Actions usando [`.
 - instala dependencias con `npm ci`
 - corre los tests
 - genera `dist/`
-- publica ese build en GitHub Pages
+- publica ese build
 
-### Activación en GitHub
+### Activación
 
 1. Subí el proyecto al repositorio de GitHub.
-2. En `Settings > Pages`, elegí `Source: GitHub Actions`.
+2. Configurá el destino de deploy para usar GitHub Actions.
 3. Hacé push a `main`.
 
-La configuración de Vite ya usa `base: './'`, así que funciona bien publicado desde el subpath del repositorio en GitHub Pages.
+La configuración de Vite ya usa `base: './'`, así que funciona bien publicado desde un subpath del repositorio.
 
 ## Estructura
 
