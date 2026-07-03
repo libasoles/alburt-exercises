@@ -4,6 +4,7 @@ import 'chessground/assets/chessground.cburnett.css'
 
 import { Chessground } from 'chessground'
 import { Chess } from 'chess.js'
+import confetti from 'canvas-confetti'
 import { exercises } from './exercises/data.js'
 import { evaluateMove } from './exercises/evaluateMove.js'
 import { formatSolutionHtml } from './exercises/formatSolution.js'
@@ -30,6 +31,7 @@ let cg = null
 let currentNode = exercise.moves
 let inFreePlay = false
 let bookResponsePending = false
+let hasUserMoved = false
 let boardOrientation = exercise.toMove
 let rotateIconTurns = 0
 
@@ -81,7 +83,13 @@ function setRotateBoardButtonLabels(lang = getLang()) {
 function updateResetButtonState() {
   const resetBtn = document.getElementById('reset-btn')
   if (!resetBtn) return
-  resetBtn.disabled = chess.history().length === 0
+  resetBtn.disabled = !hasUserMoved
+}
+
+function setResetButtonPulse(enabled) {
+  const resetBtn = document.getElementById('reset-btn')
+  if (!resetBtn) return
+  resetBtn.classList.toggle('action-btn-pulse', enabled)
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -90,6 +98,12 @@ const RATING_IMAGES = {
   best: './images/rating-best.png',
   ok: './images/rating-ok.png',
   bad: './images/rating-bad.png',
+}
+
+const TOAST_DURATION_MS = {
+  best: 1500,
+  ok: 3000,
+  bad: 4500,
 }
 
 let toastTimer = null
@@ -113,7 +127,7 @@ function showToast(rating) {
     setTimeout(() => {
       toast.classList.remove('toast-visible', 'toast-hiding')
     }, 200)
-  }, 1500)
+  }, TOAST_DURATION_MS[rating] ?? TOAST_DURATION_MS.best)
 }
 
 // ── Copy toast ──────────────────────────────────────────────────────────────
@@ -195,6 +209,16 @@ function playBookResponse(san) {
   updateResetButtonState()
 }
 
+// ── Confetti ──────────────────────────────────────────────────────────────────
+
+function celebrateSolved() {
+  confetti({
+    particleCount: 150,
+    spread: 70,
+    origin: { y: 0.6 },
+  })
+}
+
 // ── Move handler ──────────────────────────────────────────────────────────────
 
 function handleMove(orig, dest) {
@@ -226,6 +250,7 @@ function handleMove(orig, dest) {
     },
   })
 
+  hasUserMoved = true
   updateResetButtonState()
 
   // In free play mode, just keep playing
@@ -234,10 +259,14 @@ function handleMove(orig, dest) {
   const { rating, response, nextNode } = evaluateMove(currentNode, move.san)
 
   showToast(rating)
+  setResetButtonPulse(rating === 'bad')
 
   // Advance tree
   currentNode = nextNode
-  if (currentNode === null) inFreePlay = true
+  if (currentNode === null) {
+    inFreePlay = true
+    if (rating === 'best') celebrateSolved()
+  }
 
   // Schedule book response — disable board during the delay to prevent state desync
   if (response) {
@@ -274,10 +303,12 @@ function initBoard() {
 function resetBoard() {
   clearTimeout(toastTimer)
   bookResponsePending = false
+  setResetButtonPulse(false)
 
   chess = new Chess(exercise.fen)
   currentNode = exercise.moves
   inFreePlay = false
+  hasUserMoved = false
 
   cg.set({
     fen: exercise.fen,
