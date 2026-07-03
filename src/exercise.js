@@ -328,7 +328,10 @@ function setCurvedCompletionTitle(text) {
 
   const chars = [...text]
   const center = (chars.length - 1) / 2
-  const spread = Math.min(30, Math.max(16, 340 / Math.max(chars.length - 1, 1)))
+  const isDesktop = window.matchMedia('(min-width: 640px)').matches
+  const spread = isDesktop
+    ? Math.min(36, Math.max(16, (titleEl.clientWidth || 520) * 0.84 / Math.max(chars.length - 1, 1)))
+    : Math.min(30, Math.max(16, 340 / Math.max(chars.length - 1, 1)))
   const maxOffset = Math.max(center, 1)
   titleEl.setAttribute('aria-label', text)
   titleEl.textContent = ''
@@ -348,6 +351,12 @@ function setCurvedCompletionTitle(text) {
     span.textContent = char === ' ' ? '\u00a0' : char
     titleEl.appendChild(span)
   })
+}
+
+function syncCurvedCompletionTitle() {
+  const titleEl = document.getElementById('completion-overlay-title')
+  const text = titleEl?.getAttribute('aria-label')
+  if (text) setCurvedCompletionTitle(text)
 }
 
 // ── Move handler ──────────────────────────────────────────────────────────────
@@ -638,6 +647,7 @@ document.getElementById('reset-btn').addEventListener('click', resetBoard)
 document.getElementById('hint-btn').addEventListener('click', () => toggleHint())
 document.getElementById('solution-btn').addEventListener('click', () => toggleSolution())
 mobilePanelsQuery.addEventListener('change', syncPanelLayout)
+window.addEventListener('resize', syncCurvedCompletionTitle)
 
 setupSettingsMenu(
   newLang => {
