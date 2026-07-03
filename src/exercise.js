@@ -31,6 +31,7 @@ let currentNode = exercise.moves
 let inFreePlay = false
 let bookResponsePending = false
 let boardOrientation = exercise.toMove
+let rotateIconTurns = 0
 
 // ── Chessground helpers ───────────────────────────────────────────────────────
 
@@ -68,11 +69,13 @@ function getOppositeOrientation(color) {
 
 function setRotateBoardButtonLabels(lang = getLang()) {
   const rotateBtn = document.getElementById('rotate-board-btn')
+  const rotateLabel = document.getElementById('rotate-board-label')
   if (!rotateBtn) return
 
   const label = lang === 'es' ? 'Rotar tablero' : 'Rotate board'
   rotateBtn.setAttribute('aria-label', label)
   rotateBtn.title = label
+  if (rotateLabel) rotateLabel.textContent = t('rotateBoard')
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────────
@@ -317,6 +320,8 @@ function setupBoardControls() {
   const rotateBtn = document.getElementById('rotate-board-btn')
   rotateBtn.addEventListener('click', () => {
     boardOrientation = getOppositeOrientation(boardOrientation)
+    rotateIconTurns += 1
+    rotateBtn.style.setProperty('--icon-rotation', `${rotateIconTurns * 180}deg`)
     cg.set({ orientation: boardOrientation })
   })
 }

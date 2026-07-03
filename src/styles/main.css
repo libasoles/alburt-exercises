@@ -544,7 +544,7 @@ settings-menu {
   position: relative;
   z-index: 1;
   width: var(--board-size);
-  min-height: 40px;
+  min-height: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -563,21 +563,26 @@ settings-menu {
 }
 
 .icon-btn {
+  --icon-rotation: 0deg;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex: 0 0 40px;
+  gap: 6px;
+  min-height: 32px;
+  padding: 5px 12px;
+  flex: 0 0 auto;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: var(--bg-card);
   color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
   cursor: pointer;
   transition:
     background 0.15s,
-    border-color 0.15s,
-    transform 0.15s;
+    border-color 0.15s;
 }
 
 .icon-btn:hover {
@@ -585,13 +590,16 @@ settings-menu {
   border-color: var(--accent);
 }
 
-.icon-btn:active {
-  transform: rotate(45deg);
+.icon-btn-label {
+  white-space: nowrap;
 }
 
 .icon-btn svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+  transform: rotate(var(--icon-rotation));
+  transition: transform 0.25s ease;
 }
 
 .panel-buttons {

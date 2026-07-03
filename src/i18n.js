@@ -24,6 +24,7 @@ export const strings = {
     settingsBoard: "Tablero",
     settingsBoardFlat: "Plano",
     settingsBoardWood: "Staunton",
+    rotateBoard: "Rotar",
   },
   en: {
     indexTitle: "Chess Exercises — Alburt's Pocket Book",
@@ -48,6 +49,7 @@ export const strings = {
     settingsBoard: "Board",
     settingsBoardFlat: "Flat",
     settingsBoardWood: "Staunton",
+    rotateBoard: "Rotate",
   },
 };
 
