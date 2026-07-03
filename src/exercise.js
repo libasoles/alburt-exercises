@@ -8,6 +8,7 @@ import { exercises } from './exercises/data.js'
 import { evaluateMove } from './exercises/evaluateMove.js'
 import { formatSolutionHtml } from './exercises/formatSolution.js'
 import { getLang, applyI18n, t } from './i18n.js'
+import './settingsMenu.js'
 import { getTheme, applyBoardTheme, setupSettingsMenu } from './settings.js'
 
 // ── Routing ──────────────────────────────────────────────────────────────────

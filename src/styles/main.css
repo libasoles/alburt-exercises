@@ -108,6 +108,10 @@ a {
 
 /* ── Settings ─────────────────────────────────────────────────────────────── */
 
+settings-menu {
+  display: block;
+}
+
 .settings-wrap {
   position: relative;
 }
@@ -136,7 +140,6 @@ a {
 
 .settings-btn:hover {
   background: var(--bg-card);
-  transform: rotate(45deg);
 }
 
 .settings-btn[aria-expanded="true"] {
@@ -175,7 +178,7 @@ a {
 }
 
 .settings-opt {
-  flex: 1;
+  flex: 0 0 136px;
   padding: 6px 10px;
   border-radius: calc(var(--radius) - 2px);
   border: 1px solid var(--border);
@@ -183,6 +186,7 @@ a {
   color: var(--text);
   font-size: 0.82rem;
   font-weight: 600;
+  text-align: center;
   cursor: pointer;
   transition:
     background 0.15s,
@@ -237,13 +241,13 @@ a {
 #board-wrap.theme-3d piece::before {
   content: "";
   position: absolute;
-  left: -22%;
-  top: -26%;
-  width: 144%;
-  height: 172%;
+  left: -36%;
+  top: -65%;
+  width: 175%;
+  height: 210%;
   background-image: var(--piece-image);
   background-size: contain;
-  background-position: center bottom;
+  background-position: center top;
   background-repeat: no-repeat;
   filter: var(--piece-shadow);
   pointer-events: none;

@@ -14,23 +14,7 @@
       <img src="./images/mascot.png" alt="TucuChess" class="mascot-logo" />
     </a>
     <div class="header-right">
-      <div class="settings-wrap">
-        <button id="settings-btn" class="settings-btn" aria-label="Configuración" aria-expanded="false">
-          <svg class="settings-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9.6 2h4.8l.5 2.4a8.2 8.2 0 0 1 1.9.8l2-1.4 3.4 3.4-1.4 2a8.2 8.2 0 0 1 .8 1.9L24 11.6v4.8l-2.4.5a8.2 8.2 0 0 1-.8 1.9l1.4 2-3.4 3.4-2-1.4a8.2 8.2 0 0 1-1.9.8L14.4 26H9.6l-.5-2.4a8.2 8.2 0 0 1-1.9-.8l-2 1.4-3.4-3.4 1.4-2a8.2 8.2 0 0 1-.8-1.9L0 16.4v-4.8l2.4-.5a8.2 8.2 0 0 1 .8-1.9l-1.4-2 3.4-3.4 2 1.4a8.2 8.2 0 0 1 1.9-.8L9.6 2Z" transform="scale(.75) translate(4 4)" fill="currentColor"/>
-            <circle cx="12" cy="12" r="3.2" fill="var(--bg)"/>
-          </svg>
-        </button>
-        <div id="settings-menu" class="settings-menu" hidden>
-          <div class="settings-section">
-            <div class="settings-section-label" data-i18n="settingsLang">Idioma</div>
-            <div class="settings-opts">
-              <button class="settings-opt" data-lang="es">ES</button>
-              <button class="settings-opt" data-lang="en">EN</button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <settings-menu></settings-menu>
     </div>
   </header>
 

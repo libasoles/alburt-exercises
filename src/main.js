@@ -1,5 +1,6 @@
 import { exercises } from './exercises/data.js'
 import { getLang, applyI18n } from './i18n.js'
+import './settingsMenu.js'
 import { setupSettingsMenu } from './settings.js'
 
 function renderExerciseList(lang) {

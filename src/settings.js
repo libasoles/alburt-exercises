@@ -19,9 +19,10 @@ export function applyBoardTheme(theme) {
 }
 
 export function setupSettingsMenu(onLangChange, onThemeChange) {
-  const btn = document.getElementById('settings-btn')
-  const menu = document.getElementById('settings-menu')
-  if (!btn || !menu) return
+  const root = document.querySelector('settings-menu')
+  const btn = root?.querySelector('#settings-btn')
+  const menu = root?.querySelector('#settings-menu')
+  if (!root || !btn || !menu) return
 
   let open = false
 
