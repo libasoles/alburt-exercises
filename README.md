@@ -1,5 +1,7 @@
 # TucuChess: ejercicios de Alburt
 
+> Este proyecto fue codeado en forma black box con IA como proyecto personal. No es un repositorio pensado para evaluación de recruiters ni como muestra representativa de ingeniería profesional.
+
 Aplicación web estática para practicar ejercicios tácticos de ajedrez basados en el *Chess Training Pocket Book* de Lev Alburt. El proyecto ofrece una portada con los ejercicios disponibles y una vista interactiva para resolver cada posición directamente sobre el tablero.
 
 ## Capturas
