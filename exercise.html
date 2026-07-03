@@ -54,7 +54,7 @@
             <button id="prev-btn" class="nav-btn" data-i18n="prev">
               Anterior
             </button>
-            <button id="reset-btn" class="action-btn" data-i18n="reset">
+            <button id="reset-btn" class="action-btn" data-i18n="reset" disabled>
               Reiniciar
             </button>
             <button id="next-btn" class="nav-btn" data-i18n="next">
@@ -65,6 +65,46 @@
 
         <!-- Info column -->
         <div class="info-column">
+          <details id="fen-details" class="fen-details">
+            <summary class="fen-summary">
+              <span data-i18n="fenLabel">FEN</span>
+              <svg
+                class="fen-chevron"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
+            </summary>
+            <button type="button" id="fen-box" class="fen-box">
+              <code id="fen-value"></code>
+              <svg
+                class="fen-copy-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+              </svg>
+            </button>
+          </details>
+
           <div class="panel-buttons">
             <button
               id="hint-btn"
@@ -99,6 +139,9 @@
     <div id="toast" class="toast" aria-live="polite">
       <img id="toast-img" src="" alt="" />
     </div>
+
+    <!-- Copy toast -->
+    <div id="copy-toast" class="copy-toast" role="status" aria-live="polite"></div>
 
     <script type="module" src="./src/exercise.js"></script>
   </body>

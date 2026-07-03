@@ -26,6 +26,9 @@ export const strings = {
     settingsBoardFlat: "Plano",
     settingsBoardWood: "Staunton",
     rotateBoard: "Rotar",
+    fenLabel: "FEN",
+    fenCopyHint: "Tocá para copiar",
+    fenCopied: "FEN copiado",
   },
   en: {
     indexTitleMain: "Chess Exercises",
@@ -52,6 +55,9 @@ export const strings = {
     settingsBoardFlat: "Flat",
     settingsBoardWood: "Staunton",
     rotateBoard: "Rotate",
+    fenLabel: "FEN",
+    fenCopyHint: "Tap to copy",
+    fenCopied: "FEN copied",
   },
 };
 

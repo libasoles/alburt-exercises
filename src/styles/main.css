@@ -730,6 +730,81 @@ settings-menu {
   border-top: 1px solid var(--overlay-border);
 }
 
+/* ── FEN dropdown ────────────────────────────────────────────────────────── */
+
+.fen-details {
+  position: relative;
+  z-index: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.fen-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 32px;
+  padding: 5px 12px;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+
+.fen-summary::-webkit-details-marker {
+  display: none;
+}
+
+.fen-chevron {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  transition: transform 0.2s ease;
+}
+
+.fen-details[open] .fen-chevron {
+  transform: rotate(180deg);
+}
+
+.fen-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: calc(100% - 16px);
+  margin: 0 8px 12px;
+  padding: 8px;
+  text-align: left;
+  background: var(--bg-card);
+  border: none;
+  border-radius: var(--radius);
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.fen-box:hover {
+  background: var(--bg-surface);
+}
+
+.fen-box code {
+  flex: 1;
+  min-width: 0;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.fen-copy-icon {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+}
+
 /* ── Toast ───────────────────────────────────────────────────────────────── */
 
 .toast {
@@ -764,6 +839,42 @@ settings-menu {
   height: auto;
   display: block;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.25));
+}
+
+/* ── Copy toast ──────────────────────────────────────────────────────────── */
+
+.copy-toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  z-index: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  opacity: 0;
+  transform: translate(-50%, 20px);
+  pointer-events: none;
+  transition: none;
+}
+
+.copy-toast.copy-toast-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+  transition:
+    opacity 0.22s ease-in,
+    transform 0.22s ease-in;
+}
+
+.copy-toast.copy-toast-hiding {
+  opacity: 0;
+  transform: translate(-50%, -10px);
+  transition:
+    opacity 0.18s ease-out,
+    transform 0.18s ease-out;
 }
 
 /* ── Mobile (≤ 639px) ────────────────────────────────────────────────────── */
@@ -823,6 +934,10 @@ settings-menu {
   .solution-btn {
     width: 100%;
     text-align: center;
+  }
+
+  .fen-details {
+    order: 1;
   }
 
   .index-main {

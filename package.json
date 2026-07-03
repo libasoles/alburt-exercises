@@ -13,6 +13,7 @@
     "chessground": "^9.2.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "vite": "^5.4.0",
     "vitest": "^2.0.0"
   }

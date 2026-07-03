@@ -78,6 +78,12 @@ function setRotateBoardButtonLabels(lang = getLang()) {
   if (rotateLabel) rotateLabel.textContent = t('rotateBoard')
 }
 
+function updateResetButtonState() {
+  const resetBtn = document.getElementById('reset-btn')
+  if (!resetBtn) return
+  resetBtn.disabled = chess.history().length === 0
+}
+
 // ── Toast ─────────────────────────────────────────────────────────────────────
 
 const RATING_IMAGES = {
@@ -110,6 +116,59 @@ function showToast(rating) {
   }, 1500)
 }
 
+// ── Copy toast ──────────────────────────────────────────────────────────────
+
+let copyToastTimer = null
+
+function showCopyToast(message) {
+  const toast = document.getElementById('copy-toast')
+  toast.textContent = message
+
+  clearTimeout(copyToastTimer)
+  toast.classList.remove('copy-toast-hiding')
+  void toast.offsetWidth
+  toast.classList.add('copy-toast-visible')
+
+  copyToastTimer = setTimeout(() => {
+    toast.classList.add('copy-toast-hiding')
+    setTimeout(() => {
+      toast.classList.remove('copy-toast-visible', 'copy-toast-hiding')
+    }, 200)
+  }, 1500)
+}
+
+// ── FEN copy ────────────────────────────────────────────────────────────────
+
+async function copyFen() {
+  const fen = exercise.fen
+  try {
+    await navigator.clipboard.writeText(fen)
+  } catch {
+    // Fallback for insecure contexts / older browsers
+    const ta = document.createElement('textarea')
+    ta.value = fen
+    ta.style.position = 'fixed'
+    ta.style.opacity = '0'
+    document.body.appendChild(ta)
+    ta.select()
+    try {
+      document.execCommand('copy')
+    } catch {
+      /* ignore */
+    }
+    ta.remove()
+  }
+  showCopyToast(t('fenCopied'))
+}
+
+function setupFenCopy() {
+  document.getElementById('fen-value').textContent = exercise.fen
+  const box = document.getElementById('fen-box')
+  box.title = t('fenCopyHint')
+  box.setAttribute('aria-label', t('fenCopyHint'))
+  box.addEventListener('click', copyFen)
+}
+
 // ── Book response ─────────────────────────────────────────────────────────────
 
 function playBookResponse(san) {
@@ -132,6 +191,8 @@ function playBookResponse(san) {
       dests: toDests(chess),
     },
   })
+
+  updateResetButtonState()
 }
 
 // ── Move handler ──────────────────────────────────────────────────────────────
@@ -164,6 +225,8 @@ function handleMove(orig, dest) {
       dests: toDests(chess),
     },
   })
+
+  updateResetButtonState()
 
   // In free play mode, just keep playing
   if (inFreePlay) return
@@ -234,6 +297,8 @@ function resetBoard() {
   if (hintPanel && !hintPanel.hidden) toggleHint(false)
   const solutionPanel = document.getElementById('solution-panel')
   if (solutionPanel && !solutionPanel.hidden) toggleSolution(false)
+
+  updateResetButtonState()
 }
 
 // ── Hint panel ────────────────────────────────────────────────────────────────
@@ -297,6 +362,13 @@ function renderExercise(lang) {
   // Solution button label
   const btn = document.getElementById('solution-btn')
   btn.textContent = solutionOpen ? t('hideSolution') : t('showSolution')
+
+  // FEN copy tooltip
+  const fenBox = document.getElementById('fen-box')
+  if (fenBox) {
+    fenBox.title = t('fenCopyHint')
+    fenBox.setAttribute('aria-label', t('fenCopyHint'))
+  }
 }
 
 // ── Navigation ────────────────────────────────────────────────────────────────
@@ -335,6 +407,8 @@ initBoard()
 syncBoardTheme()
 setupNav()
 setupBoardControls()
+setupFenCopy()
+updateResetButtonState()
 
 document.getElementById('reset-btn').addEventListener('click', resetBoard)
 document.getElementById('hint-btn').addEventListener('click', () => toggleHint())
