@@ -984,6 +984,7 @@ settings-menu {
   height: 190px;
   margin: -92px 0 -54px;
   color: #fff7cf;
+  font-synthesis: none;
   text-shadow: 0 8px 26px rgba(0, 0, 0, 0.32);
 }
 
@@ -996,7 +997,8 @@ settings-menu {
   line-height: 1;
   white-space: pre;
   transform-origin: center center;
-  transform: translate(calc(-50% + var(--char-x)), var(--char-curve-y)) rotate(var(--char-tilt, 0deg)) scale(1);
+  transform: translate(calc(-50% + var(--char-x)), var(--char-curve-y))
+    rotate(var(--char-tilt, 0deg)) scale(1);
   opacity: 1;
 }
 
@@ -1134,6 +1136,8 @@ settings-menu {
   .completion-overlay-title-char {
     bottom: 10px;
     font-size: clamp(1.45rem, 6vw, 2.2rem);
+    font-weight: 950;
+    text-shadow: 0 10px 28px rgba(0, 0, 0, 0.38);
   }
 
   .completion-overlay-mascot {
