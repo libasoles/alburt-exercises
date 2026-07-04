@@ -37,7 +37,8 @@ let hasUserMoved = false;
 let boardOrientation = exercise.toMove;
 let rotateIconTurns = 0;
 let completionConfettiTimer = null;
-let completionConfetti = confetti;
+let pageConfetti = confetti;
+let overlayConfetti = confetti;
 
 // ── Chessground helpers ───────────────────────────────────────────────────────
 
@@ -242,7 +243,7 @@ function playBookResponse(san) {
 // ── Confetti ──────────────────────────────────────────────────────────────────
 
 function celebrateSolved() {
-  completionConfetti({
+  pageConfetti({
     particleCount: 150,
     spread: 70,
     origin: { y: 0.6 },
@@ -260,7 +261,7 @@ function celebrateFinalExerciseSolved() {
   bursts.forEach((burst, index) => {
     setTimeout(
       () =>
-        completionConfetti({
+        overlayConfetti({
           ...burst,
           disableForReducedMotion: true,
         }),
@@ -273,14 +274,14 @@ function startCompletionConfetti() {
   if (completionConfettiTimer !== null) return;
 
   const fire = () => {
-    completionConfetti({
+    overlayConfetti({
       particleCount: 110,
       angle: 60,
       spread: 70,
       origin: { x: 0, y: 0.72 },
       disableForReducedMotion: true,
     });
-    completionConfetti({
+    overlayConfetti({
       particleCount: 110,
       angle: 120,
       spread: 70,
@@ -639,7 +640,7 @@ function setupCompletionOverlay() {
   const confettiCanvas = document.getElementById("completion-confetti-canvas");
 
   if (confettiCanvas instanceof HTMLCanvasElement) {
-    completionConfetti = confetti.create(confettiCanvas, {
+    overlayConfetti = confetti.create(confettiCanvas, {
       resize: true,
       useWorker: true,
     });
