@@ -1,6 +1,7 @@
 import { strings } from '../i18n.js'
 
 const MOVE_START_RE = /(\d+)\.(\.\.)?([^\s()]+)/g
+const MOVE_RATING_RE = /^(.*?)(?:\{(best|ok|bad)\})([!?.,;:]*)$/i
 
 function escapeHtml(text) {
   return text
@@ -23,6 +24,17 @@ function isLikelyMoveToken(token) {
   if (!token || token.includes('.')) return false
 
   return /^(?:O-O(?:-O)?|0-0(?:-0)?|[KQRBNDTCAR]?[a-h]?[1-8]?x?[a-h][1-8](?:=[KQRBNDTCAR])?|[a-h]x[a-h][1-8](?:=[KQRBNDTCAR])?|[a-h][1-8](?:=[KQRBNDTCAR])?)(?:[+#]+)?[!?]*$/i.test(token)
+}
+
+function parseRatedMoveToken(token) {
+  const match = token.match(MOVE_RATING_RE)
+  if (!match) return { move: token, rating: null, punctuation: '' }
+
+  return {
+    move: match[1],
+    rating: match[2].toLowerCase(),
+    punctuation: match[3] ?? '',
+  }
 }
 
 function consumeLeadingToken(text) {
@@ -55,8 +67,8 @@ function parseTextSegment(text) {
     const row = {
       type: 'row',
       number: match[1],
-      whiteMove: match[2] ? '' : match[3],
-      blackMove: match[2] ? match[3] : '',
+      whiteMove: match[2] ? '' : parseRatedMoveToken(match[3]),
+      blackMove: match[2] ? parseRatedMoveToken(match[3]) : '',
       result: '',
     }
 
@@ -64,8 +76,9 @@ function parseTextSegment(text) {
 
     if (!match[2] && tail) {
       const { token, rest } = consumeLeadingToken(tail)
-      if (isLikelyMoveToken(token)) {
-        row.blackMove = token
+      const ratedToken = parseRatedMoveToken(token)
+      if (isLikelyMoveToken(ratedToken.move)) {
+        row.blackMove = ratedToken
         tail = rest
       }
     }
@@ -130,15 +143,21 @@ function splitTopLevelComments(text) {
 
 function renderRow(row) {
   const moveNo = `${row.number}.`
-  const whiteMove = row.whiteMove ? escapeHtml(row.whiteMove) : '&hellip;'
-  const blackMove = row.blackMove ? escapeHtml(row.blackMove) : '&hellip;'
+  const whiteMove = row.whiteMove
+    ? `${escapeHtml(row.whiteMove.move)}${escapeHtml(row.whiteMove.punctuation ?? '')}`
+    : '&hellip;'
+  const blackMove = row.blackMove
+    ? `${escapeHtml(row.blackMove.move)}${escapeHtml(row.blackMove.punctuation ?? '')}`
+    : '&hellip;'
   const result = row.result ? escapeHtml(row.result) : ''
+  const whiteRatingClass = row.whiteMove?.rating ? ` solution-${row.whiteMove.rating}` : ''
+  const blackRatingClass = row.blackMove?.rating ? ` solution-${row.blackMove.rating}` : ''
 
   return `
     <div class="solution-row">
       <span class="solution-move-no">${escapeHtml(moveNo)}</span>
-      <span class="solution-move solution-white">${whiteMove}</span>
-      <span class="solution-move solution-black">${blackMove}</span>
+      <span class="solution-move solution-white${whiteRatingClass}">${whiteMove}</span>
+      <span class="solution-move solution-black${blackRatingClass}">${blackMove}</span>
       <span class="solution-result">${result}</span>
     </div>
   `

@@ -755,6 +755,18 @@ settings-menu {
   color: var(--color-charcoal);
 }
 
+.solution-best {
+  color: #2e9f57;
+}
+
+.solution-ok {
+  color: var(--color-orange);
+}
+
+.solution-bad {
+  color: #c64545;
+}
+
 .solution-result {
   color: var(--accent);
   font-weight: 800;

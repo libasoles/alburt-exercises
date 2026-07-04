@@ -26,4 +26,13 @@ describe('formatSolutionHtml', () => {
     expect(html).toContain('class="solution-move solution-black">Kxg7</span>')
     expect(html).toContain('a typical mate.')
   })
+
+  test('applies explicit move ratings without showing annotation markers', () => {
+    const html = formatSolutionHtml('This works against 1...Nc4{bad}. Clearly 1...f6{best} was best.')
+
+    expect(html).toContain('class="solution-move solution-black solution-bad">Nc4.</span>')
+    expect(html).toContain('class="solution-move solution-black solution-best">f6</span>')
+    expect(html).not.toContain('{bad}')
+    expect(html).not.toContain('{best}')
+  })
 })

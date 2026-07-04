@@ -218,12 +218,12 @@ export const exercises = [
       es: 'Si te tienta 1...Cc4, atacando dama y alfil, descartalo. En la partida las negras jugaron 1...f6 y entregaron un peón. ¿Por qué?',
     },
     solution: {
-      en: 'White has a terrible threat: 2.Qg7+! Kxg7 3.Nf5++ Kg8 4.Nh6# — a typical bishop+knight mate. This works against 1...Nc4 and most other moves. Clearly 1...f6 was the lesser evil.',
-      es: 'Las blancas tienen una amenaza brutal: 2.Dg7+! Rxg7 3.Cf5++ Rg8 4.Ch6#, un mate típico de alfil y caballo. Eso funciona contra 1...Cc4 y contra casi cualquier otra jugada. Por eso 1...f6 era el mal menor.',
+      en: 'White has a terrible threat: 2.Qg7+! Kxg7 3.Nf5++ Kg8 4.Nh6# — a typical bishop+knight mate. This works against 1...Nc4{bad} and most other moves. Clearly 1...f6{best} was the lesser evil.',
+      es: 'Las blancas tienen una amenaza brutal: 2.Dg7+! Rxg7 3.Cf5++ Rg8 4.Ch6#, un mate típico de alfil y caballo. Eso funciona contra 1...Cc4{bad} y contra casi cualquier otra jugada. Por eso 1...f6{best} era el mal menor.',
     },
     moves: {
       'f6': {
-        rating: 'ok',
+        rating: 'best',
         response: null,
       },
       'Nc4': {
