@@ -7,6 +7,7 @@ import { Chess } from "chess.js";
 import confetti from "canvas-confetti";
 import { exercises } from "./exercises/data.js";
 import { evaluateMove } from "./exercises/evaluateMove.js";
+import { formatHintHtml } from "./exercises/formatHint.js";
 import { formatSolutionHtml } from "./exercises/formatSolution.js";
 import { getLang, applyI18n, t } from "./i18n.js";
 import "./settingsMenu.js";
@@ -575,7 +576,7 @@ function renderExercise(lang) {
   const hintEl = document.getElementById("hint-text");
   const hintBtn = document.getElementById("hint-btn");
   if (exercise.hint[lang]) {
-    hintEl.textContent = exercise.hint[lang];
+    hintEl.innerHTML = formatHintHtml(exercise.hint[lang]);
     hintBtn.hidden = false;
   } else {
     hintBtn.hidden = true;
