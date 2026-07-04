@@ -1,4 +1,6 @@
 const LANG_KEY = "tucuchess_lang";
+const DEFAULT_LANG = "es";
+const SUPPORTED_LANGS = new Set(["es", "en"]);
 
 export const strings = {
   es: {
@@ -69,8 +71,23 @@ export const strings = {
   },
 };
 
+export function detectBrowserLang() {
+  if (typeof navigator === "undefined") return DEFAULT_LANG;
+
+  const candidates = Array.isArray(navigator.languages)
+    ? navigator.languages
+    : [navigator.language];
+
+  for (const candidate of candidates) {
+    const normalized = candidate?.toLowerCase().split("-")[0];
+    if (SUPPORTED_LANGS.has(normalized)) return normalized;
+  }
+
+  return DEFAULT_LANG;
+}
+
 export function getLang() {
-  return localStorage.getItem(LANG_KEY) || "es";
+  return localStorage.getItem(LANG_KEY) || detectBrowserLang();
 }
 
 export function setLang(lang) {
