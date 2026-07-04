@@ -1,4 +1,4 @@
-# TucuChess: ejercicios de Alburt
+# Ejercicios de Alburt
 
 > Este proyecto fue codeado en forma black box con IA como proyecto personal. No es un repositorio pensado para evaluación de recruiters ni como muestra representativa de ingeniería profesional.
 
@@ -8,7 +8,7 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 
 <p align="center">
   <a href="https://libasoles.github.io/alburt-exercises/">
-    <img src="./public/images/rating-ok.png" alt="Abrir demo de TucuChess" width="160" />
+    <img src="./public/images/rating-ok.png" alt="Abrir demo de los ejercicios" width="160" />
   </a>
 </p>
 
@@ -20,11 +20,15 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 
 ### Desktop
 
-![Vista desktop de TucuChess](./docs/images/app-desktop.png)
+![Vista desktop de la app](./docs/images/app-desktop.png)
 
 ### Mobile
 
-![Vista mobile de TucuChess](./docs/images/app-mobile.png)
+![Vista mobile de la app](./docs/images/app-mobile.png)
+
+![Vista mobile de un ejercicio](./docs/images/app-mobile-default.png)
+
+![Vista mobile de otro ejercicio con tablero Staunton](./docs/images/app-mobile-staunton.png)
 
 ## Qué incluye
 
