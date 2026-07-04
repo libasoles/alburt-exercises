@@ -2,7 +2,7 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
 import { exercises } from '../src/exercises/data.js'
-import { SITE_URL, buildSiteUrl } from '../src/site.js'
+import { buildSiteUrl } from '../src/site.js'
 
 const OUT_DIR = resolve(import.meta.dirname, '..', 'public')
 const LANGS = ['es', 'en']
@@ -61,9 +61,7 @@ ${items}
 
 function buildRobotsTxt() {
   return `User-agent: *
-Allow: /
-
-Sitemap: ${SITE_URL}sitemap.xml
+Disallow: /
 `
 }
 
