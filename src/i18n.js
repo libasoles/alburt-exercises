@@ -5,7 +5,7 @@ export const strings = {
     indexTitleMain: "Ejercicios de Ajedrez",
     indexTitleSub: "Libro de Alburt",
     alburtBio:
-      "Lev Alburt fue tres veces campeón de ajedrez de EE.UU. (1984, 1985 y 1990). Nació en Ucrania, emigró a Estados Unidos en 1979 y llegó a ser uno de los entrenadores más reconocidos del país. Su «Chess Training Pocket Book» reúne 300 posiciones elegidas para afinar el cálculo y la visión táctica. Acá compartimos los primeros 7 ejercicios para practicar de forma interactiva en TucuChess.",
+      "Lev Alburt fue tres veces campeón de ajedrez de EE.UU. (1984, 1985 y 1990). Nació en Ucrania, emigró a Estados Unidos en 1979 y llegó a ser uno de los entrenadores más reconocidos del país. Su «<strong>Chess Training Pocket Book</strong>» reúne 300 posiciones elegidas para afinar el cálculo y la visión táctica. Acá compartimos los primeros 7 ejercicios para practicar de forma interactiva en TucuChess.",
     toMoveWhite: "Juegan las blancas",
     toMoveBlack: "Juegan las negras",
     reset: "Reiniciar",
@@ -38,7 +38,7 @@ export const strings = {
     indexTitleMain: "Chess Exercises",
     indexTitleSub: "Alburt's Pocket Book",
     alburtBio:
-      'GM Lev Alburt is a three-time US Chess Champion (1984, 1985, 1990). Born in Ukraine, he emigrated to the United States in 1979 and became one of the country\'s most recognized chess coaches. His "Chess Training Pocket Book" contains 300 carefully selected positions designed to sharpen calculation and tactical vision. This site presents the first 7 exercises for interactive practice by the TucuChess club.',
+      'GM Lev Alburt is a three-time US Chess Champion (1984, 1985, 1990). Born in Ukraine, he emigrated to the United States in 1979 and became one of the country\'s most recognized chess coaches. His "<strong>Chess Training Pocket Book</strong>" contains 300 carefully selected positions designed to sharpen calculation and tactical vision. This site presents the first 7 exercises for interactive practice by the TucuChess club.',
     toMoveWhite: "White to move",
     toMoveBlack: "Black to move",
     reset: "Reset",
@@ -86,7 +86,12 @@ export function applyI18n(lang) {
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const key = el.dataset.i18n;
     const text = strings[l][key];
-    if (text !== undefined) el.textContent = text;
+    if (text === undefined) return;
+    if (el.dataset.i18nHtml === "true") {
+      el.innerHTML = text;
+      return;
+    }
+    el.textContent = text;
   });
   // Update <html lang> attribute
   document.documentElement.lang = l;
