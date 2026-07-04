@@ -10,6 +10,7 @@ import { evaluateMove } from "./exercises/evaluateMove.js";
 import { formatHintHtml } from "./exercises/formatHint.js";
 import { formatSolutionHtml } from "./exercises/formatSolution.js";
 import { getLang, applyI18n, syncLangInUrl, t, withLangInUrl } from "./i18n.js";
+import { updateExerciseSeo } from "./seo.js";
 import "./settingsMenu.js";
 import { getTheme, applyBoardTheme, setupSettingsMenu } from "./settings.js";
 
@@ -557,7 +558,7 @@ function syncPanelLayout() {
 // ── Render exercise content ───────────────────────────────────────────────────
 
 function renderExercise(lang) {
-  document.title = `TucuChess — ${exercise.title[lang]}`;
+  updateExerciseSeo({ lang, exercise });
 
   document.getElementById("exercise-number").textContent =
     `${lang === "es" ? "Ejercicio" : "Exercise"} ${exercise.id}`;

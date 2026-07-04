@@ -24,4 +24,14 @@ describe('html shell', () => {
       html.indexOf('</head>'),
     )
   })
+
+  test('html shells expose canonical and robots metadata', () => {
+    const indexHtml = readRootFile('index.html')
+    const exerciseHtml = readRootFile('exercise.html')
+
+    expect(indexHtml).toContain('rel="canonical"')
+    expect(indexHtml).toContain('name="robots"')
+    expect(exerciseHtml).toContain('rel="canonical"')
+    expect(exerciseHtml).toContain('name="robots"')
+  })
 })
