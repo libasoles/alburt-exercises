@@ -1,4 +1,4 @@
-import { getLang, setLang, applyI18n } from './i18n.js'
+import { getLang, setLang, applyI18n, syncLangInUrl } from './i18n.js'
 
 const THEME_KEY = 'tucuchess_board_theme'
 
@@ -53,6 +53,7 @@ export function setupSettingsMenu(onLangChange, onThemeChange) {
     el.addEventListener('click', () => {
       const newLang = el.dataset.lang
       setLang(newLang)
+      syncLangInUrl(newLang)
       applyI18n(newLang)
       updateActive()
       if (onLangChange) onLangChange(newLang)

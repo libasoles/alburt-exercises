@@ -9,7 +9,7 @@ import { exercises } from "./exercises/data.js";
 import { evaluateMove } from "./exercises/evaluateMove.js";
 import { formatHintHtml } from "./exercises/formatHint.js";
 import { formatSolutionHtml } from "./exercises/formatSolution.js";
-import { getLang, applyI18n, t } from "./i18n.js";
+import { getLang, applyI18n, syncLangInUrl, t, withLangInUrl } from "./i18n.js";
 import "./settingsMenu.js";
 import { getTheme, applyBoardTheme, setupSettingsMenu } from "./settings.js";
 
@@ -19,7 +19,7 @@ const params = new URLSearchParams(window.location.search);
 const exId = parseInt(params.get("ex"), 10);
 
 if (!exId || exId < 1 || exId > exercises.length) {
-  window.location.replace("./index.html");
+  window.location.replace(withLangInUrl("./index.html"));
   throw new Error("redirect");
 }
 
@@ -321,7 +321,7 @@ function hideCompletionOverlay() {
 
 function goToIndex() {
   stopCompletionConfetti();
-  window.location.href = "./index.html";
+  window.location.href = withLangInUrl("./index.html");
 }
 
 function setCurvedCompletionTitle(text) {
@@ -613,11 +613,12 @@ function setupNav() {
   if (exId >= exercises.length) nextBtn.disabled = true;
 
   prevBtn.addEventListener("click", () => {
-    if (exId > 1) window.location.href = `./exercise.html?ex=${exId - 1}`;
+    if (exId > 1)
+      window.location.href = withLangInUrl(`./exercise.html?ex=${exId - 1}`);
   });
   nextBtn.addEventListener("click", () => {
     if (exId < exercises.length)
-      window.location.href = `./exercise.html?ex=${exId + 1}`;
+      window.location.href = withLangInUrl(`./exercise.html?ex=${exId + 1}`);
   });
 }
 
@@ -658,6 +659,7 @@ function setupCompletionOverlay() {
 // ── Init ──────────────────────────────────────────────────────────────────────
 
 const lang = getLang();
+syncLangInUrl(lang);
 applyI18n(lang);
 renderExercise(lang);
 initBoard();

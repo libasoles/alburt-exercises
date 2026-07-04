@@ -1,6 +1,12 @@
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
-import { detectBrowserLang, getLang, setLang } from "./i18n.js";
+import {
+  detectBrowserLang,
+  getLang,
+  getLangFromUrl,
+  setLang,
+  withLangInUrl,
+} from "./i18n.js";
 
 describe("i18n", () => {
   beforeEach(() => {
@@ -18,6 +24,27 @@ describe("i18n", () => {
     setLang("en");
 
     expect(getLang()).toBe("en");
+  });
+
+  test("uses language from url before saved preference", () => {
+    setLang("es");
+    vi.stubGlobal("window", {
+      location: {
+        search: "?lang=en",
+      },
+    });
+
+    expect(getLang()).toBe("en");
+  });
+
+  test("ignores unsupported language from url", () => {
+    vi.stubGlobal("window", {
+      location: {
+        search: "?lang=fr",
+      },
+    });
+
+    expect(getLangFromUrl()).toBe(null);
   });
 
   test("uses browser language on first load", () => {
@@ -45,5 +72,17 @@ describe("i18n", () => {
     });
 
     expect(getLang()).toBe("es");
+  });
+
+  test("adds current language to navigation urls", () => {
+    vi.stubGlobal("window", {
+      location: {
+        href: "https://example.com/index.html?lang=en",
+      },
+    });
+
+    expect(withLangInUrl("./exercise.html?ex=3", "en")).toBe(
+      "/exercise.html?ex=3&lang=en",
+    );
   });
 });

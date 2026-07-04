@@ -1,5 +1,5 @@
 import { exercises } from './exercises/data.js'
-import { getLang, applyI18n } from './i18n.js'
+import { getLang, applyI18n, syncLangInUrl, withLangInUrl } from './i18n.js'
 import './settingsMenu.js'
 import { setupSettingsMenu } from './settings.js'
 
@@ -12,7 +12,7 @@ function renderExerciseList(lang) {
     li.className = 'exercise-item'
 
     const link = document.createElement('a')
-    link.href = `./exercise.html?ex=${ex.id}`
+    link.href = withLangInUrl(`./exercise.html?ex=${ex.id}`, lang)
     link.className = 'exercise-link'
 
     const title = document.createElement('span')
@@ -27,6 +27,7 @@ function renderExerciseList(lang) {
 
 // Init
 const lang = getLang()
+syncLangInUrl(lang)
 applyI18n(lang)
 renderExerciseList(lang)
 

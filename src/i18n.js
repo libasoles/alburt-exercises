@@ -71,6 +71,18 @@ export const strings = {
   },
 };
 
+export function normalizeLang(lang) {
+  const normalized = lang?.toLowerCase().split("-")[0];
+  return SUPPORTED_LANGS.has(normalized) ? normalized : null;
+}
+
+export function getLangFromUrl(
+  search = typeof window === "undefined" ? "" : window.location.search,
+) {
+  const params = new URLSearchParams(search);
+  return normalizeLang(params.get("lang"));
+}
+
 export function detectBrowserLang() {
   if (typeof navigator === "undefined") return DEFAULT_LANG;
 
@@ -79,19 +91,40 @@ export function detectBrowserLang() {
     : [navigator.language];
 
   for (const candidate of candidates) {
-    const normalized = candidate?.toLowerCase().split("-")[0];
-    if (SUPPORTED_LANGS.has(normalized)) return normalized;
+    const normalized = normalizeLang(candidate);
+    if (normalized) return normalized;
   }
 
   return DEFAULT_LANG;
 }
 
 export function getLang() {
-  return localStorage.getItem(LANG_KEY) || detectBrowserLang();
+  return (
+    getLangFromUrl() ||
+    normalizeLang(localStorage.getItem(LANG_KEY)) ||
+    detectBrowserLang()
+  );
 }
 
 export function setLang(lang) {
-  localStorage.setItem(LANG_KEY, lang);
+  const normalized = normalizeLang(lang);
+  if (!normalized) return;
+  localStorage.setItem(LANG_KEY, normalized);
+}
+
+export function withLangInUrl(path, lang = getLang()) {
+  if (typeof window === "undefined") return path;
+  const url = new URL(path, window.location.href);
+  url.searchParams.set("lang", lang);
+  return `${url.pathname}${url.search}`;
+}
+
+export function syncLangInUrl(lang = getLang()) {
+  if (typeof window === "undefined") return;
+  const nextUrl = withLangInUrl(window.location.href, lang);
+  const currentUrl = `${window.location.pathname}${window.location.search}`;
+  if (nextUrl === currentUrl) return;
+  window.history.replaceState({}, "", nextUrl);
 }
 
 export function t(key) {
