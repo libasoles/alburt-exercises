@@ -269,4 +269,177 @@ export const exercises = [
       },
     },
   },
+
+  {
+    id: 8,
+    // Schlechter - Meitner, 1899. White to move. Verified against book diagram (ex-003).
+    // White: Kg1 Qg7 Bd4, pawns a2 c3 f3 g2 h3. Black: Kh5 Qe6 Nd5, pawns a7 c6 d6 f5 g5 h6.
+    fen: '8/p5Q1/2ppq2p/3n1ppk/3B4/2P2P1P/P5P1/6K1 w - - 0 1',
+    toMove: 'white',
+    title: {
+      en: 'Minimum Force',
+      es: 'La fuerza justa',
+    },
+    game: 'Schlechter – Meitner, 1899',
+    hint: {
+      en: 'Consider driving the Black King even further into White\'s position.',
+      es: 'Pensá en meter al rey negro todavía más adentro de la posición blanca.',
+    },
+    solution: {
+      en: '1.g4+! fxg4 2.hxg4+ Kh4 3.Qxh6+! (deflection) 3...Qxh6 4.Kh2 and Bf2# cannot be prevented. 1-0',
+      es: '1.g4+! fxg4 2.hxg4+ Rh4 3.Dxh6+! (desviación) 3...Dxh6 4.Rh2 y no hay forma de evitar Af2#. 1-0',
+    },
+    moves: {
+      'g4+': {
+        rating: 'best',
+        response: 'fxg4',
+        continuations: {
+          'hxg4+': {
+            rating: 'best',
+            response: 'Kh4',
+            continuations: {
+              'Qxh6+': {
+                rating: 'best',
+                response: 'Qxh6',
+                continuations: {
+                  'Kh2': { rating: 'best' },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    id: 9,
+    // Popil - Marco, 1902. Black to move. Verified against book diagram (ex-004).
+    // Black: Kh8 Qe5 Rd7 Bb7 Bd4 (desperado), pawns a6 b5 g7 h6.
+    // White: Kh1 Qd3 Rd1 Bb1 Nf5, pawns a2 e4 g2 h2.
+    fen: '7k/1b1r2p1/p6p/1p2qN2/3bP3/3Q4/P5PP/1B1R3K b - - 0 1',
+    toMove: 'black',
+    title: {
+      en: 'No One Wins by Resigning',
+      es: 'Rendirse no gana partidas',
+    },
+    game: 'Popil – Marco, 1902',
+    hint: {
+      en: 'Black thought he could not save his Bishop on d4, and so he resigned. But can you find a threat that takes precedence over White\'s?',
+      es: 'Las negras creyeron que no podían salvar el alfil de d4 y se rindieron. ¿Podés encontrar una amenaza más fuerte que la de las blancas?',
+    },
+    solution: {
+      en: '1...Bg1!! A desperado! The bishop clears the d-file so the rook on d7 attacks the queen, while also threatening 2...Qxh2#. If 2.Kxg1 Rxd3 wins the queen.',
+      es: '1...Ag1!! ¡Un alfil «desperado»! Despeja la columna d para que la torre de d7 ataque a la dama y a la vez amenaza 2...Dxh2#. Si 2.Rxg1 Txd3 gana la dama.',
+    },
+    moves: {
+      'Bg1': {
+        rating: 'best',
+        response: 'Kxg1',
+        continuations: {
+          'Rxd3': { rating: 'best' },
+        },
+      },
+    },
+  },
+
+  {
+    id: 10,
+    // Kolvic - Koch, 1959. White to move. Verified against book diagram (ex-005).
+    // White: Kg1 Qf4 Rf1 Re2 Nh4, pawns c3 d4 e5 f6 g3 h2. Black: Kh8 Qc8 Rf8 Ra6 Na3, pawns b7 c7 f7 h7 g6 a4.
+    fen: '2q2r1k/1pp2p1p/r4Pp1/4P3/p2P1Q1N/n1P3P1/4R2P/5RK1 w - - 0 1',
+    toMove: 'white',
+    title: {
+      en: 'The Queen Can Hang!',
+      es: '¡La dama puede quedar colgada!',
+    },
+    game: 'Kolvic – Koch, 1959',
+    hint: {
+      en: 'Don\'t be afraid to place your queen where it can be captured — if what follows is a forced mate.',
+      es: 'No tengas miedo de poner la dama donde pueden capturarla, si lo que sigue es un mate forzado.',
+    },
+    solution: {
+      en: '1.Qh6! Rg8 2.Nf3! (threatening 3.Ng5) 2...Qf8 3.Ng5! and if 3...Qxh6 4.Nxf7# — a smothered mate, since the f6-pawn covers g7.',
+      es: '1.Dh6! Tg8 2.Cf3! (amenazando 3.Cg5) 2...Df8 3.Cg5! y si 3...Dxh6 4.Cxf7#, un mate ahogado, porque el peón de f6 cubre g7.',
+    },
+    moves: {
+      'Qh6': {
+        rating: 'best',
+        response: 'Rg8',
+        continuations: {
+          'Nf3': {
+            rating: 'best',
+            response: 'Qf8',
+            continuations: {
+              'Ng5': {
+                rating: 'best',
+                response: 'Qxh6',
+                continuations: {
+                  'Nxf7#': { rating: 'best' },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+
+  {
+    id: 11,
+    // Chigorin - Yankovic, 1889. White to move. Verified against book diagram (ex-006).
+    // White: Kf1 Ra1 Rb5 Be3, pawns b7 e4 f3 f2 h2. Black: Kb8 Nd8 Ra6 Rc6, pawns d6 e5 f6 g7 h7.
+    fen: '1k1n4/1P4pp/r1rp1p2/1R2p3/4P3/4BP2/5P1P/R4K2 w - - 0 1',
+    toMove: 'white',
+    title: {
+      en: 'Promote the Pawn!',
+      es: '¡A coronar el peón!',
+    },
+    game: 'Chigorin – Yankovic, 1889',
+    hint: {
+      en: 'The b7-pawn is one step from queening. Clear its path with a decoy.',
+      es: 'El peón de b7 está a un paso de coronar. Despejale el camino con un señuelo.',
+    },
+    solution: {
+      en: '1.Ba7+! Rxa7 2.Rxa7 1-0 — the a-file opens and the b7-pawn will queen.',
+      es: '1.Aa7+! Txa7 2.Txa7 1-0. Se abre la columna a y el peón de b7 va a coronar.',
+    },
+    moves: {
+      'Ba7+': {
+        rating: 'best',
+        response: 'Rxa7',
+        continuations: {
+          'Rxa7': { rating: 'best' },
+        },
+      },
+    },
+  },
+
+  {
+    id: 12,
+    // Alburt exercise (no game cited). White to move. Verified against book diagram (ex-007).
+    // White: Kg1 Qd4 Ra1 Rf1 Bc1 Nf3, pawns a2 b2 c2 c4 d2 f2 g2 h2.
+    // Black: Ke8 Qg6 Ra8 Rh8 Bb7 Ng8, pawns a6 c6 c7 d7 e6 g7 h7.
+    // Trap: 1.Ne5? Qxg2+! 2.Kxg2 c5+ discovers Bb7 (unblocked once Nf3 left) and wins Qd4.
+    fen: 'r3k1nr/1bpp2pp/p1p1p1q1/8/2PQ4/5N2/PPPP1PPP/R1B2RK1 w - - 0 1',
+    toMove: 'white',
+    title: {
+      en: 'White to Play and ...',
+      es: 'Juegan las blancas y…',
+    },
+    game: '',
+    hint: {
+      en: 'White to play — and be very careful. One tempting move throws the game away.',
+      es: 'Juegan las blancas… y hay que tener mucho cuidado. Una jugada tentadora tira la partida.',
+    },
+    solution: {
+      en: 'Be careful! The tempting 1.Ne5{bad} loses to 1...Qxg2+!! 2.Kxg2 c5+ — a discovered check by the b7-bishop (freed when the knight leaves f3) that also wins the d4-queen, leaving White a pawn down. Any calm move is fine, e.g. 1.Qd3{best}, or the bold 1.c5{ok}, locking the b7-bishop out.',
+      es: '¡Cuidado! La tentadora 1.Ce5{bad} pierde por 1...Dxg2+!! 2.Rxg2 c5+, un jaque a la descubierta del alfil de b7 (liberado al irse el caballo de f3) que además gana la dama de d4 y deja a las blancas un peón abajo. Cualquier jugada tranquila sirve, por ejemplo 1.Dd3{best}, o la audaz 1.c5{ok}, que encierra al alfil de b7.',
+    },
+    moves: {
+      'Qd3': { rating: 'best', response: null },
+      'c5': { rating: 'ok', response: null },
+      'Ne5': { rating: 'bad', response: 'Qxg2+' },
+    },
+  },
 ]

@@ -20,24 +20,15 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 
 ### Desktop
 
-![Vista desktop de la app](./docs/images/app-desktop.png)
+![Vista desktop de la app](./public/images/app-desktop.png)
 
 ### Mobile
 
-![Vista mobile de la app](./docs/images/app-mobile.png)
+![Vista mobile de la app](./public/images/app-mobile.png)
 
-![Vista mobile de un ejercicio](./docs/images/app-mobile-default.png)
+![Vista mobile de un ejercicio](./public/images/app-mobile-default.png)
 
-![Vista mobile de otro ejercicio con tablero Staunton](./docs/images/app-mobile-staunton.png)
-
-## Qué incluye
-
-- 7 ejercicios cargados desde un dataset local.
-- Tablero interactivo con `chessground` y validación de jugadas con `chess.js`.
-- Pistas y soluciones por ejercicio.
-- Navegación entre ejercicios, reinicio de posición y feedback visual por jugada.
-- Interfaz bilingüe (`es` / `en`).
-- Dos estilos de tablero seleccionables desde el menú de configuración.
+![Vista mobile de otro ejercicio con tablero Staunton](./public/images/app-mobile-staunton.png)
 
 ## Stack
 
