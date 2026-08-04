@@ -43,5 +43,6 @@ describe('formatSolutionHtml', () => {
     expect(html).toContain('class="solution-move solution-white solution-best">c5</span>')
     expect(html).not.toContain('solution-best">Dd3,</span>')
     expect(html).not.toContain('solution-best">c5,</span>')
+    expect(html).not.toContain('<p class="solution-paragraph">,')
   })
 })

@@ -28,13 +28,12 @@ function isLikelyMoveToken(token) {
 
 function parseRatedMoveToken(token) {
   const match = token.match(MOVE_RATING_RE)
-  if (!match) return { move: token, rating: null, punctuation: '', trailingText: '' }
+  if (!match) return { move: token, rating: null, punctuation: '' }
 
   return {
     move: match[1],
     rating: match[2].toLowerCase(),
     punctuation: match[3] ?? '',
-    trailingText: match[3] ?? '',
   }
 }
 
@@ -74,26 +73,13 @@ function parseTextSegment(text) {
     }
 
     let tail = text.slice(match.index + match[0].length, nextIndex).trim()
-    let trailingText = ''
-
     if (!match[2] && tail) {
       const { token, rest } = consumeLeadingToken(tail)
       const ratedToken = parseRatedMoveToken(token)
       if (isLikelyMoveToken(ratedToken.move)) {
         row.blackMove = ratedToken
-        trailingText = ratedToken.trailingText ?? ''
-        tail = `${trailingText}${rest ? ` ${rest}` : ''}`.trim()
+        tail = rest
       }
-    }
-
-    if (match[2]) {
-      trailingText = row.blackMove?.trailingText ?? ''
-    } else {
-      trailingText = row.whiteMove?.trailingText ?? ''
-    }
-
-    if (trailingText) {
-      tail = `${trailingText}${tail ? ` ${tail}` : ''}`.trim()
     }
 
     if (tail) {
