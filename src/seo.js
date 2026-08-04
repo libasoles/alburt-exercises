@@ -1,5 +1,10 @@
 import { SITE_IMAGE, SITE_NAME, buildSiteUrl } from './site.js'
 
+export function buildExerciseTitle(lang, exercise) {
+  const label = lang === 'es' ? 'Ejercicio' : 'Exercise'
+  return `${SITE_NAME} — ${label} ${exercise.id}: ${exercise.title[lang]}`
+}
+
 function setMeta(id, content) {
   const element = document.getElementById(id)
   if (!element || content === undefined || content === null) return
@@ -69,7 +74,7 @@ export function updateIndexSeo(lang) {
 
 export function updateExerciseSeo({ lang, exercise }) {
   const isSpanish = lang === 'es'
-  const title = `${SITE_NAME} — ${exercise.title[lang]}`
+  const title = buildExerciseTitle(lang, exercise)
   const description = isSpanish
     ? `Ejercicio ${exercise.id} de ajedrez de Lev Alburt. ${exercise.hint[lang]}`
     : `Chess exercise ${exercise.id} from Lev Alburt. ${exercise.hint[lang]}`
