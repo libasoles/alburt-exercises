@@ -10,6 +10,7 @@ import { evaluateMove } from "./exercises/evaluateMove.js";
 import { formatHintHtml } from "./exercises/formatHint.js";
 import { formatSolutionHtml } from "./exercises/formatSolution.js";
 import { getLang, applyI18n, syncLangInUrl, t, withLangInUrl } from "./i18n.js";
+import { registerServiceWorker } from "./pwa.js";
 import { updateExerciseSeo } from "./seo.js";
 import "./settingsMenu.js";
 import { getTheme, applyBoardTheme, setupSettingsMenu } from "./settings.js";
@@ -40,6 +41,8 @@ let rotateIconTurns = 0;
 let completionConfettiTimer = null;
 let pageConfetti = confetti;
 let overlayConfetti = confetti;
+
+registerServiceWorker();
 
 // ── Chessground helpers ───────────────────────────────────────────────────────
 

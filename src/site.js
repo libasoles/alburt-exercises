@@ -1,4 +1,4 @@
-export const SITE_NAME = 'TucuChess'
+export const SITE_NAME = 'Alburt'
 export const SITE_URL = 'https://libasoles.github.io/alburt-exercises/'
 export const SITE_IMAGE = new URL('images/mascot.png', SITE_URL).toString()
 

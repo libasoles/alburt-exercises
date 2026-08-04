@@ -1,5 +1,6 @@
 import { exercises } from './exercises/data.js'
 import { getLang, applyI18n, syncLangInUrl, withLangInUrl } from './i18n.js'
+import { registerServiceWorker } from './pwa.js'
 import { updateIndexSeo } from './seo.js'
 import './settingsMenu.js'
 import { setupSettingsMenu } from './settings.js'
@@ -37,3 +38,5 @@ setupSettingsMenu(newLang => {
   updateIndexSeo(newLang)
   renderExerciseList(newLang)
 })
+
+registerServiceWorker()
