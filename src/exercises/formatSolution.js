@@ -28,12 +28,13 @@ function isLikelyMoveToken(token) {
 
 function parseRatedMoveToken(token) {
   const match = token.match(MOVE_RATING_RE)
-  if (!match) return { move: token, rating: null, punctuation: '' }
+  if (!match) return { move: token, rating: null, punctuation: '', trailingText: '' }
 
   return {
     move: match[1],
     rating: match[2].toLowerCase(),
     punctuation: match[3] ?? '',
+    trailingText: match[3] ?? '',
   }
 }
 
@@ -73,14 +74,26 @@ function parseTextSegment(text) {
     }
 
     let tail = text.slice(match.index + match[0].length, nextIndex).trim()
+    let trailingText = ''
 
     if (!match[2] && tail) {
       const { token, rest } = consumeLeadingToken(tail)
       const ratedToken = parseRatedMoveToken(token)
       if (isLikelyMoveToken(ratedToken.move)) {
         row.blackMove = ratedToken
-        tail = rest
+        trailingText = ratedToken.trailingText ?? ''
+        tail = `${trailingText}${rest ? ` ${rest}` : ''}`.trim()
       }
+    }
+
+    if (match[2]) {
+      trailingText = row.blackMove?.trailingText ?? ''
+    } else {
+      trailingText = row.whiteMove?.trailingText ?? ''
+    }
+
+    if (trailingText) {
+      tail = `${trailingText}${tail ? ` ${tail}` : ''}`.trim()
     }
 
     if (tail) {
@@ -144,10 +157,10 @@ function splitTopLevelComments(text) {
 function renderRow(row) {
   const moveNo = `${row.number}.`
   const whiteMove = row.whiteMove
-    ? `${escapeHtml(row.whiteMove.move)}${escapeHtml(row.whiteMove.punctuation ?? '')}`
+    ? `${escapeHtml(row.whiteMove.move)}`
     : '&hellip;'
   const blackMove = row.blackMove
-    ? `${escapeHtml(row.blackMove.move)}${escapeHtml(row.blackMove.punctuation ?? '')}`
+    ? `${escapeHtml(row.blackMove.move)}`
     : '&hellip;'
   const result = row.result ? escapeHtml(row.result) : ''
   const whiteRatingClass = row.whiteMove?.rating ? ` solution-${row.whiteMove.rating}` : ''

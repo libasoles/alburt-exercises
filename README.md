@@ -2,7 +2,7 @@
 
 > Este proyecto fue codeado en forma black box con IA como proyecto personal. No es un repositorio pensado para evaluación de recruiters ni como muestra representativa de ingeniería profesional.
 
-Aplicación web estática para practicar ejercicios tácticos de ajedrez basados en el _Chess Training Pocket Book_ de Lev Alburt. El proyecto ofrece una portada con los ejercicios disponibles y una vista interactiva para resolver cada posición directamente sobre el tablero.
+Aplicación web estática para practicar ejercicios tácticos de ajedrez basados en el _Chess Training Pocket Book_ de Lev Alburt. El proyecto ofrece un índice con los ejercicios disponibles y una vista interactiva para resolver cada posición sobre un tablero.
 
 ## Demo
 
@@ -38,12 +38,6 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 - `chess.js`
 - Vitest
 
-## Componentes y assets
-
-- El tablero interactivo está construido sobre [`lichess-org/chessground`](https://github.com/lichess-org/chessground).
-- El tema plano usa los assets `cburnett` importados desde `chessground`.
-- Las piezas del tema Staunton incluidas en `public/images/staunton/` provienen de [`lichess-org/lila`](https://github.com/lichess-org/lila).
-
 ## Desarrollo
 
 ### Requisitos
@@ -51,13 +45,15 @@ Aplicación web estática para practicar ejercicios tácticos de ajedrez basados
 - Node.js 18+
 - npm
 
+> Para que la IA pueda extraer ejercicios, el libro en PDF debe existir dentro de la carpeta `/references`, que no se versiona en git.
+
 ### Instalar dependencias
 
 ```bash
 npm install
 ```
 
-### Levantar en local
+### Levantar en local para desarrollo
 
 ```bash
 npm run dev
@@ -75,34 +71,35 @@ npm test
 npm run build
 ```
 
-## Publicar
+## Deploys (Continuos Delivery)
 
-El repositorio queda listo para deploy automático con GitHub Actions usando [`.github/workflows/deploy-pages.yml`](/Users/guillermoperez/Projects/playground/chess/alburt-book/.github/workflows/deploy-pages.yml). El flujo:
-
-- se ejecuta en cada push a `main`
-- instala dependencias con `npm ci`
-- corre los tests
-- genera `dist/`
-- publica ese build
-
-### Activación
-
-1. Subí el proyecto al repositorio de GitHub.
-2. Configurá el destino de deploy para usar GitHub Actions.
-3. Hacé push a `main`.
-
-La configuración de Vite ya usa `base: './'`, así que funciona bien publicado desde un subpath del repositorio.
+Deploy automático con GitHub Actions. Ver [`.github/workflows/deploy-pages.yml`](/Users/guillermoperez/Projects/playground/chess/alburt-book/.github/workflows/deploy-pages.yml). El flujo:
 
 ## Estructura
 
 ```text
 .
-├── index.html
-├── exercise.html
-├── public/images/
+├── index.html (página)
+├── exercise.html (página)
 └── src/
     ├── exercise.js
     ├── main.js
     ├── exercises/
     └── styles/
+├── public/images/ (assets)
 ```
+
+La estructura de los ejercicios se define en el archivo:
+`src/exercises/data.js`
+
+## Componentes y assets
+
+- El tablero interactivo está construido sobre [`lichess-org/chessground`](https://github.com/lichess-org/chessground).
+- El tema plano usa los assets `cburnett` importados desde `chessground`.
+- Las piezas del tema Staunton incluidas en `public/images/staunton/` provienen de [`lichess-org/lila`](https://github.com/lichess-org/lila).
+
+## IAs
+
+Hay una Skill casera con instrucciones para extraer ejercicios del PDF en: `.claude/skills/extract-alburt-exercises/SKILL.md`.
+
+En esa carpeta, la skill es solo accesible para Claude, pero se puede mover a `.agents` y probarla con otro agente.
