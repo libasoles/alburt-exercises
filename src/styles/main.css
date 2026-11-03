@@ -421,6 +421,7 @@ settings-menu {
 .exercise-link-badge.black {
   background: var(--color-charcoal);
   color: #f0f0f0;
+  border: 1px solid transparent;
 }
 
 /* ── Exercise page ───────────────────────────────────────────────────────── */
