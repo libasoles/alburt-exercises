@@ -19,7 +19,7 @@ import { getTheme, applyBoardTheme, setupSettingsMenu } from "./settings.js";
 // ── Routing ──────────────────────────────────────────────────────────────────
 
 const params = new URLSearchParams(window.location.search);
-const exId = parseInt(params.get("ex"), 10);
+let exId = parseInt(params.get("ex"), 10);
 const setParam = params.get("set") === "woodpecker" ? "woodpecker" : null;
 const exercises = setParam ? woodpeckerExercises : alburtExercises;
 const exerciseUrl = (id) => withLangInUrl(`./exercise.html?${setParam ? `set=${setParam}&` : ""}ex=${id}`);
@@ -29,8 +29,8 @@ if (!exId || exId < 1 || exId > exercises.length) {
   throw new Error("redirect");
 }
 
-const exercise = exercises[exId - 1];
-const isLastExercise = exId === exercises.length;
+let exercise = exercises[exId - 1];
+let isLastExercise = exId === exercises.length;
 
 // ── State ─────────────────────────────────────────────────────────────────────
 
@@ -838,17 +838,89 @@ function setupNav() {
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
 
-  if (exId <= 1) prevBtn.disabled = true;
-  if (exId >= exercises.length) nextBtn.disabled = true;
+  updateNavButtons();
 
   prevBtn.addEventListener("click", () => {
-    if (exId > 1)
-      window.location.href = exerciseUrl(exId - 1);
+    if (exId > 1) goToExercise(exId - 1);
   });
   nextBtn.addEventListener("click", () => {
-    if (exId < exercises.length)
-      window.location.href = exerciseUrl(exId + 1);
+    if (exId < exercises.length) goToExercise(exId + 1);
   });
+  window.addEventListener("popstate", () => {
+    const id = parseInt(new URLSearchParams(window.location.search).get("ex"), 10);
+    if (id >= 1 && id <= exercises.length && id !== exId) loadExercise(id);
+  });
+}
+
+function updateNavButtons() {
+  document.getElementById("prev-btn").disabled = exId <= 1;
+  document.getElementById("next-btn").disabled = exId >= exercises.length;
+}
+
+// Switches exercise in place: the board stays mounted and only the pieces
+// fade out and back in with the new position.
+const SWAP_FADE_MS = 180;
+let swapTimer = null;
+
+function goToExercise(id) {
+  history.pushState(null, "", exerciseUrl(id));
+  loadExercise(id);
+}
+
+function loadExercise(id) {
+  const boardEl = document.getElementById("board");
+  boardEl.classList.add("board-swapping");
+  clearTimeout(swapTimer);
+  swapTimer = setTimeout(() => {
+    applyExercise(id);
+    // Let chessground draw the new pieces (still transparent) before fading in.
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => boardEl.classList.remove("board-swapping")),
+    );
+  }, SWAP_FADE_MS);
+}
+
+function applyExercise(id) {
+  cancelPlayback();
+  clearTimeout(bookResponseTimer);
+  bookResponseTimer = null;
+  bookResponsePending = false;
+  checkpointPending = false;
+  stopCompletionConfetti();
+  hideToast();
+  hideCompletionOverlay();
+  setResetButtonPulse(false);
+  setNextButtonPulse(false);
+  clearActiveSolutionMove();
+  if (solutionOpen) setSolutionVisible(false);
+  toggleHint(false);
+  hintStage = "idle";
+  hintCardDismissed = false;
+
+  exId = id;
+  exercise = exercises[id - 1];
+  isLastExercise = id === exercises.length;
+  chess = new Chess(exercise.fen);
+  currentNode = exercise.moves;
+  inFreePlay = false;
+  boardOrientation = exercise.toMove;
+
+  cg.set({
+    animation: { enabled: false },
+    fen: exercise.fen,
+    orientation: boardOrientation,
+    turnColor: exercise.toMove,
+    lastMove: undefined,
+    check: false,
+    movable: { color: "both", free: false, dests: toDests(chess) },
+  });
+  cg.set({ animation: { enabled: true } });
+
+  saveCheckpoint();
+  renderExercise(getLang());
+  document.getElementById("fen-value").textContent = exercise.fen;
+  updateNavButtons();
+  updateResetButtonState();
 }
 
 function setupBoardControls() {
