@@ -1265,7 +1265,8 @@ settings-menu {
 }
 
 :root {
-  --hint-color: rgba(46, 159, 87, 0.45);
+  /* pastel sky blue: complements the warm orange/peach board */
+  --hint-color: rgba(110, 196, 240, 0.6);
 }
 
 .hint-square {
