@@ -5,7 +5,8 @@ import "chessground/assets/chessground.cburnett.css";
 import { Chessground } from "chessground";
 import { Chess } from "chess.js";
 import confetti from "canvas-confetti";
-import { exercises } from "./exercises/data.js";
+import { exercises as alburtExercises } from "./exercises/data.js";
+import { woodpeckerExercises } from "./woodpecker/data.js";
 import { evaluateMove } from "./exercises/evaluateMove.js";
 import { formatHintHtml } from "./exercises/formatHint.js";
 import { formatSolutionHtml } from "./exercises/formatSolution.js";
@@ -19,6 +20,9 @@ import { getTheme, applyBoardTheme, setupSettingsMenu } from "./settings.js";
 
 const params = new URLSearchParams(window.location.search);
 const exId = parseInt(params.get("ex"), 10);
+const setParam = params.get("set") === "woodpecker" ? "woodpecker" : null;
+const exercises = setParam ? woodpeckerExercises : alburtExercises;
+const exerciseUrl = (id) => withLangInUrl(`./exercise.html?${setParam ? `set=${setParam}&` : ""}ex=${id}`);
 
 if (!exId || exId < 1 || exId > exercises.length) {
   window.location.replace(withLangInUrl("./index.html"));
@@ -839,11 +843,11 @@ function setupNav() {
 
   prevBtn.addEventListener("click", () => {
     if (exId > 1)
-      window.location.href = withLangInUrl(`./exercise.html?ex=${exId - 1}`);
+      window.location.href = exerciseUrl(exId - 1);
   });
   nextBtn.addEventListener("click", () => {
     if (exId < exercises.length)
-      window.location.href = withLangInUrl(`./exercise.html?ex=${exId + 1}`);
+      window.location.href = exerciseUrl(exId + 1);
   });
 }
 

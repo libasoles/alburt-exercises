@@ -1,4 +1,5 @@
 import { exercises } from './exercises/data.js'
+import { woodpeckerExercises } from './woodpecker/data.js'
 import { getLang, applyI18n, syncLangInUrl, withLangInUrl } from './i18n.js'
 import { registerServiceWorker } from './pwa.js'
 import { updateIndexSeo } from './seo.js'
@@ -6,15 +7,20 @@ import './settingsMenu.js'
 import { setupSettingsMenu } from './settings.js'
 
 function renderExerciseList(lang) {
-  const list = document.getElementById('exercise-list')
+  renderList('exercise-list', exercises, '', lang)
+  renderList('woodpecker-list', woodpeckerExercises, 'set=woodpecker&', lang)
+}
+
+function renderList(listId, items, query, lang) {
+  const list = document.getElementById(listId)
   list.innerHTML = ''
 
-  exercises.forEach(ex => {
+  items.forEach(ex => {
     const li = document.createElement('li')
     li.className = 'exercise-item'
 
     const link = document.createElement('a')
-    link.href = withLangInUrl(`./exercise.html?ex=${ex.id}`, lang)
+    link.href = withLangInUrl(`./exercise.html?${query}ex=${ex.id}`, lang)
     link.className = 'exercise-link'
 
     const title = document.createElement('span')
