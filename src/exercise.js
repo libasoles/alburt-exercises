@@ -801,6 +801,7 @@ function renderExercise(lang) {
 
   const gameEl = document.getElementById("game-ref");
   gameEl.textContent = exercise.game ?? "";
+  gameEl.title = exercise.game ?? "";
   setRotateBoardButtonLabels(lang);
 
   // Hint panel content and button visibility
