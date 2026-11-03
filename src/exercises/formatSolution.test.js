@@ -77,3 +77,13 @@ describe('formatSolutionHtml clickable moves', () => {
     expect(formatSolutionHtml(text, 'es')).not.toContain('data-path')
   })
 })
+
+describe('formatSolutionHtml with a prefix', () => {
+  test('replays the assumed prefix before the solution moves', () => {
+    const fen = '8/1p2kp1p/p3pn2/2r5/8/P1N5/1PP3PP/5RK1 w - - 0 1'
+    const html = formatSolutionHtml('1...Txc3! 2.Txf7+! Rxf7 3.bxc3', 'es', fen, ['Rxf6'])
+
+    expect(html).toContain('data-path="Rxf6 Rxc3">Txc3!</span>')
+    expect(html).toContain('data-path="Rxf6 Rxc3 Rxf7+ Kxf7 bxc3">bxc3</span>')
+  })
+})

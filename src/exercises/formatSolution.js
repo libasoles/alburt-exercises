@@ -151,10 +151,11 @@ function toEnglishSan(token, lang) {
   return san
 }
 
-function createLine(fen) {
+function createLine(fen, prefix = []) {
   const chess = new Chess(fen)
+  const sans = prefix.map(san => chess.move(san).san)
   const startPly = (chess.moveNumber() - 1) * 2 + (chess.turn() === 'w' ? 0 : 1)
-  return { fen, path: [], nextPly: startPly, history: new Map() }
+  return { fen: chess.fen(), path: sans, nextPly: startPly, history: new Map() }
 }
 
 // A variation can only branch from plies already played on the line it was cloned from.
@@ -269,9 +270,10 @@ function renderComment(text, lang, mainLine) {
  * @param {string} text - solution text in book notation
  * @param {string} lang
  * @param {string} [fen] - start position; when given, moves that can be replayed from it become clickable (data-path)
+ * @param {string[]} [prefix] - English SAN moves the text assumes were already played from `fen`
  */
-export function formatSolutionHtml(text, lang = 'es', fen) {
-  const mainLine = fen ? createLine(fen) : null
+export function formatSolutionHtml(text, lang = 'es', fen, prefix = []) {
+  const mainLine = fen ? createLine(fen, prefix) : null
   return splitTopLevelComments(text)
     .map(segment => {
       if (segment.type === 'comment') return renderComment(segment.text, lang, mainLine)

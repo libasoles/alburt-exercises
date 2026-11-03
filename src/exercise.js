@@ -126,15 +126,17 @@ function bestMoves() {
 // shown. A good move returns it to idle.
 function updateHintButton() {
   const btn = document.getElementById("hint-btn");
-  if (!btn) return;
+  const label = document.getElementById("hint-btn-label");
+  if (!btn || !label) return;
   const key = hintStage === "idle" ? "showHint" : "revealHint";
-  btn.textContent = t(key);
-  btn.dataset.i18n = key;
+  label.textContent = t(key);
+  label.dataset.i18n = key;
+  btn.classList.toggle("hint-btn-reveal", hintStage !== "idle");
   btn.disabled = hintStage === "arrow" || bestMoves().length === 0;
 }
 
-// The square tint is an overlay div (not a chessground shape) so it is a plain
-// square colour change; the arrow is a chessground auto shape.
+// The square tint is a div inside cg-board, under the pieces (chessground
+// ignores nodes that are not piece/square), so only the square is coloured; the arrow is a chessground auto shape.
 function refreshHintHighlight() {
   const boardEl = document.getElementById("board");
   boardEl.querySelectorAll(".hint-square").forEach((el) => el.remove());
@@ -159,7 +161,7 @@ function refreshHintHighlight() {
     el.className = "hint-square";
     el.style.left = `${(white ? file : 7 - file) * 12.5}%`;
     el.style.top = `${(white ? 7 - rank : rank) * 12.5}%`;
-    boardEl.appendChild(el);
+    boardEl.querySelector("cg-board").appendChild(el);
   }
   updateHintButton();
 }
@@ -551,6 +553,7 @@ function initBoard() {
 
 function retryFromCheckpoint() {
   cancelPlayback();
+  if (solutionOpen) setSolutionVisible(false);
   hintStage = "idle";
   hideToast();
   hideCompletionOverlay();
@@ -725,30 +728,26 @@ function toggleHint(forceOpen) {
 
 let solutionOpen = false;
 
-function toggleSolution(forceOpen) {
-  const panel = document.getElementById("solution-panel");
-  const btn = document.getElementById("solution-btn");
-  solutionOpen = forceOpen !== undefined ? forceOpen : !solutionOpen;
+// The panel buttons are hidden while the solution card is open; Retry closes it.
+function setSolutionVisible(open) {
+  solutionOpen = open;
+  document.getElementById("solution-panel").hidden = !open;
+  document
+    .getElementById("panel-buttons")
+    .classList.toggle("panel-buttons-collapsed", open);
+}
 
-  if (solutionOpen && !hintOpen && exercise.hint[getLang()]) {
-    toggleHint(true);
-  }
+function openSolution() {
+  setSolutionVisible(true);
+  if (!hintOpen && exercise.hint[getLang()]) toggleHint(true);
 
-  panel.hidden = !solutionOpen;
-  btn.textContent = solutionOpen ? t("hideSolution") : t("showSolution");
-  btn.dataset.i18n = solutionOpen ? "hideSolution" : "showSolution";
-
-  if (solutionOpen) {
-    // Continue from the user's last good position; only the missing moves play.
-    playLine(checkpoint.inFreePlay ? [] : bestLine(checkpoint.node), {
-      fen: checkpoint.fen,
-      lastMove: checkpoint.lastMove,
-      startDelay: AUTOPLAY_START_DELAY_MS,
-      nextDelay: humanMoveDelay,
-    });
-  } else if (chess.fen() !== checkpoint.fen) {
-    retryFromCheckpoint();
-  }
+  // Continue from the user's last good position; only the missing moves play.
+  playLine(checkpoint.inFreePlay ? [] : bestLine(checkpoint.node), {
+    fen: checkpoint.fen,
+    lastMove: checkpoint.lastMove,
+    startDelay: AUTOPLAY_START_DELAY_MS,
+    nextDelay: humanMoveDelay,
+  });
 }
 
 const mobilePanelsQuery = window.matchMedia("(max-width: 639px)");
@@ -815,11 +814,9 @@ function renderExercise(lang) {
     exercise.solution[lang],
     lang,
     exercise.fen,
+    exercise.solutionPrefix,
   );
 
-  // Solution button label
-  const btn = document.getElementById("solution-btn");
-  btn.textContent = solutionOpen ? t("hideSolution") : t("showSolution");
 
   // FEN copy tooltip
   const fenBox = document.getElementById("fen-box");
@@ -908,7 +905,7 @@ document
   .addEventListener("click", advanceHint);
 document
   .getElementById("solution-btn")
-  .addEventListener("click", () => toggleSolution());
+  .addEventListener("click", openSolution);
 mobilePanelsQuery.addEventListener("change", syncPanelLayout);
 window.addEventListener("resize", syncCurvedCompletionTitle);
 

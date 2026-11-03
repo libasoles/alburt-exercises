@@ -53,6 +53,8 @@ export const exercises = [
       es: "Entrar al final de peones",
     },
     game: "",
+    // The solution text starts after 1.Rxf6, so replays need it as a prefix.
+    solutionPrefix: ["Rxf6"],
     hint: {
       en: "Doesn't 1.Rxf6 Kxf6 2.Ne4+ win a piece?",
       es: "¿No gana una pieza 1.Txf6 Rxf6 2.Ce4+?",

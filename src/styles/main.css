@@ -1247,11 +1247,40 @@ settings-menu {
   }
 }
 
+.solution-btn.hint-btn-reveal:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+:root {
+  --hint-color: rgba(46, 159, 87, 0.45);
+}
+
 .hint-square {
   position: absolute;
   width: 12.5%;
   height: 12.5%;
-  background: rgba(46, 159, 87, 0.45);
+  background: var(--hint-color);
   pointer-events: none;
-  z-index: 3;
+  z-index: 1;
+}
+
+.panel-buttons:not(.panel-buttons-collapsed) #hint-btn:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.hint-btn-icon {
+  display: none;
+  flex-shrink: 0;
+}
+
+.hint-btn-reveal .hint-btn-icon {
+  display: block;
+}
+
+.panel-buttons-collapsed .solution-btn {
+  display: none;
 }
