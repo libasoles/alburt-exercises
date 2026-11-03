@@ -8,7 +8,10 @@ import { setupSettingsMenu } from './settings.js'
 
 function renderExerciseList(lang) {
   renderList('exercise-list', exercises, '', lang)
-  renderList('woodpecker-list', woodpeckerExercises, 'set=woodpecker&', lang)
+  for (const level of ['easy', 'intermediate', 'advanced']) {
+    const items = woodpeckerExercises.filter(ex => ex.level === level)
+    renderList(`woodpecker-list-${level}`, items, 'set=woodpecker&', lang)
+  }
 }
 
 function renderList(listId, items, query, lang) {

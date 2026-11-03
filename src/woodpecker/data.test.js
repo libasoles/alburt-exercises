@@ -15,8 +15,14 @@ function mainLine(node) {
 }
 
 describe('woodpecker exercises', () => {
-  test('has 25 sequentially numbered exercises', () => {
-    expect(woodpeckerExercises).toHaveLength(25)
+  test('has 25 exercises for each of the three book levels', () => {
+    for (const level of ['easy', 'intermediate', 'advanced']) {
+      expect(woodpeckerExercises.filter(ex => ex.level === level)).toHaveLength(25)
+    }
+  })
+
+  test('has sequentially numbered exercises', () => {
+    expect(woodpeckerExercises).toHaveLength(75)
     woodpeckerExercises.forEach((ex, i) => expect(ex.id).toBe(i + 1))
   })
 
