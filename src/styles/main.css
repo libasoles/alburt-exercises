@@ -1149,8 +1149,18 @@ settings-menu {
     aspect-ratio: 1;
   }
 
+  /* Flatten the info column so the nav buttons can sit right under the board */
   .info-column {
-    padding-top: 0;
+    display: contents;
+  }
+
+  .info-column > * {
+    order: 2;
+  }
+
+  .info-column > .board-controls {
+    order: 1;
+    margin-top: -12px;
   }
 
   .nav-btn,
@@ -1263,6 +1273,26 @@ settings-menu {
 @media (min-width: 640px) {
   .exercise-layout {
     min-height: calc(var(--board-size) + 120px);
+  }
+
+  /* Nav buttons live at the bottom of the right column */
+  .info-column {
+    align-self: stretch;
+  }
+
+  .info-column > .board-controls {
+    margin-top: auto;
+  }
+}
+
+/* Large screens: grow the board, capped so the column still fits the viewport height */
+@media (min-width: 1024px) {
+  :root {
+    --board-size: clamp(480px, calc(100vh - 300px), 720px);
+  }
+
+  .exercise-main {
+    max-width: 1400px;
   }
 }
 
