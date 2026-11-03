@@ -1304,3 +1304,16 @@ settings-menu {
 .panel-buttons-collapsed .solution-btn {
   display: none;
 }
+
+/* Exercise switch: the board keeps its space, only the pieces fade. */
+#board piece,
+#board cg-container svg,
+#board .hint-square {
+  transition: opacity 0.18s ease;
+}
+
+#board.board-swapping piece,
+#board.board-swapping cg-container svg,
+#board.board-swapping .hint-square {
+  opacity: 0;
+}
