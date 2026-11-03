@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alburt-v1'
+const CACHE_NAME = 'alburt-v2'
 const APP_SHELL_URLS = [
   './',
   './index.html',
