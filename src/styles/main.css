@@ -747,6 +747,24 @@ settings-menu {
   font-weight: 700;
 }
 
+.solution-clickable {
+  cursor: pointer;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+}
+
+.solution-clickable:hover,
+.solution-clickable:focus-visible,
+.solution-clickable.solution-active {
+  text-decoration-style: solid;
+  outline: none;
+}
+
+.solution-clickable.solution-active {
+  background: rgba(253, 123, 65, 0.18);
+  border-radius: 4px;
+}
+
 .solution-white {
   color: #7a5c3a;
 }
@@ -1227,4 +1245,13 @@ settings-menu {
   .exercise-layout {
     min-height: calc(var(--board-size) + 120px);
   }
+}
+
+.hint-square {
+  position: absolute;
+  width: 12.5%;
+  height: 12.5%;
+  background: rgba(46, 159, 87, 0.45);
+  pointer-events: none;
+  z-index: 3;
 }

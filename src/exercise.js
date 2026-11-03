@@ -35,7 +35,14 @@ let cg = null;
 let currentNode = exercise.moves;
 let inFreePlay = false;
 let bookResponsePending = false;
-let hasUserMoved = false;
+let checkpoint = null;
+let checkpointPending = false;
+let bookResponseTimer = null;
+let playbackTimer = null;
+let playbackId = 0;
+let hintOpen = false;
+let hintStage = "idle";
+let hintCardDismissed = false;
 let boardOrientation = exercise.toMove;
 let rotateIconTurns = 0;
 let completionConfettiTimer = null;
@@ -89,10 +96,72 @@ function setRotateBoardButtonLabels(lang = getLang()) {
   if (rotateLabel) rotateLabel.textContent = t("rotateBoard");
 }
 
+function saveCheckpoint() {
+  checkpoint = {
+    fen: chess.fen(),
+    node: currentNode,
+    inFreePlay,
+    lastMove: cg?.state.lastMove,
+  };
+}
+
 function updateResetButtonState() {
   const resetBtn = document.getElementById("reset-btn");
   if (!resetBtn) return;
-  resetBtn.disabled = !hasUserMoved;
+  resetBtn.disabled = chess.fen() === checkpoint.fen;
+}
+
+function bestMoves() {
+  if (!currentNode || inFreePlay || bookResponsePending) return [];
+  const bestSans = Object.keys(currentNode).filter(
+    (san) => currentNode[san].rating === "best",
+  );
+  return chess
+    .moves({ verbose: true })
+    .filter((move) => bestSans.includes(move.san))
+    .sort((a, b) => bestSans.indexOf(a.san) - bestSans.indexOf(b.san));
+}
+
+// Hint button cycle: "Ver pista" (idle) -> "Revelar" (square tinted) -> arrow
+// shown. A good move returns it to idle.
+function updateHintButton() {
+  const btn = document.getElementById("hint-btn");
+  if (!btn) return;
+  const key = hintStage === "idle" ? "showHint" : "revealHint";
+  btn.textContent = t(key);
+  btn.dataset.i18n = key;
+  btn.disabled = hintStage === "arrow" || bestMoves().length === 0;
+}
+
+// The square tint is an overlay div (not a chessground shape) so it is a plain
+// square colour change; the arrow is a chessground auto shape.
+function refreshHintHighlight() {
+  const boardEl = document.getElementById("board");
+  boardEl.querySelectorAll(".hint-square").forEach((el) => el.remove());
+  cg?.setAutoShapes([]);
+
+  const moves = bestMoves();
+  if (hintStage === "idle" || moves.length === 0) {
+    updateHintButton();
+    return;
+  }
+
+  if (hintStage === "arrow") {
+    cg.setAutoShapes([{ orig: moves[0].from, dest: moves[0].to, brush: "green" }]);
+  }
+
+  const origins = hintStage === "arrow" ? [moves[0].from] : moves.map((m) => m.from);
+  for (const square of new Set(origins)) {
+    const file = square.charCodeAt(0) - 97;
+    const rank = Number(square[1]) - 1;
+    const white = boardOrientation === "white";
+    const el = document.createElement("div");
+    el.className = "hint-square";
+    el.style.left = `${(white ? file : 7 - file) * 12.5}%`;
+    el.style.top = `${(white ? 7 - rank : rank) * 12.5}%`;
+    boardEl.appendChild(el);
+  }
+  updateHintButton();
 }
 
 function setResetButtonPulse(enabled) {
@@ -222,6 +291,7 @@ function setupFenCopy() {
 
 function playBookResponse(san) {
   bookResponsePending = false;
+  bookResponseTimer = null;
   let move;
   try {
     move = chess.move(san);
@@ -241,7 +311,10 @@ function playBookResponse(san) {
     },
   });
 
+  if (checkpointPending) saveCheckpoint();
+  checkpointPending = false;
   updateResetButtonState();
+  refreshHintHighlight();
 }
 
 // ── Confetti ──────────────────────────────────────────────────────────────────
@@ -405,15 +478,22 @@ function handleMove(orig, dest) {
     },
   });
 
-  hasUserMoved = true;
-  updateResetButtonState();
+  hintStage = "idle";
 
   // In free play mode, just keep playing
-  if (inFreePlay) return;
+  if (inFreePlay) {
+    updateResetButtonState();
+    refreshHintHighlight();
+    return;
+  }
 
   const { rating, response, nextNode } = evaluateMove(currentNode, move.san);
 
   showToast(rating);
+  if (rating === "best" && hintOpen) {
+    toggleHint(false);
+    hintCardDismissed = true;
+  }
   setResetButtonPulse(rating === "bad");
 
   // Advance tree
@@ -434,9 +514,15 @@ function handleMove(orig, dest) {
   // Schedule book response — disable board during the delay to prevent state desync
   if (response) {
     bookResponsePending = true;
+    checkpointPending = rating === "best";
     cg.set({ movable: { color: undefined } });
-    setTimeout(() => playBookResponse(response), 600);
+    bookResponseTimer = setTimeout(() => playBookResponse(response), 600);
+  } else if (rating === "best") {
+    saveCheckpoint();
   }
+
+  updateResetButtonState();
+  refreshHintHighlight();
 }
 
 // ── Board init ────────────────────────────────────────────────────────────────
@@ -461,25 +547,29 @@ function initBoard() {
   });
 }
 
-// ── Reset ─────────────────────────────────────────────────────────────────────
+// ── Retry ─────────────────────────────────────────────────────────────────────
 
-function resetBoard() {
+function retryFromCheckpoint() {
+  cancelPlayback();
+  hintStage = "idle";
   hideToast();
   hideCompletionOverlay();
+  clearTimeout(bookResponseTimer);
+  bookResponseTimer = null;
   bookResponsePending = false;
+  checkpointPending = false;
   setResetButtonPulse(false);
   setNextButtonPulse(false);
 
-  chess = new Chess(exercise.fen);
-  currentNode = exercise.moves;
-  inFreePlay = false;
-  hasUserMoved = false;
+  chess = new Chess(checkpoint.fen);
+  currentNode = checkpoint.node;
+  inFreePlay = checkpoint.inFreePlay;
 
   cg.set({
-    fen: exercise.fen,
+    fen: checkpoint.fen,
     orientation: boardOrientation,
-    turnColor: exercise.toMove,
-    lastMove: undefined,
+    turnColor: cgTurnColor(chess),
+    lastMove: checkpoint.lastMove,
     movable: {
       color: "both",
       free: false,
@@ -488,26 +578,147 @@ function resetBoard() {
     check: false,
   });
 
-  // Hide hint and solution panels
-  const hintPanel = document.getElementById("hint-panel");
-  if (hintPanel && !hintPanel.hidden) toggleHint(false);
-  const solutionPanel = document.getElementById("solution-panel");
-  if (solutionPanel && !solutionPanel.hidden) toggleSolution(false);
-
   updateResetButtonState();
+  refreshHintHighlight();
+}
+
+// ── Solution playback ─────────────────────────────────────────────────────────
+
+const CLICK_MOVE_DELAY_MS = 550;
+const AUTOPLAY_START_DELAY_MS = 900;
+
+function humanMoveDelay() {
+  return 1100 + Math.random() * 900;
+}
+
+function bestLine(startNode) {
+  const sans = [];
+  let node = startNode;
+  while (node) {
+    const san = Object.keys(node).find((key) => node[key].rating === "best");
+    if (!san) break;
+    sans.push(san);
+    if (node[san].response) sans.push(node[san].response);
+    node = node[san].continuations ?? null;
+  }
+  return sans;
+}
+
+// On mobile the solution panel sits below the board; bring the board back
+// into view so the replay is visible.
+function revealBoard() {
+  if (!mobilePanelsQuery.matches) return;
+  document
+    .getElementById("board")
+    .scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function clearActiveSolutionMove() {
+  document
+    .querySelectorAll(".solution-active")
+    .forEach((el) => el.classList.remove("solution-active"));
+}
+
+function cancelPlayback() {
+  playbackId += 1;
+  clearTimeout(playbackTimer);
+  playbackTimer = null;
+  clearActiveSolutionMove();
+}
+
+function showPlaybackPosition(lastMove) {
+  cg.set({
+    fen: chess.fen(),
+    turnColor: cgTurnColor(chess),
+    lastMove,
+    check: chess.inCheck() ? cgTurnColor(chess) : false,
+    movable: { color: undefined },
+  });
+}
+
+// Replays `sans` from `fen`, one move at a time, on top of a board that is
+// locked until the line ends.
+function playLine(
+  sans,
+  { fen = exercise.fen, lastMove, startDelay, nextDelay },
+) {
+  cancelPlayback();
+  revealBoard();
+  const id = playbackId;
+
+  clearTimeout(bookResponseTimer);
+  bookResponseTimer = null;
+  bookResponsePending = false;
+  checkpointPending = false;
+  inFreePlay = true;
+  hintStage = "idle";
+  setResetButtonPulse(false);
+  setNextButtonPulse(false);
+  hideToast();
+  hideCompletionOverlay();
+
+  chess = new Chess(fen);
+  showPlaybackPosition(lastMove);
+  updateResetButtonState();
+  refreshHintHighlight();
+
+  const step = (index) => {
+    if (id !== playbackId) return;
+    if (index >= sans.length) {
+      playbackTimer = null;
+      cg.set({ movable: { color: "both", free: false, dests: toDests(chess) } });
+      return;
+    }
+    const move = chess.move(sans[index]);
+    showPlaybackPosition([move.from, move.to]);
+    playbackTimer = setTimeout(() => step(index + 1), nextDelay());
+  };
+
+  playbackTimer = setTimeout(() => step(0), startDelay);
+}
+
+function setupSolutionClicks() {
+  const container = document.getElementById("solution-text");
+
+  const activate = (el) => {
+    const path = el.dataset.path.split(" ");
+    playLine(path, {
+      startDelay: CLICK_MOVE_DELAY_MS,
+      nextDelay: () => CLICK_MOVE_DELAY_MS,
+    });
+    clearActiveSolutionMove();
+    el.classList.add("solution-active");
+  };
+
+  container.addEventListener("click", (event) => {
+    const el = event.target.closest(".solution-clickable");
+    if (el) activate(el);
+  });
+  container.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const el = event.target.closest(".solution-clickable");
+    if (!el) return;
+    event.preventDefault();
+    activate(el);
+  });
 }
 
 // ── Hint panel ────────────────────────────────────────────────────────────────
 
-let hintOpen = false;
+function advanceHint() {
+  if (hintStage === "idle") {
+    if (!hintOpen && !hintCardDismissed) toggleHint(true);
+    hintStage = "highlight";
+  } else if (hintStage === "highlight") {
+    hintStage = "arrow";
+  }
+  refreshHintHighlight();
+}
 
 function toggleHint(forceOpen) {
   const panel = document.getElementById("hint-panel");
-  const btn = document.getElementById("hint-btn");
   hintOpen = forceOpen !== undefined ? forceOpen : !hintOpen;
   panel.hidden = !hintOpen;
-  btn.textContent = hintOpen ? t("hideHint") : t("showHint");
-  btn.dataset.i18n = hintOpen ? "hideHint" : "showHint";
 }
 
 // ── Solution panel ────────────────────────────────────────────────────────────
@@ -526,6 +737,18 @@ function toggleSolution(forceOpen) {
   panel.hidden = !solutionOpen;
   btn.textContent = solutionOpen ? t("hideSolution") : t("showSolution");
   btn.dataset.i18n = solutionOpen ? "hideSolution" : "showSolution";
+
+  if (solutionOpen) {
+    // Continue from the user's last good position; only the missing moves play.
+    playLine(checkpoint.inFreePlay ? [] : bestLine(checkpoint.node), {
+      fen: checkpoint.fen,
+      lastMove: checkpoint.lastMove,
+      startDelay: AUTOPLAY_START_DELAY_MS,
+      nextDelay: humanMoveDelay,
+    });
+  } else if (chess.fen() !== checkpoint.fen) {
+    retryFromCheckpoint();
+  }
 }
 
 const mobilePanelsQuery = window.matchMedia("(max-width: 639px)");
@@ -586,11 +809,12 @@ function renderExercise(lang) {
   } else {
     hintBtn.hidden = true;
   }
-  hintBtn.textContent = hintOpen ? t("hideHint") : t("showHint");
+  updateHintButton();
 
   document.getElementById("solution-text").innerHTML = formatSolutionHtml(
     exercise.solution[lang],
     lang,
+    exercise.fen,
   );
 
   // Solution button label
@@ -636,6 +860,7 @@ function setupBoardControls() {
       `${rotateIconTurns * 180}deg`,
     );
     cg.set({ orientation: boardOrientation });
+    refreshHintHighlight();
   });
 }
 
@@ -667,18 +892,20 @@ syncLangInUrl(lang);
 applyI18n(lang);
 renderExercise(lang);
 initBoard();
+saveCheckpoint();
 syncBoardTheme();
 setupNav();
 setupBoardControls();
 setupCompletionOverlay();
 setupFenCopy();
+setupSolutionClicks();
 syncPanelLayout();
 updateResetButtonState();
 
-document.getElementById("reset-btn").addEventListener("click", resetBoard);
+document.getElementById("reset-btn").addEventListener("click", retryFromCheckpoint);
 document
   .getElementById("hint-btn")
-  .addEventListener("click", () => toggleHint());
+  .addEventListener("click", advanceHint);
 document
   .getElementById("solution-btn")
   .addEventListener("click", () => toggleSolution());

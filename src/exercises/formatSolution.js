@@ -1,3 +1,4 @@
+import { Chess } from 'chess.js'
 import { strings } from '../i18n.js'
 
 const MOVE_START_RE = /(\d+)\.(\.\.)?([^\s()]+)/g
@@ -140,14 +141,66 @@ function splitTopLevelComments(text) {
   return segments
 }
 
+const ES_PIECES = { D: 'Q', T: 'R', C: 'N', A: 'B', R: 'K' }
+
+function toEnglishSan(token, lang) {
+  let san = token.replace(/[!?]+/g, '').replace(/\+\+/, '+').replace(/^0-0-0/, 'O-O-O').replace(/^0-0/, 'O-O')
+  if (lang === 'es') {
+    san = san.replace(/^[DTCAR]/, piece => ES_PIECES[piece]).replace(/=[DTCA]/, promo => `=${ES_PIECES[promo[1]]}`)
+  }
+  return san
+}
+
+function createLine(fen) {
+  const chess = new Chess(fen)
+  const startPly = (chess.moveNumber() - 1) * 2 + (chess.turn() === 'w' ? 0 : 1)
+  return { fen, path: [], nextPly: startPly, history: new Map() }
+}
+
+// A variation can only branch from plies already played on the line it was cloned from.
+function cloneLine(line) {
+  return { ...line, nextPly: -1, history: new Map(line.history) }
+}
+
+function playToken(line, token, ply, lang) {
+  const base = ply === line.nextPly ? { fen: line.fen, path: line.path } : line.history.get(ply)
+  if (!base) return
+
+  const chess = new Chess(base.fen)
+  let move
+  try {
+    move = chess.move(toEnglishSan(token.move, lang))
+  } catch {
+    return
+  }
+  if (!move) return
+
+  line.history.set(ply, base)
+  line.path = [...base.path, move.san]
+  line.fen = chess.fen()
+  line.nextPly = ply + 1
+  token.path = line.path.join(' ')
+}
+
+function annotateSegments(segments, line, lang) {
+  if (!line) return
+  for (const segment of segments) {
+    if (segment.type !== 'row') continue
+    const ply = (Number(segment.number) - 1) * 2
+    if (segment.whiteMove) playToken(line, segment.whiteMove, ply, lang)
+    if (segment.blackMove) playToken(line, segment.blackMove, ply + 1, lang)
+  }
+}
+
+function renderMove(token, classes) {
+  if (!token) return `<span class="${classes}">&hellip;</span>`
+  const text = escapeHtml(token.move)
+  if (!token.path) return `<span class="${classes}">${text}</span>`
+  return `<span class="${classes} solution-clickable" role="button" tabindex="0" data-path="${escapeHtml(token.path)}">${text}</span>`
+}
+
 function renderRow(row) {
   const moveNo = `${row.number}.`
-  const whiteMove = row.whiteMove
-    ? `${escapeHtml(row.whiteMove.move)}`
-    : '&hellip;'
-  const blackMove = row.blackMove
-    ? `${escapeHtml(row.blackMove.move)}`
-    : '&hellip;'
   const result = row.result ? escapeHtml(row.result) : ''
   const whiteRatingClass = row.whiteMove?.rating ? ` solution-${row.whiteMove.rating}` : ''
   const blackRatingClass = row.blackMove?.rating ? ` solution-${row.blackMove.rating}` : ''
@@ -155,8 +208,8 @@ function renderRow(row) {
   return `
     <div class="solution-row">
       <span class="solution-move-no">${escapeHtml(moveNo)}</span>
-      <span class="solution-move solution-white${whiteRatingClass}">${whiteMove}</span>
-      <span class="solution-move solution-black${blackRatingClass}">${blackMove}</span>
+      ${renderMove(row.whiteMove, `solution-move solution-white${whiteRatingClass}`)}
+      ${renderMove(row.blackMove, `solution-move solution-black${blackRatingClass}`)}
       <span class="solution-result">${result}</span>
     </div>
   `
@@ -187,13 +240,16 @@ function renderFlatSegments(segments, { mainLine = false } = {}) {
   return html
 }
 
-function renderComment(text, lang) {
+function renderComment(text, lang, mainLine) {
   const branches = text
     .split(';')
     .map(branch => normalizeWhitespace(branch))
     .filter(Boolean)
 
   const parsedBranches = branches.map(branch => parseTextSegment(branch))
+  if (mainLine) {
+    for (const segments of parsedBranches) annotateSegments(segments, cloneLine(mainLine), lang)
+  }
   const hasMoves = parsedBranches.some(segments => segments.some(segment => segment.type === 'row'))
 
   const content = parsedBranches.length > 1
@@ -209,12 +265,19 @@ function renderComment(text, lang) {
   return `<div class="solution-comment">${title}${content}</div>`
 }
 
-export function formatSolutionHtml(text, lang = 'es') {
-  const segments = splitTopLevelComments(text)
-  return segments
+/**
+ * @param {string} text - solution text in book notation
+ * @param {string} lang
+ * @param {string} [fen] - start position; when given, moves that can be replayed from it become clickable (data-path)
+ */
+export function formatSolutionHtml(text, lang = 'es', fen) {
+  const mainLine = fen ? createLine(fen) : null
+  return splitTopLevelComments(text)
     .map(segment => {
-      if (segment.type === 'comment') return renderComment(segment.text, lang)
-      return renderFlatSegments(parseTextSegment(segment.text), { mainLine: true })
+      if (segment.type === 'comment') return renderComment(segment.text, lang, mainLine)
+      const parsed = parseTextSegment(segment.text)
+      annotateSegments(parsed, mainLine, lang)
+      return renderFlatSegments(parsed, { mainLine: true })
     })
     .join('')
 }

@@ -46,3 +46,34 @@ describe('formatSolutionHtml', () => {
     expect(html).not.toContain('<p class="solution-paragraph">,')
   })
 })
+
+describe('formatSolutionHtml clickable moves', () => {
+  const fen = '3r2k1/p4ppp/1q6/8/8/2R1P3/P3QPPP/6K1 b - - 0 1'
+  const text =
+    '1...Db2! (En la partida.) 2.Tc8!? (2.Tc2 Db1+ 3.Df1 Dxc2; 2.De1 Dxc3) 2...Db1+ 3.Df1 Dxf1+ 4.Rxf1 Txc8 0-1'
+
+  test('attaches the path from the start position to each replayable move', () => {
+    const html = formatSolutionHtml(text, 'es', fen)
+
+    expect(html).toContain('data-path="Qb2">Db2!</span>')
+    expect(html).toContain('data-path="Qb2 Rc8">Tc8!?</span>')
+    expect(html).toContain('data-path="Qb2 Rc8 Qb1+ Qf1 Qxf1+ Kxf1 Rxc8">Txc8</span>')
+  })
+
+  test('variations branch from the move they replace', () => {
+    const html = formatSolutionHtml(text, 'es', fen)
+
+    expect(html).toContain('data-path="Qb2 Rc2 Qb1+ Qf1 Qxc2">Dxc2</span>')
+    expect(html).toContain('data-path="Qb2 Qe1 Qxc3">Dxc3</span>')
+  })
+
+  test('moves that cannot be replayed stay plain text', () => {
+    const html = formatSolutionHtml('1.Txf6 Rxf6', 'es', fen)
+
+    expect(html).not.toContain('data-path')
+  })
+
+  test('without a start position nothing is clickable', () => {
+    expect(formatSolutionHtml(text, 'es')).not.toContain('data-path')
+  })
+})
