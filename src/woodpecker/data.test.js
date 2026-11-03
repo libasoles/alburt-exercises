@@ -25,7 +25,7 @@ describe('woodpecker exercises', () => {
     expect(chess.turn()).toBe(ex.toMove === 'white' ? 'w' : 'b')
     const line = mainLine(ex.moves)
     for (const san of line) chess.move(san)
-    if (ex.title.en.startsWith('Mate')) expect(chess.isCheckmate()).toBe(true)
+    if (ex.solution.en.endsWith('#')) expect(chess.isCheckmate()).toBe(true)
   })
 
   test.each(woodpeckerExercises.map(ex => [ex.id, ex]))('exercise %i solution formats in both languages', (_id, ex) => {

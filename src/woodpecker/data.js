@@ -1,30 +1,31 @@
-// Selected tactics from the Lichess puzzle database (CC0, https://database.lichess.org/#puzzles).
-// Generated; each puzzle links back to https://lichess.org/training/<lichessId>.
+// Tactics from historical master games, identified from "The Woodpecker Method" (Smith & Tikkanen).
+// Only the positions/games are used; moves come from the games themselves (PGN Mentor, https://www.pgnmentor.com).
+// `bookNumber` is the exercise number in the book's Easy section.
 export const woodpeckerExercises = [
   {
     "id": 1,
-    "lichessId": "YrZ9M",
-    "rating": 1385,
-    "fen": "8/Q7/1p3Kpk/8/5P1p/4P1P1/7q/8 w - - 0 39",
-    "toMove": "white",
+    "bookNumber": 1,
+    "fen": "r6r/1pp3k1/1b6/p2P1p2/P1N1pn2/2P2PP1/BP5P/4RR1K b - - 0 30",
+    "toMove": "black",
     "title": {
-      "en": "Mate in 2",
-      "es": "Mate en 2"
+      "en": "Hamppe – Steinitz",
+      "es": "Hamppe – Steinitz"
     },
+    "game": "Hamppe – Steinitz, Vienna 1860",
     "hint": {
-      "en": "Find the mate in two.",
-      "es": "Encontrá el mate en dos jugadas."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "39.Qg7+ Kh5 40.Qxg6#",
-      "es": "39.Dg7+ Rh5 40.Dxg6#"
+      "en": "30...Rxh2+ 31.Kxh2 Rh8#",
+      "es": "30...Txh2+ 31.Rxh2 Th8#"
     },
     "moves": {
-      "Qg7+": {
+      "Rxh2+": {
         "rating": "best",
-        "response": "Kh5",
+        "response": "Kxh2",
         "continuations": {
-          "Qxg6#": {
+          "Rh8#": {
             "rating": "best"
           }
         }
@@ -33,28 +34,28 @@ export const woodpeckerExercises = [
   },
   {
     "id": 2,
-    "lichessId": "gHHWW",
-    "rating": 1322,
-    "fen": "r2qkb1r/ppp2ppp/2np4/P3N3/2B5/2P5/1PP2PPP/R1BbK2R w KQkq - 0 9",
+    "bookNumber": 11,
+    "fen": "4r2k/1b3Q1p/p1q3p1/1p4B1/2pb4/8/PPB3PP/5R1K w - - 1 34",
     "toMove": "white",
     "title": {
-      "en": "Mate in 2",
-      "es": "Mate en 2"
+      "en": "Mackenzie – Steinitz",
+      "es": "Mackenzie – Steinitz"
     },
+    "game": "Mackenzie – Steinitz, Vienna 1882",
     "hint": {
-      "en": "Find the mate in two.",
-      "es": "Encontrá el mate en dos jugadas."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "9.Bxf7+ Ke7 10.Bg5#",
-      "es": "9.Axf7+ Re7 10.Ag5#"
+      "en": "34.Be4 Qxe4 35.Bf6+",
+      "es": "34.Ae4 Dxe4 35.Af6+"
     },
     "moves": {
-      "Bxf7+": {
+      "Be4": {
         "rating": "best",
-        "response": "Ke7",
+        "response": "Qxe4",
         "continuations": {
-          "Bg5#": {
+          "Bf6+": {
             "rating": "best"
           }
         }
@@ -63,28 +64,28 @@ export const woodpeckerExercises = [
   },
   {
     "id": 3,
-    "lichessId": "YszVJ",
-    "rating": 1461,
-    "fen": "1rb2rk1/p5pp/8/6N1/6nP/1P4Q1/P1P1p1P1/R6K b - - 0 24",
+    "bookNumber": 25,
+    "fen": "8/1p3q1k/2p3pp/4P1r1/8/4Q3/PP5P/3R3K b - - 2 38",
     "toMove": "black",
     "title": {
-      "en": "Mate in 2",
-      "es": "Mate en 2"
+      "en": "Thomas – Lasker",
+      "es": "Thomas – Lasker"
     },
+    "game": "Thomas – Lasker, Nottingham 1936",
     "hint": {
-      "en": "Find the mate in two.",
-      "es": "Encontrá el mate en dos jugadas."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "24...Rf1+ 25.Rxf1 exf1=Q#",
-      "es": "24...Tf1+ 25.Txf1 exf1=D#"
+      "en": "38...Rxe5 39.Qxe5 Qf3+",
+      "es": "38...Txe5 39.Dxe5 Df3+"
     },
     "moves": {
-      "Rf1+": {
+      "Rxe5": {
         "rating": "best",
-        "response": "Rxf1",
+        "response": "Qxe5",
         "continuations": {
-          "exf1=Q#": {
+          "Qf3+": {
             "rating": "best"
           }
         }
@@ -93,100 +94,102 @@ export const woodpeckerExercises = [
   },
   {
     "id": 4,
-    "lichessId": "iSrYj",
-    "rating": 1740,
-    "fen": "4r1k1/ppqn1ppp/2pb1p2/8/2BP3N/2P2P1P/PPQ3P1/R1B3K1 b - - 0 15",
-    "toMove": "black",
+    "bookNumber": 45,
+    "fen": "r3nrk1/1bp2ppp/pp2p3/3q2N1/1b1PNP2/3B2P1/PP2QP1P/2RR2K1 w - - 6 17",
+    "toMove": "white",
     "title": {
-      "en": "Mate in 3",
-      "es": "Mate en 3"
+      "en": "Capablanca – Becker",
+      "es": "Capablanca – Becker"
     },
+    "game": "Capablanca – Becker, Karlsbad 1929",
     "hint": {
-      "en": "There is a forced mate in three; start with checks and sacrifices.",
-      "es": "Hay un mate forzado en tres jugadas; empezá por los jaques y los sacrificios."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "15...Re1+ 16.Bf1 Bh2+ 17.Kh1 Rxf1#",
-      "es": "15...Te1+ 16.Af1 Ah2+ 17.Rh1 Txf1#"
+      "en": "17.Nxh7 f5",
+      "es": "17.Cxh7 f5"
     },
     "moves": {
-      "Re1+": {
+      "Nxh7": {
         "rating": "best",
-        "response": "Bf1",
-        "continuations": {
-          "Bh2+": {
-            "rating": "best",
-            "response": "Kh1",
-            "continuations": {
-              "Rxf1#": {
-                "rating": "best"
-              }
-            }
-          }
-        }
+        "response": "f5"
       }
     }
   },
   {
     "id": 5,
-    "lichessId": "mrDdX",
-    "rating": 1321,
-    "fen": "8/3qbrpk/3p3p/p3pN2/Pp2n3/6RQ/1r1B1PPP/3R2K1 w - - 0 27",
-    "toMove": "white",
+    "bookNumber": 54,
+    "fen": "r1b2rk1/pp4pp/2pb4/3p1pq1/2PP4/1N1BPR2/PPQ3PP/4R1K1 b - - 1 17",
+    "toMove": "black",
     "title": {
-      "en": "Mate in 3",
-      "es": "Mate en 3"
+      "en": "Goldfarb – Alekhine",
+      "es": "Goldfarb – Alekhine"
     },
+    "game": "Goldfarb – Alekhine, St Petersburg 1909",
     "hint": {
-      "en": "There is a forced mate in three; start with checks and sacrifices.",
-      "es": "Hay un mate forzado en tres jugadas; empezá por los jaques y los sacrificios."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "27.Rxg7+ Rxg7 28.Qxh6+ Kg8 29.Qxg7#",
-      "es": "27.Txg7+ Txg7 28.Dxh6+ Rg8 29.Dxg7#"
+      "en": "17...Bxh2+ 18.Kf2",
+      "es": "17...Axh2+ 18.Rf2"
     },
     "moves": {
-      "Rxg7+": {
+      "Bxh2+": {
         "rating": "best",
-        "response": "Rxg7",
-        "continuations": {
-          "Qxh6+": {
-            "rating": "best",
-            "response": "Kg8",
-            "continuations": {
-              "Qxg7#": {
-                "rating": "best"
-              }
-            }
-          }
-        }
+        "response": "Kf2"
       }
     }
   },
   {
     "id": 6,
-    "lichessId": "4pxqH",
-    "rating": 1379,
-    "fen": "6k1/1pb5/2P3p1/6Pp/3pPp1Q/3P1P1B/r1q5/1R4K1 w - - 1 39",
-    "toMove": "white",
+    "bookNumber": 65,
+    "fen": "1r2r1k1/p1pbqppp/Q2b1n2/3p4/P2P4/2P5/1P2BPPP/R1B1KN1R b KQ - 2 14",
+    "toMove": "black",
     "title": {
-      "en": "Fork",
-      "es": "Horquilla"
+      "en": "Fink – Alekhine",
+      "es": "Fink – Alekhine"
     },
+    "game": "Fink – Alekhine, Pasadena 1932",
     "hint": {
-      "en": "Look for a move that attacks two pieces at once.",
-      "es": "Buscá una jugada que ataque dos piezas a la vez."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "39.Be6+ Kf8 40.Bxa2",
-      "es": "39.Ae6+ Rf8 40.Axa2"
+      "en": "14...Bb5",
+      "es": "14...Ab5"
     },
     "moves": {
-      "Be6+": {
+      "Bb5": {
+        "rating": "best"
+      }
+    }
+  },
+  {
+    "id": 7,
+    "bookNumber": 81,
+    "fen": "6k1/6pp/p1p3r1/3p4/P2P1Pq1/1R2PR2/2Q1K1P1/7r b - - 1 32",
+    "toMove": "black",
+    "title": {
+      "en": "Colin – Euwe",
+      "es": "Colin – Euwe"
+    },
+    "game": "Colin – Euwe, Bern 1932",
+    "hint": {
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
+    },
+    "solution": {
+      "en": "32...Qxg2+ 33.Rf2 Qxf2+",
+      "es": "32...Dxg2+ 33.Tf2 Dxf2+"
+    },
+    "moves": {
+      "Qxg2+": {
         "rating": "best",
-        "response": "Kf8",
+        "response": "Rf2",
         "continuations": {
-          "Bxa2": {
+          "Qxf2+": {
             "rating": "best"
           }
         }
@@ -194,72 +197,30 @@ export const woodpeckerExercises = [
     }
   },
   {
-    "id": 7,
-    "lichessId": "NNjAF",
-    "rating": 1414,
-    "fen": "Q2qkb1r/2p2pp1/3p1n1p/4p1N1/4P3/1PN5/1P1P1PPP/2B3K1 w k - 2 17",
+    "id": 8,
+    "bookNumber": 90,
+    "fen": "3r2k1/2q1b2p/ppnpPpp1/2pB4/2P2PPB/PP1R3P/3Q4/6K1 w - - 5 35",
     "toMove": "white",
     "title": {
-      "en": "Fork",
-      "es": "Horquilla"
+      "en": "Euwe – Cintron",
+      "es": "Euwe – Cintron"
     },
+    "game": "Euwe – Cintron, Munich (ol) 1958",
     "hint": {
-      "en": "Look for a move that attacks two pieces at once.",
-      "es": "Buscá una jugada que ataque dos piezas a la vez."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "17.Qxd8+ Kxd8 18.Nxf7+ Ke8 19.Nxh8",
-      "es": "17.Dxd8+ Rxd8 18.Cxf7+ Re8 19.Cxh8"
+      "en": "35.Bxf6 Bxf6 36.e7+",
+      "es": "35.Axf6 Axf6 36.e7+"
     },
     "moves": {
-      "Qxd8+": {
+      "Bxf6": {
         "rating": "best",
-        "response": "Kxd8",
+        "response": "Bxf6",
         "continuations": {
-          "Nxf7+": {
-            "rating": "best",
-            "response": "Ke8",
-            "continuations": {
-              "Nxh8": {
-                "rating": "best"
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  {
-    "id": 8,
-    "lichessId": "4YFq6",
-    "rating": 1466,
-    "fen": "3r2k1/r1p1n1b1/1p2b1pp/1P2Np2/2P4P/P3p1P1/1B3PB1/2R1R1K1 b - - 0 20",
-    "toMove": "black",
-    "title": {
-      "en": "Fork",
-      "es": "Horquilla"
-    },
-    "hint": {
-      "en": "Look for a move that attacks two pieces at once.",
-      "es": "Buscá una jugada que ataque dos piezas a la vez."
-    },
-    "solution": {
-      "en": "20...exf2+ 21.Kxf2 Rd2+ 22.Kf1 Rxb2",
-      "es": "20...exf2+ 21.Rxf2 Td2+ 22.Rf1 Txb2"
-    },
-    "moves": {
-      "exf2+": {
-        "rating": "best",
-        "response": "Kxf2",
-        "continuations": {
-          "Rd2+": {
-            "rating": "best",
-            "response": "Kf1",
-            "continuations": {
-              "Rxb2": {
-                "rating": "best"
-              }
-            }
+          "e7+": {
+            "rating": "best"
           }
         }
       }
@@ -267,35 +228,29 @@ export const woodpeckerExercises = [
   },
   {
     "id": 9,
-    "lichessId": "Uheec",
-    "rating": 1483,
-    "fen": "b2k3r/2p1qp2/BpPp4/3Pn3/PP2Pp2/2N2P2/3K1Q1P/R7 b - - 1 30",
-    "toMove": "black",
+    "bookNumber": 96,
+    "fen": "r4rk1/p3qpp1/2p2n2/3pb2p/3Q2B1/1PN1P3/PB3PPP/2R2RK1 w - - 1 16",
+    "toMove": "white",
     "title": {
-      "en": "Pin",
-      "es": "Clavada"
+      "en": "Smyslov – Govbinder",
+      "es": "Smyslov – Govbinder"
     },
+    "game": "Smyslov – Govbinder, Moscow 1967",
     "hint": {
-      "en": "An enemy piece cannot move without losing something more valuable.",
-      "es": "Una pieza enemiga no puede moverse sin perder algo más valioso."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "30...Rxh2 31.Qxh2 Nxf3+ 32.Kc2 Nxh2",
-      "es": "30...Txh2 31.Dxh2 Cxf3+ 32.Rc2 Cxh2"
+      "en": "16.Nxd5 cxd5 17.Qxe5",
+      "es": "16.Cxd5 cxd5 17.Dxe5"
     },
     "moves": {
-      "Rxh2": {
+      "Nxd5": {
         "rating": "best",
-        "response": "Qxh2",
+        "response": "cxd5",
         "continuations": {
-          "Nxf3+": {
-            "rating": "best",
-            "response": "Kc2",
-            "continuations": {
-              "Nxh2": {
-                "rating": "best"
-              }
-            }
+          "Qxe5": {
+            "rating": "best"
           }
         }
       }
@@ -303,64 +258,53 @@ export const woodpeckerExercises = [
   },
   {
     "id": 10,
-    "lichessId": "IAkx5",
-    "rating": 1462,
-    "fen": "r1b2k2/ppp1q1b1/5nQ1/3p2N1/2r5/7P/PPP3P1/5RK1 w - - 2 21",
-    "toMove": "white",
+    "bookNumber": 105,
+    "fen": "5bk1/p2Q1p2/q4p2/4r2p/3pr3/8/PPRRNPPP/5K2 b - - 1 31",
+    "toMove": "black",
     "title": {
-      "en": "Pin",
-      "es": "Clavada"
+      "en": "Tal – Grigorian",
+      "es": "Tal – Grigorian"
     },
+    "game": "Tal – Grigorian, Yerevan 1980",
     "hint": {
-      "en": "An enemy piece cannot move without losing something more valuable.",
-      "es": "Una pieza enemiga no puede moverse sin perder algo más valioso."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "21.Nh7+ Kg8 22.Nxf6+ Qxf6 23.Rxf6",
-      "es": "21.Ch7+ Rg8 22.Cxf6+ Dxf6 23.Txf6"
+      "en": "31...Rxe2 32.Rxe2",
+      "es": "31...Txe2 32.Txe2"
     },
     "moves": {
-      "Nh7+": {
+      "Rxe2": {
         "rating": "best",
-        "response": "Kg8",
-        "continuations": {
-          "Nxf6+": {
-            "rating": "best",
-            "response": "Qxf6",
-            "continuations": {
-              "Rxf6": {
-                "rating": "best"
-              }
-            }
-          }
-        }
+        "response": "Rxe2"
       }
     }
   },
   {
     "id": 11,
-    "lichessId": "BNeFU",
-    "rating": 1429,
-    "fen": "r2q1r1k/pb4p1/1p2p3/2p1B3/3pB2P/2P1P3/PPQK1P2/R6R b - - 0 18",
-    "toMove": "black",
+    "bookNumber": 114,
+    "fen": "r4rk1/2n1q2p/b1n1p1p1/pp1pPpN1/P1pP1N1P/2P3P1/1P3PB1/R2QR1K1 w - - 1 24",
+    "toMove": "white",
     "title": {
-      "en": "Skewer",
-      "es": "Ensartada"
+      "en": "Petrosian – Barcza",
+      "es": "Petrosian – Barcza"
     },
+    "game": "Petrosian – Barcza, Saltsjobaden 1952",
     "hint": {
-      "en": "Attack a valuable piece to win the one behind it.",
-      "es": "Atacá una pieza valiosa para ganar la que está detrás."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "18...Rxf2+ 19.Kc1 Rxc2+",
-      "es": "18...Txf2+ 19.Rc1 Txc2+"
+      "en": "24.Nfxe6 Nxe6 25.Bxd5",
+      "es": "24.Cfxe6 Cxe6 25.Axd5"
     },
     "moves": {
-      "Rxf2+": {
+      "Nfxe6": {
         "rating": "best",
-        "response": "Kc1",
+        "response": "Nxe6",
         "continuations": {
-          "Rxc2+": {
+          "Bxd5": {
             "rating": "best"
           }
         }
@@ -369,58 +313,52 @@ export const woodpeckerExercises = [
   },
   {
     "id": 12,
-    "lichessId": "Ce8yf",
-    "rating": 1440,
-    "fen": "r2k1b1r/pp5p/2n1pNq1/5pBQ/3p4/2P5/PP4PP/R5K1 w - - 0 20",
-    "toMove": "white",
+    "bookNumber": 122,
+    "fen": "8/4r1k1/4qp2/1p6/3R4/P1N2QPp/1PP2K1P/4r3 b - - 3 38",
+    "toMove": "black",
     "title": {
-      "en": "Discovered attack",
-      "es": "Ataque descubierto"
+      "en": "Averbakh – Spassky",
+      "es": "Averbakh – Spassky"
     },
+    "game": "Averbakh – Spassky, Moscow 1961",
     "hint": {
-      "en": "Move one piece to open the line for another.",
-      "es": "Mové una pieza para abrirle la línea a otra."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "20.Nxh7+ Qxg5 21.Qxg5+",
-      "es": "20.Cxh7+ Dxg5 21.Dxg5+"
+      "en": "38...Rf1+",
+      "es": "38...Tf1+"
     },
     "moves": {
-      "Nxh7+": {
-        "rating": "best",
-        "response": "Qxg5",
-        "continuations": {
-          "Qxg5+": {
-            "rating": "best"
-          }
-        }
+      "Rf1+": {
+        "rating": "best"
       }
     }
   },
   {
     "id": 13,
-    "lichessId": "LDMBw",
-    "rating": 1502,
-    "fen": "4rrk1/pp1q1ppp/2pp1b2/4nP2/4PB2/1BQ4P/PPP2P1K/3R2R1 b - - 6 20",
+    "bookNumber": 131,
+    "fen": "2kn3r/pp1b4/2n1p1p1/q2pP1P1/2pN1P2/P1P3K1/2PB4/R2Q3B b - - 0 29",
     "toMove": "black",
     "title": {
-      "en": "Discovered attack",
-      "es": "Ataque descubierto"
+      "en": "Spassky – Dueckstein",
+      "es": "Spassky – Dueckstein"
     },
+    "game": "Spassky – Dueckstein, Zurich 1984",
     "hint": {
-      "en": "Move one piece to open the line for another.",
-      "es": "Mové una pieza para abrirle la línea a otra."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "20...Ng4+ 21.Rxg4 Bxc3",
-      "es": "20...Cg4+ 21.Txg4 Axc3"
+      "en": "29...Rxh1 30.Qxh1 Nxd4",
+      "es": "29...Txh1 30.Dxh1 Cxd4"
     },
     "moves": {
-      "Ng4+": {
+      "Rxh1": {
         "rating": "best",
-        "response": "Rxg4",
+        "response": "Qxh1",
         "continuations": {
-          "Bxc3": {
+          "Nxd4": {
             "rating": "best"
           }
         }
@@ -429,35 +367,29 @@ export const woodpeckerExercises = [
   },
   {
     "id": 14,
-    "lichessId": "gjRzl",
-    "rating": 1408,
-    "fen": "6k1/p3P1p1/3n2Pp/3p4/r2P4/P4r2/1P3P2/1KR5 w - - 1 37",
+    "bookNumber": 138,
+    "fen": "2rq1rk1/pp3pb1/3p2pB/n4P2/4pP2/1BNQ4/PKP3P1/3R3R w - - 0 21",
     "toMove": "white",
     "title": {
-      "en": "Deflection",
-      "es": "Desviación"
+      "en": "Fischer – Purevzhav",
+      "es": "Fischer – Purevzhav"
     },
+    "game": "Fischer – Purevzhav, Varna (ol) 1962",
     "hint": {
-      "en": "Pull a defender away from its key task.",
-      "es": "Alejá a una pieza defensora de su tarea clave."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "37.Rc8+ Nxc8 38.e8=Q+ Rf8 39.Qxa4",
-      "es": "37.Tc8+ Cxc8 38.e8=D+ Tf8 39.Dxa4"
+      "en": "21.Bxg7 Kxg7 22.Nxe4",
+      "es": "21.Axg7 Rxg7 22.Cxe4"
     },
     "moves": {
-      "Rc8+": {
+      "Bxg7": {
         "rating": "best",
-        "response": "Nxc8",
+        "response": "Kxg7",
         "continuations": {
-          "e8=Q+": {
-            "rating": "best",
-            "response": "Rf8",
-            "continuations": {
-              "Qxa4": {
-                "rating": "best"
-              }
-            }
+          "Nxe4": {
+            "rating": "best"
           }
         }
       }
@@ -465,35 +397,29 @@ export const woodpeckerExercises = [
   },
   {
     "id": 15,
-    "lichessId": "OIJ0Y",
-    "rating": 1290,
-    "fen": "r1bk1br1/5p1p/p2p1N2/2p5/Pp2PP1n/6Pq/1PP1BR1P/RN1Q2K1 b - - 2 20",
-    "toMove": "black",
+    "bookNumber": 147,
+    "fen": "1r2b1k1/R4nqp/4p3/1pR5/1P1P1r2/5N2/1Q2B1P1/6K1 w - - 8 35",
+    "toMove": "white",
     "title": {
-      "en": "Deflection",
-      "es": "Desviación"
+      "en": "Karpov – Franklin",
+      "es": "Karpov – Franklin"
     },
+    "game": "Karpov – Franklin, Hastings 1972",
     "hint": {
-      "en": "Pull a defender away from its key task.",
-      "es": "Alejá a una pieza defensora de su tarea clave."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "20...Rxg3+ 21.hxg3 Qxg3+ 22.Kh1 Qxf2",
-      "es": "20...Txg3+ 21.hxg3 Dxg3+ 22.Rh1 Dxf2"
+      "en": "35.Rg5 Qxg5 36.Nxg5",
+      "es": "35.Tg5 Dxg5 36.Cxg5"
     },
     "moves": {
-      "Rxg3+": {
+      "Rg5": {
         "rating": "best",
-        "response": "hxg3",
+        "response": "Qxg5",
         "continuations": {
-          "Qxg3+": {
-            "rating": "best",
-            "response": "Kh1",
-            "continuations": {
-              "Qxf2": {
-                "rating": "best"
-              }
-            }
+          "Nxg5": {
+            "rating": "best"
           }
         }
       }
@@ -501,35 +427,29 @@ export const woodpeckerExercises = [
   },
   {
     "id": 16,
-    "lichessId": "1q4El",
-    "rating": 1457,
-    "fen": "r5k1/p6p/6p1/2N5/2p5/4nN1P/PRP1rRP1/6K1 b - - 4 23",
-    "toMove": "black",
+    "bookNumber": 154,
+    "fen": "5kr1/5p2/8/1Q1bPp2/8/P5P1/q1rBBK1P/3R4 w - - 0 32",
+    "toMove": "white",
     "title": {
-      "en": "Attraction",
-      "es": "Atracción"
+      "en": "Karpov – Agdestein",
+      "es": "Karpov – Agdestein"
     },
+    "game": "Karpov – Agdestein, Oslo 1984",
     "hint": {
-      "en": "Force an enemy piece onto a square where you can punish it.",
-      "es": "Forzá a una pieza enemiga a una casilla donde puedas castigarla."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "23...Rxf2 24.Kxf2 Nd1+ 25.Ke2 Nxb2",
-      "es": "23...Txf2 24.Rxf2 Cd1+ 25.Re2 Cxb2"
+      "en": "32.Qxd5 Qxd5 33.Bh6+",
+      "es": "32.Dxd5 Dxd5 33.Ah6+"
     },
     "moves": {
-      "Rxf2": {
+      "Qxd5": {
         "rating": "best",
-        "response": "Kxf2",
+        "response": "Qxd5",
         "continuations": {
-          "Nd1+": {
-            "rating": "best",
-            "response": "Ke2",
-            "continuations": {
-              "Nxb2": {
-                "rating": "best"
-              }
-            }
+          "Bh6+": {
+            "rating": "best"
           }
         }
       }
@@ -537,28 +457,28 @@ export const woodpeckerExercises = [
   },
   {
     "id": 17,
-    "lichessId": "CA1J9",
-    "rating": 1366,
-    "fen": "rnb2k1r/pp1p1ppp/8/8/2q2P2/2b5/PP4PP/RN1QR1K1 w - - 0 14",
-    "toMove": "white",
+    "bookNumber": 161,
+    "fen": "4r2k/3n2bB/2p1NqQ1/2Pp4/5B2/r6P/5PP1/4R1K1 b - - 2 34",
+    "toMove": "black",
     "title": {
-      "en": "Back-rank mate",
-      "es": "Mate en la primera fila"
+      "en": "Karpov – Lobron",
+      "es": "Karpov – Lobron"
     },
+    "game": "Karpov – Lobron, Frankfurt 1997",
     "hint": {
-      "en": "The king has no escape on its back rank.",
-      "es": "El rey no tiene escape en su primera fila."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "14.Qd6+ Kg8 15.Re8#",
-      "es": "14.Dd6+ Rg8 15.Te8#"
+      "en": "34...Rxe6 35.Rxe6 Ra1+",
+      "es": "34...Txe6 35.Txe6 Ta1+"
     },
     "moves": {
-      "Qd6+": {
+      "Rxe6": {
         "rating": "best",
-        "response": "Kg8",
+        "response": "Rxe6",
         "continuations": {
-          "Re8#": {
+          "Ra1+": {
             "rating": "best"
           }
         }
@@ -567,35 +487,29 @@ export const woodpeckerExercises = [
   },
   {
     "id": 18,
-    "lichessId": "sDVW2",
-    "rating": 1472,
-    "fen": "2r2rk1/1p3ppp/pqn1p3/3pP3/QP1P1P2/P7/3NN1PP/2R2RK1 b - - 0 19",
-    "toMove": "black",
+    "bookNumber": 167,
+    "fen": "r5k1/pb1p1Rpq/2n1p1Q1/1p2P3/3P2P1/P7/1P1K4/5R2 w - - 10 26",
+    "toMove": "white",
     "title": {
-      "en": "Double check",
-      "es": "Jaque doble"
+      "en": "Karpov – Ghaem Maghami",
+      "es": "Karpov – Ghaem Maghami"
     },
+    "game": "Karpov – Ghaem Maghami, Teheran 2009",
     "hint": {
-      "en": "A double check can only be answered by moving the king.",
-      "es": "Un jaque doble sólo se responde moviendo el rey."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "19...Nxd4 20.Rxc8 Nxe2+ 21.Kh1 Rxc8",
-      "es": "19...Cxd4 20.Txc8 Cxe2+ 21.Rh1 Txc8"
+      "en": "26.Rf8+ Rxf8 27.Rxf8+",
+      "es": "26.Tf8+ Txf8 27.Txf8+"
     },
     "moves": {
-      "Nxd4": {
+      "Rf8+": {
         "rating": "best",
-        "response": "Rxc8",
+        "response": "Rxf8",
         "continuations": {
-          "Nxe2+": {
-            "rating": "best",
-            "response": "Kh1",
-            "continuations": {
-              "Rxc8": {
-                "rating": "best"
-              }
-            }
+          "Rxf8+": {
+            "rating": "best"
           }
         }
       }
@@ -603,154 +517,125 @@ export const woodpeckerExercises = [
   },
   {
     "id": 19,
-    "lichessId": "XcRHG",
-    "rating": 1280,
-    "fen": "5rk1/5Npp/2p5/p1P5/2Qp4/P4P2/4KP2/q7 w - - 8 40",
+    "bookNumber": 175,
+    "fen": "2r5/pp1b4/4p3/3pPk2/5P2/8/1K6/3R2R1 w - - 2 35",
     "toMove": "white",
     "title": {
-      "en": "Smothered mate",
-      "es": "Mate ahogado"
+      "en": "Kasparov – Shirov",
+      "es": "Kasparov – Shirov"
     },
+    "game": "Kasparov – Shirov, Astana 2001",
     "hint": {
-      "en": "The king is surrounded by its own pieces.",
-      "es": "El rey está rodeado por sus propias piezas."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "40.Nh6+ Kh8 41.Qg8+ Rxg8 42.Nf7#",
-      "es": "40.Ch6+ Rh8 41.Dg8+ Txg8 42.Cf7#"
+      "en": "35.Rd4",
+      "es": "35.Td4"
     },
     "moves": {
-      "Nh6+": {
-        "rating": "best",
-        "response": "Kh8",
-        "continuations": {
-          "Qg8+": {
-            "rating": "best",
-            "response": "Rxg8",
-            "continuations": {
-              "Nf7#": {
-                "rating": "best"
-              }
-            }
-          }
-        }
+      "Rd4": {
+        "rating": "best"
       }
     }
   },
   {
     "id": 20,
-    "lichessId": "1YJUs",
-    "rating": 1449,
-    "fen": "rnbqk1nr/ppppbpQp/8/8/8/1P6/P1P1PPPP/RNB1KBNR b KQkq - 0 4",
+    "bookNumber": 183,
+    "fen": "2rq1rk1/1p4bp/4p1p1/p2p1bP1/P2N4/2PnB3/QP4BP/R5RK b - - 11 26",
     "toMove": "black",
     "title": {
-      "en": "Trapped piece",
-      "es": "Pieza atrapada"
+      "en": "Slobodjan – Khalifman",
+      "es": "Slobodjan – Khalifman"
     },
+    "game": "Slobodjan – Khalifman, Germany 1999",
     "hint": {
-      "en": "An enemy piece has run out of safe squares.",
-      "es": "Una pieza enemiga se quedó sin casillas seguras."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "4...Bf6 5.Qg3 Bxa1",
-      "es": "4...Af6 5.Dg3 Axa1"
+      "en": "26...Qxg5 27.Rge1",
+      "es": "26...Dxg5 27.Tge1"
     },
     "moves": {
-      "Bf6": {
+      "Qxg5": {
         "rating": "best",
-        "response": "Qg3",
-        "continuations": {
-          "Bxa1": {
-            "rating": "best"
-          }
-        }
+        "response": "Rge1"
       }
     }
   },
   {
     "id": 21,
-    "lichessId": "9gvPD",
-    "rating": 1500,
-    "fen": "2r4k/6p1/7p/p6q/8/3P2P1/1PrRQ2P/1K1R4 b - - 3 36",
-    "toMove": "black",
+    "bookNumber": 190,
+    "fen": "2r4k/2q4p/p2bPp2/1p6/6QP/3B4/PPP5/1K4R1 w - - 4 38",
+    "toMove": "white",
     "title": {
-      "en": "X-ray attack",
-      "es": "Rayos X"
+      "en": "Anand – Ponomariov",
+      "es": "Anand – Ponomariov"
     },
+    "game": "Anand – Ponomariov, Mainz 2002",
     "hint": {
-      "en": "A piece attacks through another one.",
-      "es": "Una pieza ataca a través de otra."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "36...Qxe2 37.Rxe2 Rxe2",
-      "es": "36...Dxe2 37.Txe2 Txe2"
+      "en": "38.e7",
+      "es": "38.e7"
     },
     "moves": {
-      "Qxe2": {
-        "rating": "best",
-        "response": "Rxe2",
-        "continuations": {
-          "Rxe2": {
-            "rating": "best"
-          }
-        }
+      "e7": {
+        "rating": "best"
       }
     }
   },
   {
     "id": 22,
-    "lichessId": "mev4t",
-    "rating": 1352,
-    "fen": "3rr1k1/pppq1ppp/2n3n1/2B3Q1/2B5/P2P3P/1PP2PP1/3R1RK1 b - - 10 19",
-    "toMove": "black",
+    "bookNumber": 196,
+    "fen": "1r3k2/2p3Rp/2b5/p1Pp2p1/P2B1pq1/2PB2P1/7P/5RK1 w - - 2 34",
+    "toMove": "white",
     "title": {
-      "en": "Interference",
-      "es": "Interferencia"
+      "en": "Ponomariov – Bareev",
+      "es": "Ponomariov – Bareev"
     },
+    "game": "Ponomariov – Bareev, Moscow (4) 2001",
     "hint": {
-      "en": "Cut the line between two enemy pieces.",
-      "es": "Cortá la línea de comunicación entre dos piezas rivales."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "19...Re5 20.Qc1 Rxc5",
-      "es": "19...Te5 20.Dc1 Txc5"
+      "en": "34.Rxf4+",
+      "es": "34.Txf4+"
     },
     "moves": {
-      "Re5": {
-        "rating": "best",
-        "response": "Qc1",
-        "continuations": {
-          "Rxc5": {
-            "rating": "best"
-          }
-        }
+      "Rxf4+": {
+        "rating": "best"
       }
     }
   },
   {
     "id": 23,
-    "lichessId": "BU7yB",
-    "rating": 1450,
-    "fen": "R7/8/8/1k5K/1n4P1/7P/p7/8 b - - 0 55",
+    "bookNumber": 202,
+    "fen": "4r2k/p4rp1/1pb3qp/3NB3/2P1Q2n/1P1R4/1P4PP/4R1K1 b - - 3 29",
     "toMove": "black",
     "title": {
-      "en": "Quiet move",
-      "es": "Jugada tranquila"
+      "en": "Matikozian – Kasimdzhanov",
+      "es": "Matikozian – Kasimdzhanov"
     },
+    "game": "Matikozian – Kasimdzhanov, Szeged 1994",
     "hint": {
-      "en": "The key is neither a check nor a capture.",
-      "es": "La clave no es un jaque ni una captura."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "55...Na6 56.Rf8 a1=Q",
-      "es": "55...Ca6 56.Tf8 a1=D"
+      "en": "29...Rxe5 30.Qxh4 Rxe1+",
+      "es": "29...Txe5 30.Dxh4 Txe1+"
     },
     "moves": {
-      "Na6": {
+      "Rxe5": {
         "rating": "best",
-        "response": "Rf8",
+        "response": "Qxh4",
         "continuations": {
-          "a1=Q": {
+          "Rxe1+": {
             "rating": "best"
           }
         }
@@ -759,28 +644,28 @@ export const woodpeckerExercises = [
   },
   {
     "id": 24,
-    "lichessId": "XjcZ0",
-    "rating": 1449,
-    "fen": "2rr4/1p3p1k/1q2pPNp/8/1p3PQ1/P3p2P/6PK/5R2 w - - 1 30",
-    "toMove": "white",
+    "bookNumber": 209,
+    "fen": "4r1k1/2BR3p/8/5Rp1/4n1K1/4P1P1/1P2P2P/5r2 b - - 0 36",
+    "toMove": "black",
     "title": {
-      "en": "Clearance",
-      "es": "Despeje"
+      "en": "Timman – Topalov",
+      "es": "Timman – Topalov"
     },
+    "game": "Timman – Topalov, Sarajevo 1999",
     "hint": {
-      "en": "Vacate a square or line for one of your pieces.",
-      "es": "Liberá una casilla o una línea para una pieza propia."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "30.Nf8+ Rxf8 31.Qg7#",
-      "es": "30.Cf8+ Txf8 31.Dg7#"
+      "en": "36...h5+ 37.Kxh5 Rxf5",
+      "es": "36...h5+ 37.Rxh5 Txf5"
     },
     "moves": {
-      "Nf8+": {
+      "h5+": {
         "rating": "best",
-        "response": "Rxf8",
+        "response": "Kxh5",
         "continuations": {
-          "Qg7#": {
+          "Rxf5": {
             "rating": "best"
           }
         }
@@ -789,35 +674,29 @@ export const woodpeckerExercises = [
   },
   {
     "id": 25,
-    "lichessId": "mJ9QD",
-    "rating": 1377,
-    "fen": "8/6k1/4K2p/p2pP1p1/1PpP4/1P4P1/P7/8 b - - 0 39",
+    "bookNumber": 216,
+    "fen": "4r1k1/5p2/p5pp/P1p2q2/3Nr3/3Q4/5PPP/1RR3K1 b - - 0 34",
     "toMove": "black",
     "title": {
-      "en": "Promotion",
-      "es": "Coronación"
+      "en": "Erenburg – Carlsen",
+      "es": "Erenburg – Carlsen"
     },
+    "game": "Erenburg – Carlsen, Reykjavik (blitz) 2006",
     "hint": {
-      "en": "A passed pawn can decide the game.",
-      "es": "Un peón pasado puede decidir la partida."
+      "en": "Find the strongest move. It is not always a direct attack — look at every forcing option.",
+      "es": "Encontrá la jugada más fuerte. No siempre es un ataque directo: mirá todas las opciones forzadas."
     },
     "solution": {
-      "en": "39...c3 40.b5 c2 41.b6 c1=Q",
-      "es": "39...c3 40.b5 c2 41.b6 c1=D"
+      "en": "34...Re1+ 35.Rxe1 Rxe1+",
+      "es": "34...Te1+ 35.Txe1 Txe1+"
     },
     "moves": {
-      "c3": {
+      "Re1+": {
         "rating": "best",
-        "response": "b5",
+        "response": "Rxe1",
         "continuations": {
-          "c2": {
-            "rating": "best",
-            "response": "b6",
-            "continuations": {
-              "c1=Q": {
-                "rating": "best"
-              }
-            }
+          "Rxe1+": {
+            "rating": "best"
           }
         }
       }
