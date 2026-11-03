@@ -16,6 +16,7 @@ export function registerServiceWorker() {
 
     navigator.serviceWorker.register(serviceWorkerUrl, {
       scope: './',
+      updateViaCache: 'none',
     }).catch(error => {
       console.error('Service worker registration failed', error)
     })

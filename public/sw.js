@@ -1,4 +1,4 @@
-const CACHE_NAME = 'alburt-v2'
+const CACHE_NAME = 'alburt-v3'
 const APP_SHELL_URLS = [
   './',
   './index.html',
@@ -12,7 +12,7 @@ const APP_SHELL_URLS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL_URLS)),
+    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL_URLS.map(url => new Request(url, { cache: 'reload' })))),
   )
   self.skipWaiting()
 })
@@ -35,6 +35,22 @@ self.addEventListener('fetch', event => {
 
   const requestUrl = new URL(event.request.url)
   if (requestUrl.origin !== self.location.origin) return
+
+  // Pages: network first so a new deploy shows up on the next open; cache only when offline.
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request, { cache: 'reload' })
+        .then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone()
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache))
+          }
+          return networkResponse
+        })
+        .catch(() => caches.match(event.request, { ignoreSearch: true })),
+    )
+    return
+  }
 
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
