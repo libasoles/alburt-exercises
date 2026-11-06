@@ -10,7 +10,7 @@ export const strings = {
       "Lev Alburt fue tres veces campeón de ajedrez de EE.UU. (1984, 1985 y 1990). Nació en Ucrania, emigró a Estados Unidos en 1979 y llegó a ser uno de los entrenadores más reconocidos del país. Su «<strong>Chess Training Pocket Book</strong>» reúne 300 posiciones elegidas para afinar el cálculo y la visión táctica. Compartimos los primeros 12 ejercicios.",
     woodpeckerTitle: "The Woodpecker Method",
     woodpeckerBio:
-      "«<strong>The Woodpecker Method</strong>» (Axel Smith y Hans Tikkanen) propone resolver una y otra vez el mismo conjunto de problemas tácticos, cada vez más rápido, hasta que los patrones se reconocen casi sin pensar, como un pájaro carpintero golpeando el mismo árbol.",
+      "«<strong>The Woodpecker Method</strong>» (Axel Smith y Hans Tikkanen) propone resolver una y otra vez el mismo conjunto de problemas tácticos, como un pájaro carpintero golpeando el árbol, hasta que los patrones se reconocen intuitivamente.",
     woodpeckerIntro:
       "Acá van 75 posiciones selectas de partidas históricas (de Steinitz a Carlsen), 25 por cada uno de los tres niveles del libro.",
     woodpeckerClockNote:
@@ -57,7 +57,7 @@ export const strings = {
       'GM Lev Alburt is a three-time US Chess Champion (1984, 1985, 1990). Born in Ukraine, he emigrated to the United States in 1979 and became one of the country\'s most recognized chess coaches. His "<strong>Chess Training Pocket Book</strong>" contains 300 carefully selected positions designed to sharpen calculation and tactical vision. We share the first 12 exercises.',
     woodpeckerTitle: "The Woodpecker Method",
     woodpeckerBio:
-      'The "<strong>Woodpecker Method</strong>" (Axel Smith and Hans Tikkanen) means solving the same set of tactical problems again and again, a little faster each cycle, until the patterns are recognised almost without thinking, like a woodpecker hammering the same tree.',
+      'The "<strong>Woodpecker Method</strong>" (Axel Smith and Hans Tikkanen) means solving the same set of tactical problems again and again, like a woodpecker hammering the tree, until the patterns are recognised intuitively.',
     woodpeckerIntro:
       'Here are 75 selected positions from historical games (Steinitz to Carlsen), 25 for each of the three levels of the book.',
     woodpeckerClockNote:
