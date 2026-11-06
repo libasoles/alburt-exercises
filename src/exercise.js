@@ -1046,6 +1046,10 @@ document
 document
   .getElementById("solution-btn")
   .addEventListener("click", openSolution);
+// Clicking outside the board deselects the selected piece
+document.addEventListener("pointerdown", (event) => {
+  if (!event.target.closest("#board")) cg.selectSquare(null);
+});
 mobilePanelsQuery.addEventListener("change", syncPanelLayout);
 window.addEventListener("resize", syncCurvedCompletionTitle);
 
