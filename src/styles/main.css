@@ -1565,10 +1565,13 @@ settings-menu {
   display: flex;
   align-items: flex-start;
   gap: 6px;
+  line-height: 1.4;
 }
 
 .settings-hint-icon svg {
   flex: none;
   width: 1.2em;
   height: 1.2em;
+  /* centre the icon on the first line of text: (line-height - icon) / 2 */
+  margin-top: 0.1em;
 }
