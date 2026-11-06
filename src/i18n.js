@@ -12,7 +12,7 @@ export const strings = {
     woodpeckerBio:
       "«<strong>The Woodpecker Method</strong>» (Axel Smith y Hans Tikkanen) propone resolver una y otra vez el mismo conjunto de problemas tácticos, cada vez más rápido, hasta que los patrones se reconocen casi sin pensar, como un pájaro carpintero golpeando el mismo árbol.",
     woodpeckerIntro:
-      "Acá van 75 posiciones selectas de partidas históricas (de Steinitz a Carlsen), 25 por cada uno de los tres niveles del libro, con las jugadas tomadas de las partidas originales en <a href=\"https://www.pgnmentor.com\" target=\"_blank\" rel=\"noopener\">PGN Mentor</a>.",
+      "Acá van 75 posiciones selectas de partidas históricas (de Steinitz a Carlsen), 25 por cada uno de los tres niveles del libro.",
     woodpeckerClockNote:
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-8 preview-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l-4 2"/></svg> El reloj guarda tu último récord.',
     woodpeckerLevelEasy: "Fácil",
@@ -59,7 +59,7 @@ export const strings = {
     woodpeckerBio:
       'The "<strong>Woodpecker Method</strong>" (Axel Smith and Hans Tikkanen) means solving the same set of tactical problems again and again, a little faster each cycle, until the patterns are recognised almost without thinking, like a woodpecker hammering the same tree.',
     woodpeckerIntro:
-      'Here are 75 selected positions from historical games (Steinitz to Carlsen), 25 for each of the three levels of the book, with the moves taken from the original games on <a href="https://www.pgnmentor.com" target="_blank" rel="noopener">PGN Mentor</a>.',
+      'Here are 75 selected positions from historical games (Steinitz to Carlsen), 25 for each of the three levels of the book.',
     woodpeckerClockNote:
       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock-8 preview-icon" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l-4 2"/></svg> The clock keeps your last record.',
     woodpeckerLevelEasy: "Easy",
