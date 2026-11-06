@@ -325,6 +325,7 @@ settings-menu {
 }
 
 .alburt-bio {
+  position: relative;
   background: var(--bg-surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -347,6 +348,27 @@ settings-menu {
   font-size: 1.1rem;
   margin: 32px 0 12px;
   color: var(--text-muted);
+}
+
+.alburt-bio[hidden] {
+  display: none;
+}
+
+.card-dismiss {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  padding: 4px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.card-dismiss:hover {
+  color: var(--text);
 }
 
 .alburt-bio p + p {

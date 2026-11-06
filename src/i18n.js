@@ -53,6 +53,7 @@ export const strings = {
     newRecord: "¡Nuevo récord!",
     recordTimePopover: "Tiempo de tu último récord",
     goodTimePopover: "Ejercicio resuelto en buen tiempo",
+    dismissCard: "Cerrar y no volver a mostrar",
   },
   en: {
     indexTitleMain: "Chess Exercises",
@@ -104,6 +105,7 @@ export const strings = {
     newRecord: "New record!",
     recordTimePopover: "Your last record time",
     goodTimePopover: "Exercise solved in good time",
+    dismissCard: "Close and don't show again",
   },
 };
 
