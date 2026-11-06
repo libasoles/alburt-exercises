@@ -14,6 +14,9 @@ import { getLang, applyI18n, syncLangInUrl, t, withLangInUrl } from "./i18n.js";
 import { registerServiceWorker } from "./pwa.js";
 import { updateExerciseSeo } from "./seo.js";
 import "./settingsMenu.js";
+import { createClock } from "./clock.js";
+import { showPopover } from "./popover.js";
+import { getRecord, saveSolve, formatClock } from "./records.js";
 import { getTheme, applyBoardTheme, setupSettingsMenu } from "./settings.js";
 
 // ── Routing ──────────────────────────────────────────────────────────────────
@@ -52,6 +55,10 @@ let rotateIconTurns = 0;
 let completionConfettiTimer = null;
 let pageConfetti = confetti;
 let overlayConfetti = confetti;
+let userMoves = 0;
+let solutionUsed = false;
+let recordBannerTimer = null;
+const clock = createClock(document.getElementById("exercise-clock"));
 
 registerServiceWorker();
 
@@ -325,6 +332,49 @@ function playBookResponse(san) {
 
 // ── Confetti ──────────────────────────────────────────────────────────────────
 
+// ── Clock & records ───────────────────────────────────────────────────────────
+
+function startClock() {
+  clock.start(getRecord(setParam, exId)?.ms);
+}
+
+function recordSolve() {
+  const ms = clock.stop();
+  if (solutionUsed || clock.expired) return { isNewRecord: false };
+  return saveSolve(setParam, exId, ms, userMoves);
+}
+
+function showRecordBanner() {
+  const banner = document.getElementById("record-banner");
+  banner.textContent = t("newRecord");
+  banner.setAttribute("aria-hidden", "false");
+  banner.classList.remove("record-banner-visible");
+  void banner.offsetWidth;
+  banner.classList.add("record-banner-visible");
+  clearTimeout(recordBannerTimer);
+  recordBannerTimer = setTimeout(hideRecordBanner, 3200);
+}
+
+function hideRecordBanner() {
+  clearTimeout(recordBannerTimer);
+  const banner = document.getElementById("record-banner");
+  banner.classList.remove("record-banner-visible");
+  banner.setAttribute("aria-hidden", "true");
+}
+
+function setupClock() {
+  const clockEl = document.getElementById("exercise-clock");
+  clockEl.addEventListener("click", () => {
+    const record = getRecord(setParam, exId);
+    if (!record) return;
+    showPopover(
+      clockEl,
+      `${t("recordTimePopover")}: ${formatClock(record.ms, { countdown: true })}`,
+    );
+  });
+  startClock();
+}
+
 function celebrateSolved() {
   pageConfetti({
     particleCount: 150,
@@ -502,11 +552,15 @@ function handleMove(orig, dest) {
   }
   setResetButtonPulse(rating === "bad");
 
+  if (rating === "best") userMoves += 1;
+
   // Advance tree
   currentNode = nextNode;
   if (currentNode === null) {
     inFreePlay = true;
     if (rating === "best") {
+      const { isNewRecord } = recordSolve();
+      if (isNewRecord) showRecordBanner();
       if (isLastExercise) {
         celebrateFinalExerciseSolved();
         showCompletionOverlay();
@@ -742,6 +796,8 @@ function setSolutionVisible(open) {
 }
 
 function openSolution() {
+  solutionUsed = true;
+  if (!inFreePlay) clock.stop();
   setSolutionVisible(true);
   if (!hintOpen && exercise.hint[getLang()]) toggleHint(true);
 
@@ -890,6 +946,7 @@ function applyExercise(id) {
   stopCompletionConfetti();
   hideToast();
   hideCompletionOverlay();
+  hideRecordBanner();
   setResetButtonPulse(false);
   setNextButtonPulse(false);
   clearActiveSolutionMove();
@@ -904,7 +961,10 @@ function applyExercise(id) {
   chess = new Chess(exercise.fen);
   currentNode = exercise.moves;
   inFreePlay = false;
+  userMoves = 0;
+  solutionUsed = false;
   boardOrientation = exercise.toMove;
+  startClock();
 
   cg.set({
     animation: { enabled: false },
@@ -970,6 +1030,7 @@ saveCheckpoint();
 syncBoardTheme();
 setupNav();
 setupBoardControls();
+setupClock();
 setupCompletionOverlay();
 setupFenCopy();
 setupSolutionClicks();

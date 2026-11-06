@@ -54,7 +54,10 @@
             <span class="exercise-number" id="exercise-number"></span>
             <h1 class="exercise-title" id="exercise-title"></h1>
           </div>
-          <p class="to-move-label" id="to-move-label"></p>
+          <div class="to-move-row">
+            <p class="to-move-label" id="to-move-label"></p>
+            <button type="button" class="exercise-clock" id="exercise-clock" aria-live="off">0:00</button>
+          </div>
           <div id="board-wrap">
             <div id="board"></div>
           </div>
@@ -183,6 +186,8 @@
     <div id="toast" class="toast" aria-live="polite">
       <img id="toast-img" src="" alt="" />
     </div>
+
+    <div id="record-banner" class="record-banner" aria-hidden="true"></div>
 
     <!-- Copy toast -->
     <div id="copy-toast" class="copy-toast" role="status" aria-live="polite"></div>

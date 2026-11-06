@@ -5,16 +5,42 @@ import { registerServiceWorker } from './pwa.js'
 import { updateIndexSeo } from './seo.js'
 import './settingsMenu.js'
 import { setupSettingsMenu } from './settings.js'
+import { getRecord } from './records.js'
+import { showPopover } from './popover.js'
+import { t } from './i18n.js'
+
+const AWARD_ICON =
+  '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526"/><circle cx="12" cy="8" r="6"/></svg>'
+
+function createGoodTimeBadge() {
+  const badge = document.createElement('span')
+  badge.className = 'good-time-icon'
+  badge.setAttribute('role', 'button')
+  badge.tabIndex = 0
+  badge.innerHTML = AWARD_ICON
+  badge.setAttribute('aria-label', t('goodTimePopover'))
+
+  const open = event => {
+    event.preventDefault()
+    event.stopPropagation()
+    showPopover(badge, t('goodTimePopover'))
+  }
+  badge.addEventListener('click', open)
+  badge.addEventListener('keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') open(event)
+  })
+  return badge
+}
 
 function renderExerciseList(lang) {
   renderList('exercise-list', exercises, '', lang)
   for (const level of ['easy', 'intermediate', 'advanced']) {
     const items = woodpeckerExercises.filter(ex => ex.level === level)
-    renderList(`woodpecker-list-${level}`, items, 'set=woodpecker&', lang)
+    renderList(`woodpecker-list-${level}`, items, 'set=woodpecker&', lang, 'woodpecker')
   }
 }
 
-function renderList(listId, items, query, lang) {
+function renderList(listId, items, query, lang, set = null) {
   const list = document.getElementById(listId)
   list.innerHTML = ''
 
@@ -31,6 +57,7 @@ function renderList(listId, items, query, lang) {
     title.textContent = ex.title[lang]
 
     link.appendChild(title)
+    if (getRecord(set, ex.id)?.good) link.appendChild(createGoodTimeBadge())
     li.appendChild(link)
     list.appendChild(li)
   })
@@ -46,6 +73,11 @@ renderExerciseList(lang)
 setupSettingsMenu(newLang => {
   updateIndexSeo(newLang)
   renderExerciseList(newLang)
+})
+
+// Back/forward cache can restore the index without re-running this script.
+window.addEventListener('pageshow', event => {
+  if (event.persisted) renderExerciseList(getLang())
 })
 
 registerServiceWorker()
