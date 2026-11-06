@@ -1390,6 +1390,10 @@ settings-menu {
 .solution-btn.hint-btn-reveal,
 .solution-btn.hint-btn-reveal:hover {
   border-color: var(--hint-color-solid);
+}
+
+/* Sky blue on the label lacks contrast, so only the icon takes it */
+.hint-btn-reveal .hint-btn-icon {
   color: var(--hint-color-solid);
 }
 
