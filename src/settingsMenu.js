@@ -28,6 +28,11 @@ export class SettingsMenu extends HTMLElement {
           </div>`
               : ""
           }
+          <div class="settings-section">
+            <label class="settings-section-label" for="settings-timer" data-i18n="settingsTimer">Temporizador</label>
+            <input id="settings-timer" class="settings-input" type="number" min="0.5" step="0.5" inputmode="decimal" />
+            <p class="settings-hint" data-i18n="settingsTimerDesc">Segundos por movimiento para considerar el ejercicio resuelto.</p>
+          </div>
         </div>
       </div>
     `;

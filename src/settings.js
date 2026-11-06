@@ -1,5 +1,8 @@
 
+import { GOOD_SECONDS_PER_MOVE } from './records.js'
+
 const THEME_KEY = 'tucuchess_board_theme'
+const TIMER_KEY = 'tucuchess_seconds_per_move'
 
 export function getTheme() {
   const theme = localStorage.getItem(THEME_KEY) || 'default'
@@ -10,6 +13,23 @@ export function setTheme(theme) {
   localStorage.setItem(THEME_KEY, theme)
 }
 
+export function getSecondsPerMove() {
+  try {
+    const value = Number(localStorage.getItem(TIMER_KEY))
+    return value > 0 ? value : GOOD_SECONDS_PER_MOVE
+  } catch {
+    return GOOD_SECONDS_PER_MOVE
+  }
+}
+
+export function setSecondsPerMove(seconds) {
+  try {
+    localStorage.setItem(TIMER_KEY, String(seconds))
+  } catch {
+    // Storage blocked: the threshold just won't persist.
+  }
+}
+
 export function applyBoardTheme(theme) {
   const wrap = document.getElementById('board-wrap')
   if (!wrap) return
@@ -17,7 +37,7 @@ export function applyBoardTheme(theme) {
   wrap.classList.add(`theme-${theme}`)
 }
 
-export function setupSettingsMenu(onLangChange, onThemeChange) {
+export function setupSettingsMenu(onLangChange, onThemeChange, onTimerChange) {
   const root = document.querySelector('settings-menu')
   const btn = root?.querySelector('#settings-btn')
   const menu = root?.querySelector('#settings-menu')
@@ -53,6 +73,20 @@ export function setupSettingsMenu(onLangChange, onThemeChange) {
       if (onThemeChange) onThemeChange(newTheme)
     })
   })
+
+  const timerInput = menu.querySelector('#settings-timer')
+  if (timerInput) {
+    timerInput.value = getSecondsPerMove()
+    timerInput.addEventListener('change', () => {
+      const seconds = Number(timerInput.value)
+      if (!(seconds > 0)) {
+        timerInput.value = getSecondsPerMove()
+        return
+      }
+      setSecondsPerMove(seconds)
+      if (onTimerChange) onTimerChange(seconds)
+    })
+  }
 
   document.addEventListener('click', () => toggleMenu(false))
   menu.addEventListener('click', e => e.stopPropagation())

@@ -1,10 +1,10 @@
 import { describe, expect, test } from 'vitest'
-import { applySolve, formatClock, isGoodTime } from './records.js'
+import { applySolve, formatClock, isGoodRecord, isGoodTime } from './records.js'
 
 describe('applySolve', () => {
   test('first solve stores the time without being a record', () => {
     expect(applySolve(null, 20000, 4)).toEqual({
-      next: { ms: 20000, good: false },
+      next: { ms: 20000, good: false, perMove: 5000 },
       isNewRecord: false,
     })
   })
@@ -38,5 +38,28 @@ describe('formatClock', () => {
     expect(formatClock(145900)).toBe('2:25')
     expect(formatClock(145100, { countdown: true })).toBe('2:26')
     expect(formatClock(-5, { countdown: true })).toBe('0:00')
+  })
+})
+
+describe('isGoodRecord', () => {
+  test('recomputes from the best time per move', () => {
+    const record = { ms: 20000, good: false, perMove: 5000 }
+    expect(isGoodRecord(record, 4)).toBe(false)
+    expect(isGoodRecord(record, 5)).toBe(true)
+    expect(isGoodRecord({ ms: 8000, good: true, perMove: 2000 }, 1)).toBe(false)
+  })
+
+  test('legacy records fall back to the good flag', () => {
+    expect(isGoodRecord({ ms: 8000, good: true }, 1)).toBe(true)
+    expect(isGoodRecord({ ms: 8000, good: false }, 60)).toBe(false)
+    expect(isGoodRecord(null)).toBe(false)
+  })
+})
+
+describe('perMove tracking', () => {
+  test('keeps the best per-move time even when the record time stands', () => {
+    const { next } = applySolve({ ms: 8000, good: true, perMove: 2000 }, 30000, 4)
+    expect(next.perMove).toBe(2000)
+    expect(next.ms).toBe(8000)
   })
 })
