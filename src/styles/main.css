@@ -349,6 +349,10 @@ settings-menu {
   color: var(--text-muted);
 }
 
+.alburt-bio p + p {
+  margin-top: 1.7em;
+}
+
 .alburt-bio a {
   color: var(--accent);
   text-decoration: underline;
