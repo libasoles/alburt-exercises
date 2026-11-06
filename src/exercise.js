@@ -50,6 +50,7 @@ let playbackId = 0;
 let hintOpen = false;
 let hintStage = "idle";
 let hintCardDismissed = false;
+let hintLocked = false;
 let boardOrientation = exercise.toMove;
 let rotateIconTurns = 0;
 let completionConfettiTimer = null;
@@ -143,7 +144,8 @@ function updateHintButton() {
   label.textContent = t(key);
   label.dataset.i18n = key;
   btn.classList.toggle("hint-btn-reveal", hintStage !== "idle");
-  btn.disabled = hintStage === "arrow" || bestMoves().length === 0;
+  btn.disabled =
+    hintLocked || hintStage === "arrow" || bestMoves().length === 0;
 }
 
 // The square tint is a div inside cg-board, under the pieces (chessground
@@ -553,6 +555,7 @@ function handleMove(orig, dest) {
     hintCardDismissed = true;
   }
   setResetButtonPulse(rating !== "best");
+  if (rating !== "best") hintLocked = true;
 
   if (rating === "best") userMoves += 1;
 
@@ -615,6 +618,7 @@ function retryFromCheckpoint() {
   cancelPlayback();
   if (solutionOpen) setSolutionVisible(false);
   hintStage = "idle";
+  hintLocked = false;
   hideToast();
   hideCompletionOverlay();
   clearTimeout(bookResponseTimer);
@@ -716,6 +720,7 @@ function playLine(
   checkpointPending = false;
   inFreePlay = true;
   hintStage = "idle";
+  hintLocked = false;
   setResetButtonPulse(false);
   setNextButtonPulse(false);
   hideToast();
