@@ -1544,18 +1544,25 @@ settings-menu {
   }
 }
 
-.settings-input {
-  display: block;
-  margin-left: auto;
+.settings-slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.settings-slider input {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--accent);
+}
+
+.settings-slider output {
+  min-width: 2.5ch;
   text-align: right;
-  width: 5.5em;
-  padding: 6px 10px;
-  border-radius: calc(var(--radius) - 2px);
-  border: 1px solid var(--border);
-  background: var(--bg-surface);
-  color: var(--text);
   font-size: 0.9rem;
   font-weight: 600;
+  color: var(--text);
 }
 
 .settings-hint {

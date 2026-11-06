@@ -75,14 +75,17 @@ export function setupSettingsMenu(onLangChange, onThemeChange, onTimerChange) {
   })
 
   const timerInput = menu.querySelector('#settings-timer')
+  const timerValue = menu.querySelector('#settings-timer-value')
   if (timerInput) {
+    const showValue = () => {
+      if (timerValue) timerValue.textContent = `${timerInput.value}s`
+    }
+    // Stored values outside the slider range snap to its nearest end.
     timerInput.value = getSecondsPerMove()
+    showValue()
+    timerInput.addEventListener('input', showValue)
     timerInput.addEventListener('change', () => {
       const seconds = Number(timerInput.value)
-      if (!(seconds > 0)) {
-        timerInput.value = getSecondsPerMove()
-        return
-      }
       setSecondsPerMove(seconds)
       if (onTimerChange) onTimerChange(seconds)
     })
