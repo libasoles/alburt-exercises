@@ -716,13 +716,14 @@ settings-menu {
 }
 
 .solution-btn {
+  font-family: "Lilita One", var(--font-sans, system-ui), sans-serif;
   background: var(--bg-surface);
   color: var(--text);
   border: 1px solid var(--border);
   padding: 10px 20px;
   border-radius: var(--radius);
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 400;
   cursor: pointer;
   transition:
     background 0.15s,
@@ -1529,7 +1530,7 @@ settings-menu {
 }
 
 .settings-input {
-  width: 100%;
+  width: 5.5em;
   padding: 6px 10px;
   border-radius: calc(var(--radius) - 2px);
   border: 1px solid var(--border);
@@ -1544,4 +1545,16 @@ settings-menu {
   font-size: 0.75rem;
   color: var(--text-muted);
   max-width: 280px;
+}
+
+.settings-hint-icon {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.settings-hint-icon svg {
+  flex: none;
+  width: 1.2em;
+  height: 1.2em;
 }

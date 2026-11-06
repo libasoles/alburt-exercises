@@ -31,7 +31,7 @@ export class SettingsMenu extends HTMLElement {
           <div class="settings-section">
             <label class="settings-section-label" for="settings-timer" data-i18n="settingsTimer">Temporizador</label>
             <input id="settings-timer" class="settings-input" type="number" min="0.5" step="0.5" inputmode="decimal" />
-            <p class="settings-hint" data-i18n="settingsTimerDesc">Segundos por movimiento para considerar el ejercicio resuelto.</p>
+            <p class="settings-hint settings-hint-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l-4 2"/></svg><span data-i18n="settingsTimerDesc">Segundos por movimiento para considerar el ejercicio resuelto.</span></p>
           </div>
         </div>
       </div>
