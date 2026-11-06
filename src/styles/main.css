@@ -236,7 +236,8 @@ settings-menu {
 }
 
 #board-wrap.theme-3d piece.black {
-  --piece-shadow: drop-shadow(0 10px 12px rgba(12, 8, 4, 0.28));
+  --piece-shadow: brightness(1.9) contrast(0.92)
+    drop-shadow(0 10px 12px rgba(12, 8, 4, 0.28));
 }
 
 #board-wrap.theme-3d piece::before {
