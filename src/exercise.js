@@ -135,7 +135,8 @@ function bestMoves() {
 }
 
 // Hint button cycle: "Ver pista" (idle) -> "Revelar" (square tinted) -> arrow
-// shown. A good move returns it to idle.
+// shown. A good move returns it to idle; a mistaken or merely interesting move
+// disables it until the user resets.
 function updateHintButton() {
   const btn = document.getElementById("hint-btn");
   const label = document.getElementById("hint-btn-label");
