@@ -623,6 +623,7 @@ function retryFromCheckpoint() {
   checkpointPending = false;
   setResetButtonPulse(false);
   setNextButtonPulse(false);
+  clock.retry();
 
   chess = new Chess(checkpoint.fen);
   currentNode = checkpoint.node;

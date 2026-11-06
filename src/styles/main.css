@@ -499,6 +499,10 @@ settings-menu {
   color: var(--text);
   text-align: right;
   cursor: default;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
 }
 
 .exercise-clock-countdown {
@@ -506,8 +510,7 @@ settings-menu {
 }
 
 .exercise-clock-icon {
-  vertical-align: -0.12em;
-  margin-right: 4px;
+  flex: none;
 }
 
 .clock-note .preview-icon {

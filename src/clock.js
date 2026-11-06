@@ -10,6 +10,7 @@ const CLOCK_ICON =
 export function createClock(el) {
   let limitMs = null
   let elapsedBefore = 0
+  let previousAttemptsMs = 0
   let startedAt = null
   let stopped = false
   let interval = null
@@ -21,7 +22,7 @@ export function createClock(el) {
     const ms = elapsed()
     const countdown = limitMs !== null
     const text = formatClock(countdown ? limitMs - ms : ms, { countdown })
-    if (countdown) el.innerHTML = `${CLOCK_ICON}${text}`
+    if (countdown) el.innerHTML = `${text}${CLOCK_ICON}`
     else el.textContent = text
     el.classList.toggle('exercise-clock-expired', countdown && ms >= limitMs)
     el.classList.toggle('exercise-clock-countdown', countdown)
@@ -36,6 +37,11 @@ export function createClock(el) {
   function resume() {
     if (stopped || startedAt !== null) return
     startedAt = performance.now()
+  }
+
+  function tick() {
+    render()
+    if (limitMs !== null && elapsed() >= limitMs) halt()
   }
 
   function halt() {
@@ -55,22 +61,33 @@ export function createClock(el) {
       halt()
       limitMs = recordMs ?? null
       elapsedBefore = 0
+      previousAttemptsMs = 0
       stopped = false
       startedAt = performance.now()
       render()
-      interval = setInterval(() => {
-        render()
-        if (limitMs !== null && elapsed() >= limitMs) halt()
-      }, 250)
+      interval = setInterval(tick, 250)
     },
-    /** Freezes the clock and returns the elapsed milliseconds. */
+    /**
+     * Restarts the countdown for a new attempt. The time spent on earlier
+     * attempts still counts towards the total returned by stop().
+     */
+    retry() {
+      if (stopped || limitMs === null) return
+      halt()
+      previousAttemptsMs += elapsedBefore
+      elapsedBefore = 0
+      startedAt = document.hidden ? null : performance.now()
+      render()
+      interval = setInterval(tick, 250)
+    },
+    /** Freezes the clock and returns the total elapsed milliseconds, retries included. */
     stop() {
       const ms = elapsed()
       stopped = true
       halt()
       elapsedBefore = ms
       render()
-      return ms
+      return previousAttemptsMs + ms
     },
     /** Whether the countdown already reached zero. */
     get expired() {
