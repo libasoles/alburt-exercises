@@ -68,8 +68,8 @@ export function createClock(el) {
       interval = setInterval(tick, 250)
     },
     /**
-     * Restarts the countdown for a new attempt. The time spent on earlier
-     * attempts still counts towards the total returned by stop().
+     * Restarts the countdown for a new attempt from the first move. The time
+     * spent on earlier attempts still counts towards the total returned by stop().
      */
     retry() {
       if (stopped || limitMs === null) return

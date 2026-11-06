@@ -1554,7 +1554,41 @@ settings-menu {
 .settings-slider input {
   flex: 1;
   min-width: 0;
-  accent-color: var(--accent);
+  height: 20px;
+  margin: 0;
+  background: transparent;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.settings-slider input::-webkit-slider-runnable-track {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.settings-slider input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  margin-top: -7.5px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.settings-slider input::-moz-range-track {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--border);
+}
+
+.settings-slider input::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .settings-slider output {

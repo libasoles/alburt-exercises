@@ -628,7 +628,9 @@ function retryFromCheckpoint() {
   checkpointPending = false;
   setResetButtonPulse(false);
   setNextButtonPulse(false);
-  clock.retry();
+  // Only going back to the first move restarts the countdown; from a later
+  // checkpoint the clock keeps running (or stays red if it already expired).
+  if (checkpoint.fen === exercise.fen) clock.retry();
 
   chess = new Chess(checkpoint.fen);
   currentNode = checkpoint.node;
