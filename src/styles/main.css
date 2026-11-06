@@ -983,6 +983,27 @@ settings-menu {
   transform: translateY(-10px) scale(1);
 }
 
+.toast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toast-text {
+  margin-top: 6px;
+  font-family: "Lilita One", system-ui, sans-serif;
+  font-size: 1.1rem;
+  color: #fff;
+  text-align: center;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.55),
+    0 0 8px rgba(0, 0, 0, 0.4);
+}
+
+.toast-text:empty {
+  display: none;
+}
+
 .toast img {
   width: 130px;
   height: auto;

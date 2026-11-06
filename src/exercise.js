@@ -228,6 +228,8 @@ function showToast(rating) {
 
   img.src = RATING_IMAGES[rating];
   img.alt = rating;
+  document.getElementById("toast-text").textContent =
+    rating === "ok" ? t("interestingButNo") : "";
 
   // Clear any ongoing hide animation
   clearTimeout(toastTimer);
@@ -550,7 +552,7 @@ function handleMove(orig, dest) {
     toggleHint(false);
     hintCardDismissed = true;
   }
-  setResetButtonPulse(rating === "bad");
+  setResetButtonPulse(rating !== "best");
 
   if (rating === "best") userMoves += 1;
 
