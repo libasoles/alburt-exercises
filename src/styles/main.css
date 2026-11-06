@@ -720,7 +720,6 @@ settings-menu {
 }
 
 .solution-btn {
-  font-family: "Lilita One", var(--font-sans, system-ui), sans-serif;
   background: var(--bg-surface);
   color: var(--text);
   border: 1px solid var(--border);
@@ -1289,6 +1288,7 @@ settings-menu {
   }
 
   .solution-btn {
+    font-family: "Lilita One", var(--font-sans, system-ui), sans-serif;
     width: 100%;
     text-align: center;
   }
@@ -1384,6 +1384,13 @@ settings-menu {
 :root {
   /* pastel sky blue: complements the warm orange/peach board */
   --hint-color: rgba(110, 196, 240, 0.6);
+  --hint-color-solid: rgb(110, 196, 240);
+}
+
+.solution-btn.hint-btn-reveal,
+.solution-btn.hint-btn-reveal:hover {
+  border-color: var(--hint-color-solid);
+  color: var(--hint-color-solid);
 }
 
 .hint-square {
