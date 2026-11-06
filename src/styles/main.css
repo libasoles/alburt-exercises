@@ -1541,6 +1541,9 @@ settings-menu {
 }
 
 .settings-input {
+  display: block;
+  margin-left: auto;
+  text-align: right;
   width: 5.5em;
   padding: 6px 10px;
   border-radius: calc(var(--radius) - 2px);
