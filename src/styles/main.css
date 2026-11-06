@@ -999,9 +999,9 @@ settings-menu {
   color: var(--text);
   text-align: center;
   background: #fff;
-  border: 3px solid var(--text);
+  border: 4px solid #fff;
   border-radius: 999px;
-  box-shadow: 0 3px 0 var(--text);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   transform: rotate(-3deg);
 }
 
