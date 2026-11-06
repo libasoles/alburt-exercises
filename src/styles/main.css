@@ -991,12 +991,18 @@ settings-menu {
 }
 
 .toast-text {
-  margin-top: 6px;
+  margin-top: 4px;
+  padding: 6px 16px 7px;
   font-family: "Lilita One", system-ui, sans-serif;
   font-size: 1.1rem;
+  line-height: 1.1;
   color: var(--text);
   text-align: center;
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);
+  background: #fff;
+  border: 3px solid var(--text);
+  border-radius: 999px;
+  box-shadow: 0 3px 0 var(--text);
+  transform: rotate(-3deg);
 }
 
 .toast-text:empty {
