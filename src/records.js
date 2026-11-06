@@ -20,6 +20,16 @@ export function getRecord(set, id) {
   return readAll()[recordKey(set, id)] ?? null
 }
 
+/**
+ * Whether a stored record earns the medal at the given threshold. Records saved
+ * before per-move times were kept only have the sticky `good` flag.
+ */
+export function isGoodRecord(record, secondsPerMove = GOOD_SECONDS_PER_MOVE) {
+  if (!record) return false
+  if (typeof record.perMove === 'number') return record.perMove <= secondsPerMove * 1000
+  return Boolean(record.good)
+}
+
 export function isGoodTime(ms, moves, secondsPerMove = GOOD_SECONDS_PER_MOVE) {
   return moves > 0 && ms / moves <= secondsPerMove * 1000
 }
@@ -27,16 +37,20 @@ export function isGoodTime(ms, moves, secondsPerMove = GOOD_SECONDS_PER_MOVE) {
 /**
  * Pure: decide what a finished solve does to the stored record.
  *
- * @param {{ ms: number, good: boolean }|null} previous
+ * @param {{ ms: number, good: boolean, perMove?: number }|null} previous
  * @param {number} ms - time of this solve
  * @param {number} moves - user moves in the solution
- * @returns {{ next: { ms: number, good: boolean }, isNewRecord: boolean }}
+ * @returns {{ next: { ms: number, good: boolean, perMove: number }, isNewRecord: boolean }}
  */
 export function applySolve(previous, ms, moves) {
   const good = Boolean(previous?.good) || isGoodTime(ms, moves)
-  if (!previous) return { next: { ms, good }, isNewRecord: false }
-  if (ms < previous.ms) return { next: { ms, good }, isNewRecord: true }
-  return { next: { ms: previous.ms, good }, isNewRecord: false }
+  // Best average time per move across all solves, so the medal can be
+  // recalculated when the user changes the threshold.
+  const perMove = Math.min(previous?.perMove ?? Infinity, moves > 0 ? ms / moves : Infinity)
+  const stored = Number.isFinite(perMove) ? { perMove } : {}
+  if (!previous) return { next: { ms, good, ...stored }, isNewRecord: false }
+  if (ms < previous.ms) return { next: { ms, good, ...stored }, isNewRecord: true }
+  return { next: { ms: previous.ms, good, ...stored }, isNewRecord: false }
 }
 
 export function saveSolve(set, id, ms, moves) {

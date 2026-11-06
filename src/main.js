@@ -4,8 +4,8 @@ import { getLang, applyI18n, syncLangInUrl, withLangInUrl } from './i18n.js'
 import { registerServiceWorker } from './pwa.js'
 import { updateIndexSeo } from './seo.js'
 import './settingsMenu.js'
-import { setupSettingsMenu } from './settings.js'
-import { getRecord } from './records.js'
+import { setupSettingsMenu, getSecondsPerMove } from './settings.js'
+import { getRecord, isGoodRecord } from './records.js'
 import { showPopover } from './popover.js'
 import { t } from './i18n.js'
 
@@ -57,7 +57,7 @@ function renderList(listId, items, query, lang, set = null) {
     title.textContent = ex.title[lang]
 
     link.appendChild(title)
-    if (getRecord(set, ex.id)?.good) link.appendChild(createGoodTimeBadge())
+    if (isGoodRecord(getRecord(set, ex.id), getSecondsPerMove())) link.appendChild(createGoodTimeBadge())
     li.appendChild(link)
     list.appendChild(li)
   })
@@ -70,10 +70,14 @@ applyI18n(lang)
 updateIndexSeo(lang)
 renderExerciseList(lang)
 
-setupSettingsMenu(newLang => {
-  updateIndexSeo(newLang)
-  renderExerciseList(newLang)
-})
+setupSettingsMenu(
+  newLang => {
+    updateIndexSeo(newLang)
+    renderExerciseList(newLang)
+  },
+  undefined,
+  () => renderExerciseList(getLang()),
+)
 
 // Back/forward cache can restore the index without re-running this script.
 window.addEventListener('pageshow', event => {

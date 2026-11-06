@@ -1520,3 +1520,21 @@ settings-menu {
     15%, 85% { opacity: 1; transform: translate(-50%, 0) scale(1); }
   }
 }
+
+.settings-input {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.settings-hint {
+  margin: 6px 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  max-width: 280px;
+}
