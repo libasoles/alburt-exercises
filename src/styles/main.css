@@ -1267,8 +1267,9 @@ settings-menu {
     width: 100%;
   }
 
-  .fen-details {
-    order: 1;
+  /* FEN is the last row on mobile, below the hint/solution buttons */
+  .info-column > .fen-details {
+    order: 3;
   }
 
   .index-main {
