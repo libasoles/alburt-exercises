@@ -56,6 +56,7 @@ export function updateIndexSeo(lang) {
 
   setLink('alternate-es-link', buildSiteUrl('', { lang: 'es' }))
   setLink('alternate-en-link', buildSiteUrl('', { lang: 'en' }))
+  setLink('alternate-default-link', buildSiteUrl('', { lang: 'en' }))
 
   setJsonLd({
     '@context': 'https://schema.org',
@@ -96,6 +97,10 @@ export function updateExerciseSeo({ lang, exercise }) {
   )
   setLink(
     'alternate-en-link',
+    buildSiteUrl('exercise.html', { ex: String(exercise.id), lang: 'en' }),
+  )
+  setLink(
+    'alternate-default-link',
     buildSiteUrl('exercise.html', { ex: String(exercise.id), lang: 'en' }),
   )
 

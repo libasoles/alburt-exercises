@@ -65,13 +65,13 @@ describe("i18n", () => {
     expect(detectBrowserLang()).toBe("es");
   });
 
-  test("falls back to spanish when browser language is unsupported", () => {
+  test("falls back to english when browser language is unsupported", () => {
     vi.stubGlobal("navigator", {
       language: "pt-BR",
       languages: ["pt-BR"],
     });
 
-    expect(getLang()).toBe("es");
+    expect(getLang()).toBe("en");
   });
 
   test("adds current language to navigation urls", () => {

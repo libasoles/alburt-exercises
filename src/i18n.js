@@ -1,5 +1,5 @@
 const LANG_KEY = "tucuchess_lang";
-const DEFAULT_LANG = "es";
+const DEFAULT_LANG = "en";
 const SUPPORTED_LANGS = new Set(["es", "en"]);
 
 export const strings = {
@@ -36,7 +36,6 @@ export const strings = {
     gameLabel: "Partida",
     exerciseLinkWhite: "Juegan las blancas",
     exerciseLinkBlack: "Juegan las negras",
-    settingsLang: "Idioma",
     settingsBoard: "Tablero",
     settingsBoardFlat: "Plano",
     settingsBoardWood: "Staunton",
@@ -84,7 +83,6 @@ export const strings = {
     gameLabel: "Game",
     exerciseLinkWhite: "White to move",
     exerciseLinkBlack: "Black to move",
-    settingsLang: "Language",
     settingsBoard: "Board",
     settingsBoardFlat: "Flat",
     settingsBoardWood: "Staunton",

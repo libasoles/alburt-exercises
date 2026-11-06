@@ -1,4 +1,3 @@
-import { getLang, setLang, applyI18n, syncLangInUrl } from './i18n.js'
 
 const THEME_KEY = 'tucuchess_board_theme'
 
@@ -27,11 +26,7 @@ export function setupSettingsMenu(onLangChange, onThemeChange) {
   let open = false
 
   function updateActive() {
-    const lang = getLang()
     const theme = getTheme()
-    menu.querySelectorAll('[data-lang]').forEach(el => {
-      el.classList.toggle('active', el.dataset.lang === lang)
-    })
     menu.querySelectorAll('[data-theme]').forEach(el => {
       el.classList.toggle('active', el.dataset.theme === theme)
     })
@@ -47,17 +42,6 @@ export function setupSettingsMenu(onLangChange, onThemeChange) {
     e.stopPropagation()
     updateActive()
     toggleMenu()
-  })
-
-  menu.querySelectorAll('[data-lang]').forEach(el => {
-    el.addEventListener('click', () => {
-      const newLang = el.dataset.lang
-      setLang(newLang)
-      syncLangInUrl(newLang)
-      applyI18n(newLang)
-      updateActive()
-      if (onLangChange) onLangChange(newLang)
-    })
   })
 
   menu.querySelectorAll('[data-theme]').forEach(el => {
