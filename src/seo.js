@@ -40,10 +40,10 @@ function applyCommonSeo({ title, description, canonicalUrl, pageType }) {
 export function updateIndexSeo(lang) {
   const isSpanish = lang === 'es'
   const title = isSpanish
-    ? `${SITE_NAME} — Ejercicios de Alburt`
+    ? 'Libro de Alburt - El Pájaro Carpintero'
     : `${SITE_NAME} — Alburt Chess Exercises`
   const description = isSpanish
-    ? 'Ejercicios interactivos de ajedrez del libro de Lev Alburt para practicar calculo, tactica y visualizacion.'
+    ? 'Ejercicios interactivos de ajedrez de los libros de Alburt y del Pájaro Carpintero para practicar calculo, tactica y visualizacion.'
     : 'Interactive chess exercises from Lev Alburt to practice calculation, tactics, and visualization.'
   const canonicalUrl = buildSiteUrl('', { lang })
 
